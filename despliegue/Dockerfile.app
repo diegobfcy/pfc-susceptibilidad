@@ -1,6 +1,6 @@
 # Contenedor app: capa de Servicios (Flask + gunicorn)
 FROM python:3.11.11-slim-bookworm
-ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PFC_CONFIG=/srv/config/config.yaml
 WORKDIR /srv
 COPY pyproject.toml README.md ./
 COPY servicios servicios
