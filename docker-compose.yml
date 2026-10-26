@@ -23,6 +23,7 @@ services:
     depends_on: {db: {condition: service_healthy}}
   worker:
     image: ${PFC_REGISTRO:-localhost:5000}/pfc-worker:${PFC_VERSION:-latest}
+    restart: unless-stopped  # un error no previsto marca el trabajo FALLIDO y reinicia el worker
     environment:
       PFC_BD_URL: postgresql+psycopg://postgres:${POSTGRES_PASSWORD}@db:5432/pfc
       PFC_DATOS_ORIGEN: /datos/origen
