@@ -17,8 +17,14 @@ def crear_xgboost(params: dict[str, Any], semilla: int, **extra: Any) -> Clasifi
     import xgboost as xgb
 
     return xgb.XGBClassifier(
-        **params, subsample=0.8, colsample_bytree=0.8, tree_method="hist", device="cuda",
-        eval_metric="auc", random_state=semilla, **extra,
+        **params,
+        subsample=0.8,
+        colsample_bytree=0.8,
+        tree_method="hist",
+        device="cuda",
+        eval_metric="auc",
+        random_state=semilla,
+        **extra,
     )
 
 
@@ -26,6 +32,11 @@ def crear_random_forest(semilla: int) -> Clasificador:
     from sklearn.ensemble import RandomForestClassifier
 
     return RandomForestClassifier(
-        n_estimators=500, max_depth=14, min_samples_leaf=20, max_features="sqrt",
-        class_weight="balanced_subsample", n_jobs=-1, random_state=semilla,
+        n_estimators=500,
+        max_depth=14,
+        min_samples_leaf=20,
+        max_features="sqrt",
+        class_weight="balanced_subsample",
+        n_jobs=-1,
+        random_state=semilla,
     )

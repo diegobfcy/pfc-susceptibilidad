@@ -9,7 +9,6 @@ from typing import Final
 from urllib.parse import urlsplit
 
 import requests
-
 from pfc_datos.protocolos import AlmacenArtefactos, ArchivoRegistrado, RegistroBitacora
 
 
@@ -62,8 +61,9 @@ class ConectorFuente(ABC):
                     sha256.update(bloque)  # huella calculada al escribir
                     archivo.write(bloque)
         registro = self._almacen.registrar(self.nombre_fuente, destino, sha256.hexdigest())
-        self._bitacora.registrar("INFORMATIVO", "E2", "INGESTA", fuente=self.nombre_fuente,
-                                 sha256=registro.sha256)
+        self._bitacora.registrar(
+            "INFORMATIVO", "E2", "INGESTA", fuente=self.nombre_fuente, sha256=registro.sha256
+        )
         return registro
 
     def _validar_host(self, url: str) -> None:

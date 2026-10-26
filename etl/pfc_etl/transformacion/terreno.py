@@ -53,8 +53,11 @@ def variables_terreno(celdas: pd.DataFrame, ruta_pendiente: Path) -> pd.DataFram
             cy = np.floor((ys - y0) / TAM_CELDA_M).astype(int)
             CX, CY = np.meshgrid(cx, cy)
             dentro = (
-                (pendiente >= 0) & (CX >= 0) & (CY >= 0)
-                & (CX < busqueda.shape[1]) & (CY < busqueda.shape[0])
+                (pendiente >= 0)
+                & (CX >= 0)
+                & (CY >= 0)
+                & (busqueda.shape[1] > CX)
+                & (busqueda.shape[0] > CY)
             )
             k = busqueda[CY[dentro], CX[dentro]]
             p = np.clip(pendiente[dentro][k >= 0], 0, 90).astype(np.float64)

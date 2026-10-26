@@ -5,7 +5,6 @@ from pathlib import Path
 
 import pandas as pd
 import pytest
-
 from pfc_datos.almacen import AlmacenArchivos, MatrizParquet, sha256_archivo
 from pfc_datos.bitacora import BitacoraArchivo
 from pfc_etl.conectores.carga_manual import CargaManual, ExtensionNoPermitidaError

@@ -22,7 +22,9 @@ def auc_roc(y: np.ndarray, probabilidad: np.ndarray) -> float:
     return float(roc_auc_score(y, probabilidad))
 
 
-def curva_roc(y: np.ndarray, probabilidad: np.ndarray, puntos: int = 400) -> dict[str, list[float]]:
+def curva_roc(
+    y: np.ndarray, probabilidad: np.ndarray, puntos: int = 400
+) -> dict[str, list[float]]:
     fpr, tpr, _ = roc_curve(y, probabilidad)
     malla = np.linspace(0, 1, puntos)
     return {"fpr": malla.tolist(), "tpr": np.interp(malla, fpr, tpr).tolist()}

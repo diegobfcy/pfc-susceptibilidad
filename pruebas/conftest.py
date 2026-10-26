@@ -7,7 +7,6 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-
 from pfc_datos.repositorios import Usuario
 
 
@@ -26,7 +25,9 @@ class UsuariosMemoria:
     def por_correo(self, correo: str) -> Usuario | None:
         return self._usuarios.get(correo)
 
-    def registrar_intento(self, id_usuario: int, exitoso: bool, bloquear_hasta: dt.datetime | None) -> None:
+    def registrar_intento(
+        self, id_usuario: int, exitoso: bool, bloquear_hasta: dt.datetime | None
+    ) -> None:
         for u in self._usuarios.values():
             if u.id_usuario == id_usuario:
                 u.intentos_fallidos = 0 if exitoso else u.intentos_fallidos + 1
@@ -39,8 +40,14 @@ class ProcesamientosMemoria:
 
     def crear(self, id_usuario: int, tipo: str, desde: dt.date, hasta: dt.date) -> int:
         nuevo = len(self.filas) + 1
-        self.filas[nuevo] = {"id_procesamiento": nuevo, "tipo": tipo, "estado": "PENDIENTE",
-                             "fecha_desde": desde, "fecha_hasta": hasta, "id_usuario": id_usuario}
+        self.filas[nuevo] = {
+            "id_procesamiento": nuevo,
+            "tipo": tipo,
+            "estado": "PENDIENTE",
+            "fecha_desde": desde,
+            "fecha_hasta": hasta,
+            "id_usuario": id_usuario,
+        }
         return nuevo
 
     def obtener(self, id_procesamiento: int) -> dict[str, Any] | None:

@@ -15,13 +15,15 @@ def bloques_espaciales(celdas: pd.DataFrame, tamano_km: float) -> pd.Series:
     return pd.Series((bx * 1000 + by).to_numpy(), index=celdas["id_celda"].to_numpy())
 
 
-def pliegues_espaciales(bloque: np.ndarray, n_pliegues: int) -> list[tuple[np.ndarray, np.ndarray]]:
-    """Pliegues con bloques completos: las celdas de validación quedan separadas geográficamente."""
+def pliegues_espaciales(
+    bloque: np.ndarray, n_pliegues: int
+) -> list[tuple[np.ndarray, np.ndarray]]:
+    """Pliegues con bloques completos: celdas de validación separadas geográficamente."""
     return list(GroupKFold(n_splits=n_pliegues).split(np.zeros(len(bloque)), groups=bloque))
 
 
 def submuestrear_negativos(tabla: pd.DataFrame, fraccion: float, semilla: int) -> pd.DataFrame:
-    """Conserva todos los positivos y una fracción de negativos estratificada por año y provincia."""
+    """Todos los positivos y una fracción de negativos estratificada por año y provincia."""
     positivos = tabla[tabla["objetivo"] == 1]
     negativos = tabla[tabla["objetivo"] == 0]
     estratos = [negativos["periodo"].dt.year, negativos["ubigeo_prov"]]

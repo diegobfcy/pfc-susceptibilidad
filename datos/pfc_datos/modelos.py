@@ -1,4 +1,4 @@
-"""D2 + D1: repositorio de versiones del modelo (artefacto con SHA-256, métricas e importancias)."""
+"""D2 + D1: repositorio de versiones del modelo (artefacto SHA-256, métricas e importancias)."""
 
 from __future__ import annotations
 
@@ -43,14 +43,20 @@ class RepositorioModelos:
         self._raiz = raiz / "modelos"
         self._raiz.mkdir(parents=True, exist_ok=True)
 
-    def guardar(self, clasificador: Any, algoritmo: str, version: str, estado: EstadoVersion,
-                **datos: Any) -> VersionModelo:
+    def guardar(
+        self, clasificador: Any, algoritmo: str, version: str, estado: EstadoVersion, **datos: Any
+    ) -> VersionModelo:
         ruta = self._raiz / f"{algoritmo.lower()}_v{version}{self._extension(algoritmo)}"
         self._serializar(clasificador, algoritmo, ruta)
         registro = VersionModelo(
-            algoritmo=algoritmo, version=version, estado=estado, ruta_artefacto=str(ruta),
-            sha256=sha256_archivo(ruta), bytes=ruta.stat().st_size,
-            entrenado_en=dt.datetime.now(dt.UTC).isoformat(timespec="seconds"), **datos,
+            algoritmo=algoritmo,
+            version=version,
+            estado=estado,
+            ruta_artefacto=str(ruta),
+            sha256=sha256_archivo(ruta),
+            bytes=ruta.stat().st_size,
+            entrenado_en=dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
+            **datos,
         )
         tarjeta = ruta.with_suffix(".json")
         tarjeta.write_text(json.dumps(asdict(registro), indent=2, default=float), encoding="utf-8")

@@ -17,7 +17,9 @@ class ExtensionNoPermitidaError(Exception):
 
 
 class CargaManual:
-    def __init__(self, fuente: str, almacen: AlmacenArtefactos, bitacora: RegistroBitacora) -> None:
+    def __init__(
+        self, fuente: str, almacen: AlmacenArtefactos, bitacora: RegistroBitacora
+    ) -> None:
         self.nombre_fuente = fuente
         self._almacen = almacen
         self._bitacora = bitacora
@@ -32,8 +34,9 @@ class CargaManual:
                 huella.update(bloque)
                 escritura.write(bloque)
         registro = self._almacen.registrar(self.nombre_fuente, destino, huella.hexdigest())
-        self._bitacora.registrar("INFORMATIVO", "E2", "CARGA_MANUAL", fuente=self.nombre_fuente,
-                                 sha256=registro.sha256)
+        self._bitacora.registrar(
+            "INFORMATIVO", "E2", "CARGA_MANUAL", fuente=self.nombre_fuente, sha256=registro.sha256
+        )
         return registro
 
 

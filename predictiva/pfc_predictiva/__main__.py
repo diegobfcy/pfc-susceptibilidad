@@ -9,19 +9,29 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
-
 from pfc_datos.almacen import MatrizParquet
 from pfc_datos.config import cargar_config, ruta_d2
 from pfc_datos.modelos import RepositorioModelos
+
 from pfc_predictiva.entrenamiento import busqueda, entrenador
 from pfc_predictiva.entrenamiento.clasificadores import crear_random_forest
 from pfc_predictiva.entrenamiento.particion import bloques_espaciales, submuestrear_negativos
 from pfc_predictiva.evaluacion.metricas import auc_roc, curva_roc, psi
 
 VARIABLES = [
-    "tsm_c", "anom_tsm", "anom_tsm_l1", "anom_tsm_l2", "anom_tsm_l3", "anom_tsm_mm3",
-    "precip_mes_mm", "precip_max3d_mm", "precip_ant90_mm",
-    "pend_media_g", "pend_p90_g", "pend_max_g", "mes",
+    "tsm_c",
+    "anom_tsm",
+    "anom_tsm_l1",
+    "anom_tsm_l2",
+    "anom_tsm_l3",
+    "anom_tsm_mm3",
+    "precip_mes_mm",
+    "precip_max3d_mm",
+    "precip_ant90_mm",
+    "pend_media_g",
+    "pend_p90_g",
+    "pend_max_g",
+    "mes",
 ]
 
 
@@ -35,9 +45,16 @@ def resumen_particion(matriz: MatrizParquet, config: dict[str, Any]) -> list[dic
     filas = []
     for nombre, anios in conjuntos:
         tabla = matriz.leer(anios, ["periodo", "objetivo"])  # solo conteos; sin variables
-        filas.append({"conjunto": nombre, "desde": anios.start, "hasta": anios.stop - 1,
-                      "meses": int(tabla["periodo"].nunique()), "filas": len(tabla),
-                      "positivos": int(tabla["objetivo"].sum())})
+        filas.append(
+            {
+                "conjunto": nombre,
+                "desde": anios.start,
+                "hasta": anios.stop - 1,
+                "meses": int(tabla["periodo"].nunique()),
+                "filas": len(tabla),
+                "positivos": int(tabla["objetivo"].sum()),
+            }
+        )
     return filas
 
 
@@ -77,28 +94,43 @@ def main() -> None:
     parte = submuestrear_negativos(entreno, fraccion, semilla)
     rf = crear_random_forest(semilla).fit(parte[VARIABLES], parte["objetivo"])
     t_rf = time.perf_counter() - t0
-    reg_rf = RepositorioModelos(d2).guardar(rf, "RANDOM_FOREST", "1", version.estado.__class__("REVISION"))
+    reg_rf = RepositorioModelos(d2).guardar(
+        rf, "RANDOM_FOREST", "1", version.estado.__class__("REVISION")
+    )
     p_rf = rf.predict_proba(valid[VARIABLES])[:, 1]
 
     y_val = valid["objetivo"].to_numpy()
     resultado["xgboost"] = {
-        "params": b["params"], "auc_cv": b["auc_cv"], "auc_cv_std": b["auc_cv_std"],
-        "auc_validacion": auc_roc(y_val, p_xgb), "segundos_final": round(t_xgb, 1),
-        "bytes": version.bytes, "sha256": version.sha256, "estado": version.estado,
-        "importancia": importancia_relativa(version.importancia), "roc": curva_roc(y_val, p_xgb),
+        "params": b["params"],
+        "auc_cv": b["auc_cv"],
+        "auc_cv_std": b["auc_cv_std"],
+        "auc_validacion": auc_roc(y_val, p_xgb),
+        "segundos_final": round(t_xgb, 1),
+        "bytes": version.bytes,
+        "sha256": version.sha256,
+        "estado": version.estado,
+        "importancia": importancia_relativa(version.importancia),
+        "roc": curva_roc(y_val, p_xgb),
     }
     resultado["random_forest"] = {
-        "auc_cv": float(np.mean(aucs_rf)), "auc_cv_std": float(np.std(aucs_rf)),
-        "auc_validacion": auc_roc(y_val, p_rf), "segundos_final": round(t_rf, 1),
-        "bytes": reg_rf.bytes, "roc": curva_roc(y_val, p_rf),
+        "auc_cv": float(np.mean(aucs_rf)),
+        "auc_cv_std": float(np.std(aucs_rf)),
+        "auc_validacion": auc_roc(y_val, p_rf),
+        "segundos_final": round(t_rf, 1),
+        "bytes": reg_rf.bytes,
+        "roc": curva_roc(y_val, p_rf),
     }
     resultado["psi_entreno_validacion"] = {
-        v: psi(entreno[v], valid[v], version.referencia_psi[v]) for v in entrenador.VARIABLES_DERIVA
+        v: psi(entreno[v], valid[v], version.referencia_psi[v])
+        for v in entrenador.VARIABLES_DERIVA
     }
     resultado["prevalencia_entreno"] = float(entreno["objetivo"].mean())
     (d2 / "entrenamiento_v1.json").write_text(json.dumps(resultado, indent=2, default=str))
-    print(json.dumps({k: v for k, v in resultado.items() if k not in ("busqueda",)},
-                     indent=2, default=str)[:4000])
+    print(
+        json.dumps(
+            {k: v for k, v in resultado.items() if k not in ("busqueda",)}, indent=2, default=str
+        )[:4000]
+    )
 
 
 if __name__ == "__main__":

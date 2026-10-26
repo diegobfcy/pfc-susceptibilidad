@@ -14,7 +14,9 @@ def variables_precipitacion(diario: pd.DataFrame) -> pd.DataFrame:
     por_pixel = diario.groupby("id_pixel", sort=False)["precip_mm"]
     diario = diario.assign(
         p3=por_pixel.transform(lambda s: s.rolling(3, min_periods=3).sum()),
-        p90=por_pixel.transform(lambda s: s.rolling(DIAS_ANTECEDENTES, min_periods=DIAS_ANTECEDENTES).sum()),
+        p90=por_pixel.transform(
+            lambda s: s.rolling(DIAS_ANTECEDENTES, min_periods=DIAS_ANTECEDENTES).sum()
+        ),
         periodo=diario["fecha"].dt.to_period("M").dt.to_timestamp(),
     )
     mensual = diario.groupby(["id_pixel", "periodo"], sort=False).agg(

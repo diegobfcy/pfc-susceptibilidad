@@ -6,10 +6,10 @@ from __future__ import annotations
 import time
 from typing import Any
 
+from pfc_datos.protocolos import RegistroBitacora
 from sqlalchemy import text
 from sqlalchemy.engine import Engine
 
-from pfc_datos.protocolos import RegistroBitacora
 from pfc_etl.orquestador.orquestador import SQL_TOMAR, Trabajo, ejecutar_trabajo
 
 ESPERA_S = 10
@@ -27,8 +27,11 @@ def cerrar_trabajo(motor: Engine, trabajo: Trabajo) -> None:
             text("""UPDATE sistema.procesamiento
                     SET estado = :estado, finalizado_en = now(), memoria_max_gb = :mem
                     WHERE id_procesamiento = :id"""),
-            {"estado": trabajo.estado, "mem": trabajo.salida.get("memoria_max_gb"),
-             "id": trabajo.id_procesamiento},
+            {
+                "estado": trabajo.estado,
+                "mem": trabajo.salida.get("memoria_max_gb"),
+                "id": trabajo.id_procesamiento,
+            },
         )
 
 

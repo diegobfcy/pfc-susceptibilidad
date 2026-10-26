@@ -23,7 +23,9 @@ class ResultadoVerificacion:
         return not self.faltantes
 
 
-def verificar_dataset(fuente: str, tabla: pd.DataFrame, reglas: dict[str, Any]) -> ResultadoVerificacion:
+def verificar_dataset(
+    fuente: str, tabla: pd.DataFrame, reglas: dict[str, Any]
+) -> ResultadoVerificacion:
     """Aplica las cuatro reglas de RF-06 configuradas para la fuente."""
     resultado = ResultadoVerificacion(fuente, len(tabla), tabla)
     faltan = [c for c in reglas.get("columnas", []) if c not in tabla.columns]

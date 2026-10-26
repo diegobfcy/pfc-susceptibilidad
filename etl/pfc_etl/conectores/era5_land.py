@@ -39,7 +39,9 @@ class ConectorEra5Land(ConectorFuente):
             import cdsapi
 
             self._cliente = cdsapi.Client(quiet=True)
-        resultado = self._cliente.retrieve(PRODUCTO, solicitud_anual(ventana.anio_desde, self._area))
+        resultado = self._cliente.retrieve(
+            PRODUCTO, solicitud_anual(ventana.anio_desde, self._area)
+        )
         return resultado.location
 
 

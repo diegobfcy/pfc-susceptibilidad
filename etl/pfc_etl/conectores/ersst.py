@@ -21,6 +21,16 @@ class ConectorErsst(ConectorFuente):
 def leer_ersst(ruta: Path) -> pd.DataFrame:
     """Serie Niño 1+2: columnas anio, mes, n12 (°C) y n12_anom (°C)."""
     tabla = pd.read_csv(ruta, sep=r"\s+")
-    tabla.columns = ["anio", "mes", "n12", "n12_anom", "n3", "n3_anom", "n4", "n4_anom",
-                     "n34", "n34_anom"]
+    tabla.columns = [
+        "anio",
+        "mes",
+        "n12",
+        "n12_anom",
+        "n3",
+        "n3_anom",
+        "n4",
+        "n4_anom",
+        "n34",
+        "n34_anom",
+    ]
     return tabla[["anio", "mes", "n12", "n12_anom"]]

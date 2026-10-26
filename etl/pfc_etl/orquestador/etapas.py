@@ -7,9 +7,9 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
-
 from pfc_datos.almacen import AlmacenArchivos, MatrizParquet, sha256_archivo
 from pfc_datos.protocolos import RegistroBitacora
+
 from pfc_etl.conectores.ersst import leer_ersst
 from pfc_etl.orquestador.orquestador import DatosIncompletosError, FuenteNoDisponibleError, Trabajo
 from pfc_etl.transformacion import lectores
@@ -24,7 +24,9 @@ from pfc_etl.verificacion.verificador import verificar_dataset
 class EtapasLocales:
     """Fuentes ya descargadas en la carpeta de origen (caché de los conectores E2)."""
 
-    def __init__(self, origen: Path, d2: Path, config: dict[str, Any], bitacora: RegistroBitacora) -> None:
+    def __init__(
+        self, origen: Path, d2: Path, config: dict[str, Any], bitacora: RegistroBitacora
+    ) -> None:
         self._origen = origen
         self._almacen = AlmacenArchivos(d2)
         self._matriz = MatrizParquet(d2)
@@ -65,13 +67,18 @@ class EtapasLocales:
         ersst = leer_ersst(r["ersst_v5"][0])
         ersst = ersst[(ersst.anio >= trabajo.anio_desde - 1) & (ersst.anio <= trabajo.anio_hasta)]
         pixeles = lectores.leer_pixeles(r["grilla"][1])
-        era5 = lectores.leer_era5_diario(r["era5_land"], pixeles).rename(columns={"precip_mm": "p1"})
+        era5 = lectores.leer_era5_diario(r["era5_land"], pixeles).rename(
+            columns={"precip_mm": "p1"}
+        )
         eventos = lectores.leer_eventos(r["inventario"][0])
         informe = {}
         for fuente, tabla in (("ersst_v5", ersst), ("era5_land", era5), ("inventario", eventos)):
             resultado = verificar_dataset(fuente, tabla, reglas[fuente])
-            informe[fuente] = {"filas": resultado.filas, "rechazados": resultado.rechazados,
-                               "faltantes": len(resultado.faltantes)}
+            informe[fuente] = {
+                "filas": resultado.filas,
+                "rechazados": resultado.rechazados,
+                "faltantes": len(resultado.faltantes),
+            }
             if not resultado.es_valido:
                 raise DatosIncompletosError(f"{fuente}: {resultado.faltantes[:5]}")
             self._tablas[fuente] = resultado.validos
@@ -88,7 +95,9 @@ class EtapasLocales:
         else:
             terreno = variables_terreno(celdas, r["dem_glo30"][0])
             terreno.to_parquet(cache_terreno, index=False)
-        verif = verificar_dataset("dem_glo30", terreno, self._config["verificacion"]["fuentes"]["dem_glo30"])
+        verif = verificar_dataset(
+            "dem_glo30", terreno, self._config["verificacion"]["fuentes"]["dem_glo30"]
+        )
         if not verif.es_valido:
             raise DatosIncompletosError(f"dem_glo30: {verif.faltantes}")
         precipitacion = variables_precipitacion(

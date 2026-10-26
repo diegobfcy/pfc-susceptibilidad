@@ -50,9 +50,13 @@ def ejecutar_trabajo(trabajo: Trabajo, etapas: Any, bitacora: RegistroBitacora) 
             else:
                 trabajo.salida["matriz"] = etapas.transformar(trabajo)
             trabajo.tiempos_s[fase] = round(time.perf_counter() - t0, 1)
-            bitacora.registrar("INFORMATIVO", "E1", f"fase {fase} completada",
-                               id_procesamiento=trabajo.id_procesamiento,
-                               segundos=trabajo.tiempos_s[fase])
+            bitacora.registrar(
+                "INFORMATIVO",
+                "E1",
+                f"fase {fase} completada",
+                id_procesamiento=trabajo.id_procesamiento,
+                segundos=trabajo.tiempos_s[fase],
+            )
         trabajo.estado = "COMPLETADO"
     except Exception as error:
         trabajo.estado = "EN_ESPERA"

@@ -46,5 +46,10 @@ class BitacoraBD:
                     "INSERT INTO sistema.bitacora (tipo, componente, descripcion, detalle) "
                     "VALUES (:t, :c, :d, CAST(:j AS jsonb))"
                 ),
-                {"t": tipo, "c": componente, "d": descripcion, "j": json.dumps(detalle, default=str)},
+                {
+                    "t": tipo,
+                    "c": componente,
+                    "d": descripcion,
+                    "j": json.dumps(detalle, default=str),
+                },
             )

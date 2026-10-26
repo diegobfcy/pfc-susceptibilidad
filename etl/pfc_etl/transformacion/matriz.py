@@ -6,13 +6,22 @@ from typing import Final
 
 import numpy as np
 import pandas as pd
-
 from pfc_datos.protocolos import EscritorMatriz
 
 VARIABLES_MODELO: Final = [
-    "tsm_c", "anom_tsm", "anom_tsm_l1", "anom_tsm_l2", "anom_tsm_l3", "anom_tsm_mm3",
-    "precip_mes_mm", "precip_max3d_mm", "precip_ant90_mm",
-    "pend_media_g", "pend_p90_g", "pend_max_g", "mes",
+    "tsm_c",
+    "anom_tsm",
+    "anom_tsm_l1",
+    "anom_tsm_l2",
+    "anom_tsm_l3",
+    "anom_tsm_mm3",
+    "precip_mes_mm",
+    "precip_max3d_mm",
+    "precip_ant90_mm",
+    "pend_media_g",
+    "pend_p90_g",
+    "pend_max_g",
+    "mes",
 ]
 
 

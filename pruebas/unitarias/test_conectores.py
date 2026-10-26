@@ -7,15 +7,20 @@ from typing import Any
 from unittest import mock
 
 import pytest
-
 from pfc_etl.conectores.base import ConectorFuente, HostNoPermitidoError, Ventana
 from pfc_etl.conectores.dem_glo30 import ConectorDemGlo30, nombre_tesela, teselas_dominio
 from pfc_etl.conectores.era5_land import ConectorEra5Land, a_mm_dia, solicitud_anual
 from pfc_etl.conectores.ersst import ConectorErsst
 from pfc_etl.conectores.inventario import ConectorInventario
 
-HOSTS = frozenset({"www.cpc.ncep.noaa.gov", "cds.climate.copernicus.eu",
-                   "copernicus-dem-30m.s3.amazonaws.com", "geocatmin.ingemmet.gob.pe"})
+HOSTS = frozenset(
+    {
+        "www.cpc.ncep.noaa.gov",
+        "cds.climate.copernicus.eu",
+        "copernicus-dem-30m.s3.amazonaws.com",
+        "geocatmin.ingemmet.gob.pe",
+    }
+)
 CONTENIDO = b"datos de prueba" * 1000
 
 
@@ -34,7 +39,7 @@ class _Respuesta:
         return None
 
     def iter_content(self, tamano: int) -> list[bytes]:
-        return [CONTENIDO[i:i + tamano] for i in range(0, len(CONTENIDO), tamano)]
+        return [CONTENIDO[i : i + tamano] for i in range(0, len(CONTENIDO), tamano)]
 
 
 class _ClienteCds:
@@ -67,7 +72,10 @@ def test_contrato_comun_de_descarga(indice: int, almacen: Any, bitacora: Any) ->
 
 def test_rechaza_dominio_fuera_de_lista_blanca(almacen: Any, bitacora: Any) -> None:
     conector = ConectorErsst(frozenset({"otro.gob.pe"}), almacen, bitacora)
-    with pytest.raises(HostNoPermitidoError), mock.patch("pfc_etl.conectores.base.requests.get") as get:
+    with (
+        pytest.raises(HostNoPermitidoError),
+        mock.patch("pfc_etl.conectores.base.requests.get") as get,
+    ):
         conector.descargar_periodo(Ventana(2020, 2020))
     get.assert_not_called()
 
@@ -80,8 +88,11 @@ def test_rechaza_http_sin_tls(almacen: Any, bitacora: Any) -> None:
 
 def test_rechaza_redirecciones(almacen: Any, bitacora: Any) -> None:
     conector = ConectorErsst(HOSTS, almacen, bitacora)
-    with pytest.raises(HostNoPermitidoError), mock.patch(
-        "pfc_etl.conectores.base.requests.get", return_value=_Respuesta(redireccion=True)
+    with (
+        pytest.raises(HostNoPermitidoError),
+        mock.patch(
+            "pfc_etl.conectores.base.requests.get", return_value=_Respuesta(redireccion=True)
+        ),
     ):
         conector.descargar_periodo(Ventana(2020, 2020))
 
@@ -93,5 +104,7 @@ def test_solicitud_era5_y_conversion() -> None:
 
 
 def test_teselas_del_dominio() -> None:
-    teselas = teselas_dominio({"lat_min": -10.9, "lat_max": -3.35, "lon_min": -81.5, "lon_max": -76.6})
+    teselas = teselas_dominio(
+        {"lat_min": -10.9, "lat_max": -3.35, "lon_min": -81.5, "lon_max": -76.6}
+    )
     assert "Copernicus_DSM_COG_10_S08_00_W079_00_DEM" in teselas and len(teselas) == 8 * 6

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from flask import Blueprint, abort, current_app, jsonify, request, session
+from flask import Blueprint, abort, current_app, jsonify, session
 from flask.typing import ResponseReturnValue
 
 from pfc_servicios.api.validacion import cuerpo_json, texto

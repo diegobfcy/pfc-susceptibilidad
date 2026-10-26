@@ -7,7 +7,6 @@ from typing import Final
 
 from argon2 import PasswordHasher
 from argon2.exceptions import InvalidHashError, VerificationError
-
 from pfc_datos.repositorios import RepositorioUsuarios, Usuario
 
 MAX_INTENTOS: Final = 5

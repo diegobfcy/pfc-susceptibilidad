@@ -20,12 +20,16 @@ def leer_era5_diario(archivos: list[Path], pixeles: pd.DataFrame) -> pd.DataFram
 
     ds = xr.open_mfdataset([str(a) for a in archivos], combine="by_coords")
     tiempo = "valid_time" if "valid_time" in ds.dims else "time"
-    tp = ds["tp"].sel(
-        latitude=xr.DataArray(pixeles["lat"].to_numpy(), dims="p"),
-        longitude=xr.DataArray(pixeles["lon"].to_numpy(), dims="p"),
-        method="nearest",
-        tolerance=0.02,
-    ).load()
+    tp = (
+        ds["tp"]
+        .sel(
+            latitude=xr.DataArray(pixeles["lat"].to_numpy(), dims="p"),
+            longitude=xr.DataArray(pixeles["lon"].to_numpy(), dims="p"),
+            method="nearest",
+            tolerance=0.02,
+        )
+        .load()
+    )
     fechas = pd.to_datetime(tp[tiempo].to_numpy()).normalize() - pd.Timedelta(days=1)
     ancho = pd.DataFrame(tp.to_numpy() * 1000.0, index=fechas, columns=pixeles["id_pixel"])
     ancho = ancho[~ancho.index.duplicated()].sort_index()
@@ -36,8 +40,10 @@ def leer_era5_diario(archivos: list[Path], pixeles: pd.DataFrame) -> pd.DataFram
         _, cercano = cKDTree(xy.loc[validos].to_numpy()).query(xy.loc[vacios].to_numpy())
         for columna, j in zip(vacios, cercano, strict=True):
             ancho[columna] = ancho[validos[j]].to_numpy()
-    largo = ancho.rename_axis("fecha").reset_index().melt(
-        id_vars="fecha", var_name="id_pixel", value_name="precip_mm"
+    largo = (
+        ancho.rename_axis("fecha")
+        .reset_index()
+        .melt(id_vars="fecha", var_name="id_pixel", value_name="precip_mm")
     )
     largo["precip_mm"] = largo["precip_mm"].astype("float32")
     largo.attrs["pixeles_imputados"] = len(vacios)

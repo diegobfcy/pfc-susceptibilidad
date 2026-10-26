@@ -28,7 +28,9 @@ def motor() -> Any:
 
 def test_esquemas_instalados(motor: Any) -> None:
     with motor.connect() as c:
-        esquemas = set(c.execute(text("SELECT schema_name FROM information_schema.schemata")).scalars())
+        esquemas = set(
+            c.execute(text("SELECT schema_name FROM information_schema.schemata")).scalars()
+        )
     assert {"sistema", "ref", "datos", "modelo", "resultado"} <= esquemas
 
 

@@ -1,10 +1,13 @@
 """E3: reglas de RF-06."""
 
 import pandas as pd
-
 from pfc_etl.verificacion.verificador import verificar_dataset
 
-REGLAS = {"columnas": ["fecha", "id_pixel", "p1"], "rango": {"p1": [0.0, 500.0]}, "frecuencia": "D"}
+REGLAS = {
+    "columnas": ["fecha", "id_pixel", "p1"],
+    "rango": {"p1": [0.0, 500.0]},
+    "frecuencia": "D",
+}
 
 
 def _serie(valores: list[float | None], inicio: str = "2020-01-01") -> pd.DataFrame:
@@ -39,6 +42,8 @@ def test_continuidad_detecta_dia_faltante() -> None:
 
 
 def test_continuidad_mensual_con_anio_y_mes() -> None:
-    tabla = pd.DataFrame({"anio": [2020, 2020, 2020], "mes": [1, 2, 4], "n12": 24.0, "n12_anom": 0.5})
+    tabla = pd.DataFrame(
+        {"anio": [2020, 2020, 2020], "mes": [1, 2, 4], "n12": 24.0, "n12_anom": 0.5}
+    )
     reglas = {"columnas": ["anio", "mes", "n12", "n12_anom"], "rango": {}, "frecuencia": "MS"}
     assert verificar_dataset("ersst_v5", tabla, reglas).faltantes == ["2020-03-01"]

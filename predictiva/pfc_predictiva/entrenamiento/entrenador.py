@@ -5,8 +5,8 @@ from __future__ import annotations
 from typing import Any, Final
 
 import pandas as pd
-
 from pfc_datos.modelos import EstadoVersion, RepositorioModelos, VersionModelo
+
 from pfc_predictiva.entrenamiento.clasificadores import crear_xgboost
 from pfc_predictiva.evaluacion.metricas import auc_roc, deciles_referencia
 
@@ -17,8 +17,13 @@ ANIOS_VALIDACION: Final = (2017, 2019)
 VARIABLES_DERIVA: Final = ["precip_max3d_mm", "precip_ant90_mm", "anom_tsm"]
 
 
-def entrenar_version(matriz: pd.DataFrame, variables: list[str], params: dict[str, Any],
-                     modelos: RepositorioModelos, version: str = "1") -> VersionModelo:
+def entrenar_version(
+    matriz: pd.DataFrame,
+    variables: list[str],
+    params: dict[str, Any],
+    modelos: RepositorioModelos,
+    version: str = "1",
+) -> VersionModelo:
     """M1: entrena XGBoost con partición temporal y registra la versión.
 
     matriz: particiones Parquet 2000-2019 leídas desde D2. params: hiperparámetros
@@ -43,7 +48,10 @@ def entrenar_version(matriz: pd.DataFrame, variables: list[str], params: dict[st
     estado = EstadoVersion.CANDIDATA if auc >= UMBRAL_AUC_MINIMO else EstadoVersion.RECHAZADA
 
     return modelos.guardar(  # D2 con SHA-256; métricas e importancias en la tarjeta
-        clasificador, "XGBOOST", version, estado,
+        clasificador,
+        "XGBOOST",
+        version,
+        estado,
         metricas={"auc_validacion": auc},
         importancia=clasificador.get_booster().get_score(importance_type="gain"),
         referencia_psi={v: deciles_referencia(entreno[v]) for v in VARIABLES_DERIVA},

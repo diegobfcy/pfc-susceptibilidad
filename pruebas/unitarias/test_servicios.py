@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import Any
 
 import pytest
-
 from pfc_datos.repositorios import Usuario
 from pfc_servicios import crear_app
 from pfc_servicios.seguridad.claves import MAX_INTENTOS, generar_hash
+
 from pruebas.conftest import ProcesamientosMemoria, UsuariosMemoria
 
 CLAVE = "Clave-Segura-2026"
@@ -20,10 +20,19 @@ def _usuario(id_: int, correo: str, rol: str) -> Usuario:
 
 @pytest.fixture
 def cliente() -> Any:
-    usuarios = UsuariosMemoria([_usuario(1, "inv@ucsm.edu.pe", "INVESTIGADOR"),
-                                _usuario(2, "esp@ucsm.edu.pe", "ESPECIALISTA")])
-    app = crear_app({"usuarios": usuarios, "procesamientos": ProcesamientosMemoria(),
-                     "comprobar_bd": lambda: True})
+    usuarios = UsuariosMemoria(
+        [
+            _usuario(1, "inv@ucsm.edu.pe", "INVESTIGADOR"),
+            _usuario(2, "esp@ucsm.edu.pe", "ESPECIALISTA"),
+        ]
+    )
+    app = crear_app(
+        {
+            "usuarios": usuarios,
+            "procesamientos": ProcesamientosMemoria(),
+            "comprobar_bd": lambda: True,
+        }
+    )
     app.config.update(TESTING=True, SESSION_COOKIE_SECURE=False)
     return app.test_client()
 
@@ -53,8 +62,10 @@ def test_bloqueo_tras_intentos_fallidos(cliente: Any) -> None:
 
 def test_crear_y_consultar_ingesta(cliente: Any) -> None:
     _entrar(cliente, "inv@ucsm.edu.pe")
-    r = cliente.post("/api/ingestas", json={"tipo": "INGESTA", "fecha_desde": "2017-01-01",
-                                            "fecha_hasta": "2017-12-31"})
+    r = cliente.post(
+        "/api/ingestas",
+        json={"tipo": "INGESTA", "fecha_desde": "2017-01-01", "fecha_hasta": "2017-12-31"},
+    )
     assert r.status_code == 202
     estado = cliente.get(f"/api/ingestas/{r.get_json()['id_procesamiento']}").get_json()
     assert estado["estado"] == "PENDIENTE" and estado["fecha_desde"] == "2017-01-01"
@@ -68,18 +79,30 @@ def test_rbac(cliente: Any) -> None:
     assert cliente.post("/api/ingestas", json=cuerpo).status_code == 403
 
 
-@pytest.mark.parametrize("cuerpo", [
-    {"tipo": "BORRAR", "fecha_desde": "2017-01-01", "fecha_hasta": "2017-12-31"},
-    {"tipo": "INGESTA", "fecha_desde": "2017-01-01'; DROP TABLE x;--", "fecha_hasta": "2017-12-31"},
-    {"tipo": "INGESTA", "fecha_desde": "1970-01-01", "fecha_hasta": "2017-12-31"},
-    {"tipo": "INGESTA", "fecha_desde": "2018-01-01", "fecha_hasta": "2017-12-31"},
-])
+@pytest.mark.parametrize(
+    "cuerpo",
+    [
+        {"tipo": "BORRAR", "fecha_desde": "2017-01-01", "fecha_hasta": "2017-12-31"},
+        {
+            "tipo": "INGESTA",
+            "fecha_desde": "2017-01-01'; DROP TABLE x;--",
+            "fecha_hasta": "2017-12-31",
+        },
+        {"tipo": "INGESTA", "fecha_desde": "1970-01-01", "fecha_hasta": "2017-12-31"},
+        {"tipo": "INGESTA", "fecha_desde": "2018-01-01", "fecha_hasta": "2017-12-31"},
+    ],
+)
 def test_rechazo_de_entradas_invalidas(cliente: Any, cuerpo: dict[str, str]) -> None:
     _entrar(cliente, "inv@ucsm.edu.pe")
     assert cliente.post("/api/ingestas", json=cuerpo).status_code == 400
 
 
 def test_salud_degradada_sin_bd() -> None:
-    app = crear_app({"usuarios": UsuariosMemoria([]), "procesamientos": ProcesamientosMemoria(),
-                     "comprobar_bd": lambda: False})
+    app = crear_app(
+        {
+            "usuarios": UsuariosMemoria([]),
+            "procesamientos": ProcesamientosMemoria(),
+            "comprobar_bd": lambda: False,
+        }
+    )
     assert app.test_client().get("/api/salud").status_code == 503

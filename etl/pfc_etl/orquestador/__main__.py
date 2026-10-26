@@ -7,6 +7,7 @@ import json
 
 from pfc_datos.bitacora import BitacoraArchivo
 from pfc_datos.config import cargar_config, ruta_d2, ruta_datos_origen
+
 from pfc_etl.orquestador.etapas import EtapasLocales
 from pfc_etl.orquestador.orquestador import Trabajo, ejecutar_trabajo
 
@@ -23,6 +24,7 @@ def main() -> None:
     etapas = EtapasLocales(ruta_datos_origen(), d2, cargar_config(), bitacora)
     if a.cola:
         from pfc_datos.bd import crear_motor
+
         from pfc_etl.orquestador.cola import atender
 
         atender(crear_motor(), etapas, bitacora)

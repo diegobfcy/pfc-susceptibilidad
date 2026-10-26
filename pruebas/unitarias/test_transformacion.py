@@ -2,7 +2,6 @@
 
 import numpy as np
 import pandas as pd
-
 from pfc_etl.transformacion.matriz import VARIABLES_MODELO, construir_anio
 from pfc_etl.transformacion.objetivo import celdas_mes_positivas
 from pfc_etl.transformacion.oceanicas import variables_oceanicas
@@ -11,8 +10,14 @@ from pfc_etl.transformacion.terreno import percentil_histograma, tabla_celdas
 
 
 def _ersst(meses: int = 6) -> pd.DataFrame:
-    return pd.DataFrame({"anio": 2020, "mes": range(1, meses + 1),
-                         "n12": np.linspace(22, 27, meses), "n12_anom": np.arange(meses, dtype=float)})
+    return pd.DataFrame(
+        {
+            "anio": 2020,
+            "mes": range(1, meses + 1),
+            "n12": np.linspace(22, 27, meses),
+            "n12_anom": np.arange(meses, dtype=float),
+        }
+    )
 
 
 def test_rezagos_solo_miran_al_pasado() -> None:
@@ -35,22 +40,41 @@ def test_precipitacion_maximo_3_dias_y_antecedente() -> None:
 
 
 def test_objetivo_solo_dia_o_mes_y_con_celda() -> None:
-    eventos = pd.DataFrame({
-        "id_celda": [1.0, 1.0, 2.0, np.nan, 3.0],
-        "fecha": pd.to_datetime(["2020-02-03", "2020-02-20", "2020-03-01", "2020-03-01", "2020-05-01"]),
-        "precision_fecha": ["DIA", "DIA", "MES", "DIA", "ANIO"],
-    })
+    eventos = pd.DataFrame(
+        {
+            "id_celda": [1.0, 1.0, 2.0, np.nan, 3.0],
+            "fecha": pd.to_datetime(
+                ["2020-02-03", "2020-02-20", "2020-03-01", "2020-03-01", "2020-05-01"]
+            ),
+            "precision_fecha": ["DIA", "DIA", "MES", "DIA", "ANIO"],
+        }
+    )
     p = celdas_mes_positivas(eventos)
     assert len(p) == 2 and set(p["id_celda"]) == {1, 2}
 
 
 def test_construir_anio_une_por_celda_y_mes() -> None:
-    celdas = pd.DataFrame({"id_celda": [1, 2], "id_pixel": [7, 7], "ubigeo_prov": ["2401", "2401"]})
-    terreno = pd.DataFrame({"id_celda": [1, 2], "pend_media_g": [5.0, 30.0], "pend_p90_g": [8.0, 40.0],
-                            "pend_max_g": [12.0, 55.0]})
+    celdas = pd.DataFrame(
+        {"id_celda": [1, 2], "id_pixel": [7, 7], "ubigeo_prov": ["2401", "2401"]}
+    )
+    terreno = pd.DataFrame(
+        {
+            "id_celda": [1, 2],
+            "pend_media_g": [5.0, 30.0],
+            "pend_p90_g": [8.0, 40.0],
+            "pend_max_g": [12.0, 55.0],
+        }
+    )
     oceanicas = variables_oceanicas(_ersst()).fillna(0.0)
-    precip = pd.DataFrame({"id_pixel": 7, "periodo": oceanicas["periodo"], "precip_mes_mm": 50.0,
-                           "precip_max3d_mm": 20.0, "precip_ant90_mm": 150.0})
+    precip = pd.DataFrame(
+        {
+            "id_pixel": 7,
+            "periodo": oceanicas["periodo"],
+            "precip_mes_mm": 50.0,
+            "precip_max3d_mm": 20.0,
+            "precip_ant90_mm": 150.0,
+        }
+    )
     positivos = pd.DataFrame({"id_celda": [2], "periodo": pd.to_datetime(["2020-03-01"])})
     m = construir_anio(2020, celdas, oceanicas, precip, terreno, positivos)
     assert len(m) == 12 and m["objetivo"].sum() == 1
