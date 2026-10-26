@@ -18,7 +18,8 @@ prueba_humo() {
   for _ in $(seq 1 20); do
     if curl -fsk https://localhost:8443/api/salud | grep -q '"estado":"ok"' \
        && docker compose exec -T db psql -U postgres -d pfc -tAc \
-          "SELECT count(*) FROM sistema.procesamiento" >/dev/null; then
+          "SELECT count(*) FROM sistema.procesamiento" >/dev/null \
+       && [ -n "$(docker compose ps --status running --quiet worker)" ]; then
       return 0
     fi
     sleep 3
