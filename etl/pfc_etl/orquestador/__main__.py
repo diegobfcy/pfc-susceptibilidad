@@ -20,15 +20,22 @@ def main() -> None:
     argumentos.add_argument("--cola", action="store_true", help="atender la cola de D1 (worker)")
     a = argumentos.parse_args()
     d2 = ruta_d2()
-    bitacora = BitacoraArchivo(d2 / "bitacora.jsonl")
-    etapas = EtapasLocales(ruta_datos_origen(), d2, cargar_config(), bitacora)
     if a.cola:
         from pfc_datos.bd import crear_motor
+        from pfc_datos.bitacora import BitacoraBD
 
         from pfc_etl.orquestador.cola import atender
 
-        atender(crear_motor(), etapas, bitacora)
+        motor = crear_motor()
+        bitacora_bd = BitacoraBD(motor)  # D3: tabla de solo inserción en D1
+        atender(
+            motor,
+            EtapasLocales(ruta_datos_origen(), d2, cargar_config(), bitacora_bd),
+            bitacora_bd,
+        )
         return
+    bitacora = BitacoraArchivo(d2 / "bitacora.jsonl")  # ejecución local sin base de datos
+    etapas = EtapasLocales(ruta_datos_origen(), d2, cargar_config(), bitacora)
     trabajo = ejecutar_trabajo(Trabajo(1, a.tipo, a.desde, a.hasta), etapas, bitacora)
     informe = {"estado": trabajo.estado, "tiempos_s": trabajo.tiempos_s, **trabajo.salida}
     (d2 / "informe_procesamiento.json").write_text(json.dumps(informe, indent=2, default=str))
