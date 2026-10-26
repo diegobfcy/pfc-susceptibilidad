@@ -134,6 +134,11 @@
   }
 
   // ---------------- Auditoría ----------------
+  function errorVisor(error) {
+    console.error("visor:", error);
+    document.body.dataset.error = String(error);
+  }
+
   async function auditoria() {
     const d = await api("/api/auditoria");
     const nombre = {xgb_d: "XGBoost", lstm_d: "LSTM", ensamble_d: "XGBoost + LSTM"};
@@ -145,12 +150,12 @@
       ["Latencia media", `${fmt(ult.lat_media_ms, 3)} ms`, "por unidad de terreno (lote)"],
       ["CPU máx. / RAM máx.", `${fmt(ult.cpu_max_pct, 0)} % · ${fmt(ult.ram_max_mb, 0)} MB`, `ejecución ${esc(ult.codigo || "")}`],
     ].map(([t, v, s]) => `<div class="kpi"><span>${t}</span><b>${v}</b><span>${s}</span></div>`).join("");
-    $("tabla-metricas").innerHTML = "<tr><th>Modelo</th><th>AUC-ROC</th><th>AUC-PR</th><th>Precisión</th><th>Recall</th><th>F1</th><th>CV entre pliegues (%)</th></tr>" +
+    $("tabla-metricas").innerHTML =
       d.metricas.map((m) => `<tr><td>${nombre[m.nombre] || esc(m.nombre)}</td><td>${fmt(m.auc)}</td><td>${fmt(m.pr_auc)}</td>` +
         `<td>${fmt(m.precision)}</td><td>${fmt(m.recall)}</td><td>${fmt(m.f1)}</td><td>${fmt(m.cv_auc_pct, 2)}</td></tr>`).join("");
-    $("tabla-umbrales").innerHTML = "<tr><th>Nivel</th><th>p mínima</th><th>p máxima</th></tr>" +
+    $("tabla-umbrales").innerHTML =
       d.umbrales.map((u) => `<tr><td>${esc(u.etiqueta)}</td><td>${Number(u.p_min).toExponential(3)}</td><td>${Number(u.p_max).toExponential(3)}</td></tr>`).join("");
-    $("tabla-ejecuciones").innerHTML = "<tr><th>Escenario</th><th>Modo</th><th>Unidades</th><th>Duración (s)</th><th>Latencia media (ms)</th><th>Latencia p95 (ms)</th><th>CPU máx. (%)</th><th>RAM máx. (MB)</th></tr>" +
+    $("tabla-ejecuciones").innerHTML =
       d.ejecuciones.map((x) => `<tr><td>${esc(x.codigo)}</td><td>${esc(x.modo)}</td><td>${(x.n_unidades || 0).toLocaleString("es-PE")}</td>` +
         `<td>${fmt(x.duracion_s, 2)}</td><td>${fmt(x.lat_media_ms, 4)}</td><td>${fmt(x.lat_p95_ms, 2)}</td><td>${fmt(x.cpu_max_pct, 0)}</td><td>${fmt(x.ram_max_mb, 0)}</td></tr>`).join("");
   }
@@ -158,7 +163,7 @@
   document.querySelectorAll(".pestanas button").forEach((b) => b.addEventListener("click", () => {
     document.querySelectorAll(".pestanas button").forEach((x) => x.setAttribute("aria-selected", x === b));
     document.querySelectorAll(".panel").forEach((p) => p.classList.toggle("activo", p.id === b.dataset.panel));
-    if (b.dataset.panel === "panel-mapa") mapa.invalidateSize(); else auditoria();
+    if (b.dataset.panel === "panel-mapa") mapa.invalidateSize(); else auditoria().catch(errorVisor);
   }));
 
   async function iniciar() {
@@ -192,5 +197,5 @@
     window.visorListo = true;
     document.body.dataset.listo = "1";
   }
-  iniciar();
+  iniciar().catch(errorVisor);
 })();

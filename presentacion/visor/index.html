@@ -36,8 +36,8 @@
       </label>
       <fieldset class="campo">
         <legend>Inventario (filtro temporal)</legend>
-        <div class="fila"><input type="date" id="inv-desde" value="2000-01-01" min="2000-01-01" max="2026-08-31">
-        <input type="date" id="inv-hasta" value="2026-08-31" min="2000-01-01" max="2026-08-31"></div>
+        <div class="fila"><input type="date" id="inv-desde" aria-label="Fecha inicial del inventario" value="2000-01-01" min="2000-01-01" max="2026-08-31">
+        <input type="date" id="inv-hasta" aria-label="Fecha final del inventario" value="2026-08-31" min="2000-01-01" max="2026-08-31"></div>
         <label class="check"><input type="checkbox" id="inv-precisos"> Solo ubicaciones puntuales (L1–L3)</label>
       </fieldset>
       <label class="campo">Ventana de lluvia (capa precipitación)
@@ -61,11 +61,14 @@
         y telemetría de las ejecuciones del motor.</p>
       <div id="kpis" class="kpis"></div>
       <h3>Métricas por modelo</h3>
-      <table id="tabla-metricas" class="tabla"></table>
+      <table class="tabla"><thead><tr><th>Modelo</th><th>AUC-ROC</th><th>AUC-PR</th><th>Precisión</th><th>Recall</th><th>F1</th><th>CV entre pliegues (%)</th></tr></thead>
+        <tbody id="tabla-metricas"></tbody></table>
       <h3>Umbrales de clasificación</h3>
-      <table id="tabla-umbrales" class="tabla"></table>
+      <table class="tabla"><thead><tr><th>Nivel</th><th>p mínima</th><th>p máxima</th></tr></thead>
+        <tbody id="tabla-umbrales"></tbody></table>
       <h3>Ejecuciones del motor</h3>
-      <table id="tabla-ejecuciones" class="tabla"></table>
+      <table class="tabla"><thead><tr><th>Escenario</th><th>Modo</th><th>Unidades</th><th>Duración (s)</th><th>Latencia media (ms)</th><th>Latencia p95 (ms)</th><th>CPU máx. (%)</th><th>RAM máx. (MB)</th></tr></thead>
+        <tbody id="tabla-ejecuciones"></tbody></table>
     </div>
   </section>
 </main>
