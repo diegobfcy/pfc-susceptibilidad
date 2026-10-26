@@ -31,10 +31,10 @@ verificacion:                     # reglas RF-06 por fuente
       rango: {p1: [0.0, 500.0]}
       frecuencia: D
     dem_glo30:
-      columnas: [id_celda, pend_media, pend_p90, pend_max]
-      rango: {pend_media: [0.0, 90.0], pend_p90: [0.0, 90.0], pend_max: [0.0, 90.0]}
+      columnas: [id_celda, pend_media_g, pend_p90_g, pend_max_g]
+      rango: {pend_media_g: [0.0, 90.0], pend_p90_g: [0.0, 90.0], pend_max_g: [0.0, 90.0]}
     inventario:
-      columnas: [event_uid, fecha, date_precision, id_celda]
+      columnas: [event_uid, fecha, date_precision]
       rango: {}
 particion:                        # Tabla 62 ajustada al periodo disponible
   fin_entrenamiento: 2016

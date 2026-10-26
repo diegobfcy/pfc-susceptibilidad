@@ -41,14 +41,18 @@ class AlmacenArchivos:
         if final != ruta:
             shutil.move(ruta, final)
         catalogo = self._leer_catalogo()
-        catalogo[str(final.relative_to(self._raiz))] = {"fuente": fuente, "sha256": sha256}
+        catalogo[self._clave(final)] = {"fuente": fuente, "sha256": sha256}
         self._catalogo.write_text(json.dumps(catalogo, indent=2), encoding="utf-8")
         return ArchivoRegistrado(fuente, final, sha256, final.stat().st_size)
 
     def verificar(self, ruta: Path) -> bool:
         """True si el archivo conserva la huella registrada (OWASP A08)."""
-        esperado = self._leer_catalogo().get(str(ruta.relative_to(self._raiz)), {}).get("sha256")
+        esperado = self._leer_catalogo().get(self._clave(ruta), {}).get("sha256")
         return esperado is not None and esperado == sha256_archivo(ruta)
+
+    def _clave(self, ruta: Path) -> str:
+        """Ruta relativa a D2; los archivos de la caché externa se registran con ruta absoluta."""
+        return str(ruta.relative_to(self._raiz)) if ruta.is_relative_to(self._raiz) else str(ruta)
 
     def _leer_catalogo(self) -> dict[str, dict[str, str]]:
         if not self._catalogo.exists():
