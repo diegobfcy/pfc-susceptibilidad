@@ -28,7 +28,7 @@ CAPA = {
 def main(salida: Path) -> None:
     g = graphviz.Digraph(
         "despliegue",
-        graph_attr=dict(rankdir="LR", fontname=FUENTE, nodesep="0.3", ranksep="0.9", dpi="200"),
+        graph_attr=dict(rankdir="TB", fontname=FUENTE, nodesep="0.3", ranksep="0.9", dpi="200"),
         node_attr=NODO,
         edge_attr=dict(color="#52514e", fontname=FUENTE, fontsize="8"),
     )
@@ -74,30 +74,35 @@ def main(salida: Path) -> None:
             shape="cylinder",
             fillcolor="#e4def8",
         )
-    with g.subgraph(name="cluster_nodos") as c:
-        c.attr(label="Nodos", style="rounded", color="#52514e", fontname=FUENTE)
+    with g.subgraph(name="cluster_estacion") as c:
+        c.attr(
+            label="Estación de entrenamiento (nodo físico único) · RTX 5090 · 32 GB RAM",
+            style="rounded",
+            color="#52514e",
+            fontname=FUENTE,
+        )
         c.node(
             "staging",
             "Entorno de pruebas (staging)\nDocker Compose · proyecto pfc-staging\nhttps://localhost:8443",
         )
         c.node(
-            "estacion", "Estación de entrenamiento\nRTX 5090 · 32 GB RAM\nSonarQube · act (CI/CD)"
-        )
-        c.node(
             "registro", "Registro local de imágenes\nregistry:2 (localhost:5000)", shape="folder"
         )
-    g.edge("presentacion", "proxy", label="copiado (volumen)")
+        c.node("ci", "act (ci-cd.yml) · SonarQube\nCommunity Build (localhost:9000)")
+        c.node("conda", "Entorno conda pfc (Python 3.11)\nentrenamiento M1 en GPU")
+    g.edge("presentacion", "proxy", label="montado (volumen)")
     g.edge("servicios", "app")
     g.edge("datos", "app", label="pfc_datos")
     g.edge("etl", "worker")
     g.edge("predictiva", "worker")
     g.edge("datos", "worker", label="pfc_datos")
     g.edge("datos", "db", label="inicializa")
-    g.edge("desp", "registro", label="construir_y_publicar.sh", style="dashed")
+    g.edge("desp", "ci", style="dashed")
+    g.edge("ci", "registro", label="construir_y_publicar.sh", style="dashed")
+    g.edge("registro", "staging", label="desplegar.sh", style="dashed")
     for n in ("proxy", "app", "worker", "db"):
         g.edge(n, "staging")
-    g.edge("worker", "estacion", label="misma imagen\npara entrenar", style="dashed")
-    g.edge("registro", "staging", label="desplegar.sh", style="dashed")
+    g.edge("predictiva", "conda", label="mismas versiones\n(pyproject.toml)", style="dashed")
     salida.parent.mkdir(parents=True, exist_ok=True)
     g.render(str(salida.with_suffix("")), format="png", cleanup=True)
 

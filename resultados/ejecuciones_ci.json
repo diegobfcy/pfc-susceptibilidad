@@ -1,0 +1,310 @@
+[
+  {
+    "ejecucion": 1,
+    "commit": "0601279",
+    "fecha": "26/10/2026 15:52",
+    "segundos_total": 69,
+    "trabajos": {
+      "calidad-estatica": {
+        "estado": "falla",
+        "segundos": 49.9,
+        "falla": "black --check . && ruff check ."
+      },
+      "pruebas": {
+        "estado": "no ejecutado",
+        "segundos": 0.0,
+        "falla": null
+      },
+      "analisis-sonarqube": {
+        "estado": "no ejecutado",
+        "segundos": 0.0,
+        "falla": null
+      },
+      "desplegar-staging": {
+        "estado": "no ejecutado",
+        "segundos": 0.0,
+        "falla": null
+      }
+    }
+  },
+  {
+    "ejecucion": 2,
+    "commit": "d58bb88",
+    "fecha": "26/10/2026 15:53",
+    "segundos_total": 5,
+    "trabajos": {
+      "calidad-estatica": {
+        "estado": "falla",
+        "segundos": 2.5,
+        "falla": "black --check . && ruff check ."
+      },
+      "pruebas": {
+        "estado": "no ejecutado",
+        "segundos": 0.0,
+        "falla": null
+      },
+      "analisis-sonarqube": {
+        "estado": "no ejecutado",
+        "segundos": 0.0,
+        "falla": null
+      },
+      "desplegar-staging": {
+        "estado": "no ejecutado",
+        "segundos": 0.0,
+        "falla": null
+      }
+    }
+  },
+  {
+    "ejecucion": 3,
+    "commit": "b068ee2",
+    "fecha": "26/10/2026 15:54",
+    "segundos_total": 10,
+    "trabajos": {
+      "calidad-estatica": {
+        "estado": "falla",
+        "segundos": 8.0,
+        "falla": "pip-audit --skip-editable"
+      },
+      "pruebas": {
+        "estado": "no ejecutado",
+        "segundos": 0.0,
+        "falla": null
+      },
+      "analisis-sonarqube": {
+        "estado": "no ejecutado",
+        "segundos": 0.0,
+        "falla": null
+      },
+      "desplegar-staging": {
+        "estado": "no ejecutado",
+        "segundos": 0.0,
+        "falla": null
+      }
+    }
+  },
+  {
+    "ejecucion": 4,
+    "commit": "972ffaa",
+    "fecha": "26/10/2026 15:55",
+    "segundos_total": 45,
+    "trabajos": {
+      "calidad-estatica": {
+        "estado": "exito",
+        "segundos": 6.2,
+        "falla": null
+      },
+      "pruebas": {
+        "estado": "falla",
+        "segundos": 11.8,
+        "falla": "psql \"postgresql://postgres:***@db:5432/pfc\" -v ON_ERROR_STOP=1 -f datos/sql/01_esquema.sql"
+      },
+      "analisis-sonarqube": {
+        "estado": "no ejecutado",
+        "segundos": 0.0,
+        "falla": null
+      },
+      "desplegar-staging": {
+        "estado": "no ejecutado",
+        "segundos": 0.0,
+        "falla": null
+      }
+    }
+  },
+  {
+    "ejecucion": 5,
+    "commit": "6deb4ae",
+    "fecha": "26/10/2026 15:57",
+    "segundos_total": 113,
+    "trabajos": {
+      "calidad-estatica": {
+        "estado": "exito",
+        "segundos": 5.7,
+        "falla": null
+      },
+      "pruebas": {
+        "estado": "exito",
+        "segundos": 22.2,
+        "falla": null
+      },
+      "analisis-sonarqube": {
+        "estado": "falla",
+        "segundos": 43.0,
+        "falla": "$GITHUB_ACTION_PATH/script/check-quality-gate.sh \".scannerwork/report-task.txt\" \"300\""
+      },
+      "desplegar-staging": {
+        "estado": "no ejecutado",
+        "segundos": 0.0,
+        "falla": null
+      }
+    }
+  },
+  {
+    "ejecucion": 6,
+    "commit": "9190fdc",
+    "fecha": "26/10/2026 16:06",
+    "segundos_total": 207,
+    "trabajos": {
+      "calidad-estatica": {
+        "estado": "exito",
+        "segundos": 6.8,
+        "falla": null
+      },
+      "pruebas": {
+        "estado": "exito",
+        "segundos": 17.9,
+        "falla": null
+      },
+      "analisis-sonarqube": {
+        "estado": "exito",
+        "segundos": 31.8,
+        "falla": null
+      },
+      "desplegar-staging": {
+        "estado": "exito",
+        "segundos": 150.8,
+        "falla": null
+      }
+    }
+  },
+  {
+    "ejecucion": 7,
+    "commit": "1a24fa3",
+    "fecha": "26/10/2026 16:09",
+    "segundos_total": 126,
+    "trabajos": {
+      "calidad-estatica": {
+        "estado": "exito",
+        "segundos": 6.0,
+        "falla": null
+      },
+      "pruebas": {
+        "estado": "exito",
+        "segundos": 17.9,
+        "falla": null
+      },
+      "analisis-sonarqube": {
+        "estado": "exito",
+        "segundos": 31.3,
+        "falla": null
+      },
+      "desplegar-staging": {
+        "estado": "falla",
+        "segundos": 70.3,
+        "falla": "./despliegue/staging/desplegar.sh 1a24fa300548bd923a51c4a4f096a61bc1f20c87"
+      }
+    }
+  },
+  {
+    "ejecucion": 8,
+    "commit": "c094893",
+    "fecha": "26/10/2026 16:14",
+    "segundos_total": 313,
+    "trabajos": {
+      "calidad-estatica": {
+        "estado": "exito",
+        "segundos": 5.9,
+        "falla": null
+      },
+      "pruebas": {
+        "estado": "exito",
+        "segundos": 44.4,
+        "falla": null
+      },
+      "analisis-sonarqube": {
+        "estado": "exito",
+        "segundos": 36.5,
+        "falla": null
+      },
+      "desplegar-staging": {
+        "estado": "falla",
+        "segundos": 228.6,
+        "falla": "./despliegue/staging/desplegar.sh c094893d76fed8d6f79b9f9268d48aa6128c64b8"
+      }
+    }
+  },
+  {
+    "ejecucion": 9,
+    "commit": "f08c408",
+    "fecha": "26/10/2026 16:23",
+    "segundos_total": 97,
+    "trabajos": {
+      "calidad-estatica": {
+        "estado": "exito",
+        "segundos": 14.8,
+        "falla": null
+      },
+      "pruebas": {
+        "estado": "exito",
+        "segundos": 26.2,
+        "falla": null
+      },
+      "analisis-sonarqube": {
+        "estado": "exito",
+        "segundos": 31.6,
+        "falla": null
+      },
+      "desplegar-staging": {
+        "estado": "exito",
+        "segundos": 20.7,
+        "falla": null
+      }
+    }
+  },
+  {
+    "ejecucion": 10,
+    "commit": "1f75fbb",
+    "fecha": "26/10/2026 16:27",
+    "segundos_total": 204,
+    "trabajos": {
+      "calidad-estatica": {
+        "estado": "exito",
+        "segundos": 5.8,
+        "falla": null
+      },
+      "pruebas": {
+        "estado": "exito",
+        "segundos": 20.1,
+        "falla": null
+      },
+      "analisis-sonarqube": {
+        "estado": "exito",
+        "segundos": 31.6,
+        "falla": null
+      },
+      "desplegar-staging": {
+        "estado": "exito",
+        "segundos": 147.0,
+        "falla": null
+      }
+    }
+  },
+  {
+    "ejecucion": 11,
+    "commit": "69738e5",
+    "fecha": "26/10/2026 16:30",
+    "segundos_total": 145,
+    "trabajos": {
+      "calidad-estatica": {
+        "estado": "exito",
+        "segundos": 6.0,
+        "falla": null
+      },
+      "pruebas": {
+        "estado": "exito",
+        "segundos": 24.3,
+        "falla": null
+      },
+      "analisis-sonarqube": {
+        "estado": "exito",
+        "segundos": 31.7,
+        "falla": null
+      },
+      "desplegar-staging": {
+        "estado": "exito",
+        "segundos": 84.5,
+        "falla": null
+      }
+    }
+  }
+]
