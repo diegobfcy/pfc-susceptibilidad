@@ -1,0 +1,13 @@
+# Imagen worker: capas de Ingesta y ETL y Predictiva (también se usa en la estación de entrenamiento)
+FROM python:3.11.11-slim-bookworm
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+WORKDIR /srv
+COPY pyproject.toml README.md ./
+COPY datos/pfc_datos datos/pfc_datos
+COPY etl/pfc_etl etl/pfc_etl
+COPY predictiva/pfc_predictiva predictiva/pfc_predictiva
+COPY servicios servicios
+COPY config config
+RUN pip install --no-cache-dir ".[geo]" dask scipy && useradd --system --uid 10001 pfc
+USER pfc
+CMD ["python", "-m", "pfc_etl.orquestador", "--cola"]
