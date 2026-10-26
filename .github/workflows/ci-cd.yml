@@ -1,0 +1,67 @@
+name: ci-cd
+on:
+  push: {branches: ["**"]}
+  pull_request: {branches: [main]}
+
+jobs:
+  calidad-estatica:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11", cache: pip}
+      - run: pip install -e ".[dev]"
+      - run: black --check . && ruff check .
+      - run: lint-imports        # contrato de capas (import-linter)
+      - run: openapi-spec-validator api/openapi.yaml
+      - run: pip-audit --skip-editable   # dependencias vulnerables (OWASP A06)
+
+  pruebas:
+    needs: calidad-estatica
+    runs-on: ubuntu-22.04
+    services:
+      db:
+        image: postgis/postgis:15-3.4
+        env: {POSTGRES_PASSWORD: "${{ secrets.PG_PRUEBAS }}", POSTGRES_DB: pfc}
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s --health-retries 20
+    env:
+      PFC_BD_URL: postgresql+psycopg://postgres:${{ secrets.PG_PRUEBAS }}@db:5432/pfc
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.11", cache: pip}
+      - run: pip install -e ".[dev]"
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
+      - run: psql "postgresql://postgres:${{ secrets.PG_PRUEBAS }}@db:5432/pfc" -v ON_ERROR_STOP=1 -f datos/sql/01_esquema.sql
+      - run: pytest --cov --cov-report=xml --junitxml=pruebas.xml
+      - uses: actions/upload-artifact@v4
+        with: {name: cobertura, path: coverage.xml}
+
+  analisis-sonarqube:
+    needs: pruebas
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/download-artifact@v4
+        with: {name: cobertura}
+      - uses: sonarsource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      - uses: sonarsource/sonarqube-quality-gate-action@v1
+        timeout-minutes: 5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+  desplegar-staging:
+    if: github.ref == 'refs/heads/main'
+    needs: analisis-sonarqube
+    runs-on: ubuntu-22.04
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./despliegue/construir_y_publicar.sh ${{ github.sha }}
+      - run: ./despliegue/staging/desplegar.sh ${{ github.sha }}
