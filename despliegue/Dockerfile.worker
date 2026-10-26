@@ -2,6 +2,9 @@
 FROM python:3.11.11-slim-bookworm
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PFC_CONFIG=/srv/config/config.yaml
 WORKDIR /srv
+# libexpat1: dependencia nativa de rasterio (GDAL) ausente en la imagen slim
+RUN apt-get update && apt-get install -y --no-install-recommends libexpat1 \
+    && rm -rf /var/lib/apt/lists/*
 COPY pyproject.toml README.md ./
 COPY datos/pfc_datos datos/pfc_datos
 COPY etl/pfc_etl etl/pfc_etl
