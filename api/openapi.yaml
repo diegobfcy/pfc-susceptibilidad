@@ -1,0 +1,106 @@
+openapi: 3.0.3
+info:
+  title: API del sistema de susceptibilidad a deslizamientos (Presentación - Servicios)
+  version: 0.3.0
+servers:
+  - url: /api
+components:
+  securitySchemes:
+    sesion:
+      type: apiKey
+      in: cookie
+      name: session
+  schemas:
+    Error:
+      type: object
+      properties:
+        error: {type: string}
+        detalle: {type: string}
+    SolicitudIngesta:
+      type: object
+      required: [tipo, fecha_desde, fecha_hasta]
+      additionalProperties: false
+      properties:
+        tipo: {type: string, enum: [INGESTA, ENTRENAMIENTO, INFERENCIA]}
+        fecha_desde: {type: string, format: date, description: "Desde 2000-01-01"}
+        fecha_hasta: {type: string, format: date}
+    Procesamiento:
+      type: object
+      properties:
+        id_procesamiento: {type: integer}
+        tipo: {type: string}
+        estado: {type: string, enum: [PENDIENTE, EN_CURSO, EN_ESPERA, COMPLETADO, CANCELADO, FALLIDO]}
+        fase: {type: string, nullable: true}
+        fecha_desde: {type: string, format: date}
+        fecha_hasta: {type: string, format: date}
+  responses:
+    NoAutenticado:
+      description: Sin sesión válida
+      content: {application/json: {schema: {$ref: "#/components/schemas/Error"}}}
+    Prohibido:
+      description: El rol no tiene permiso para la operación
+      content: {application/json: {schema: {$ref: "#/components/schemas/Error"}}}
+    Invalida:
+      description: Entrada inválida
+      content: {application/json: {schema: {$ref: "#/components/schemas/Error"}}}
+paths:
+  /sesion:
+    post:
+      tags: [Acceso]
+      summary: Inicia sesión (Argon2id; bloqueo tras 5 intentos fallidos)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [correo, clave]
+              properties:
+                correo: {type: string, maxLength: 150}
+                clave: {type: string, maxLength: 128}
+      responses:
+        "200":
+          description: Sesión iniciada
+          content: {application/json: {schema: {type: object, properties: {rol: {type: string}}}}}
+        "400": {$ref: "#/components/responses/Invalida"}
+        "401": {$ref: "#/components/responses/NoAutenticado"}
+    delete:
+      tags: [Acceso]
+      summary: Cierra la sesión
+      responses:
+        "204": {description: Sesión cerrada}
+  /ingestas:
+    post:
+      tags: [Procesamiento]
+      summary: Crea un procesamiento de CU-01 (rol INVESTIGADOR)
+      security: [{sesion: []}]
+      requestBody:
+        required: true
+        content: {application/json: {schema: {$ref: "#/components/schemas/SolicitudIngesta"}}}
+      responses:
+        "202":
+          description: Procesamiento encolado
+          content: {application/json: {schema: {$ref: "#/components/schemas/Procesamiento"}}}
+        "400": {$ref: "#/components/responses/Invalida"}
+        "401": {$ref: "#/components/responses/NoAutenticado"}
+        "403": {$ref: "#/components/responses/Prohibido"}
+  /ingestas/{id}:
+    get:
+      tags: [Procesamiento]
+      summary: Estado de un procesamiento
+      security: [{sesion: []}]
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: integer, minimum: 1}}
+      responses:
+        "200":
+          description: Estado actual
+          content: {application/json: {schema: {$ref: "#/components/schemas/Procesamiento"}}}
+        "401": {$ref: "#/components/responses/NoAutenticado"}
+        "404": {description: No existe}
+  /salud:
+    get:
+      tags: [Técnico]
+      summary: Verificación de salud para las pruebas de humo del despliegue
+      responses:
+        "200": {description: Servicio y base de datos disponibles}
+        "503": {description: Base de datos no disponible}

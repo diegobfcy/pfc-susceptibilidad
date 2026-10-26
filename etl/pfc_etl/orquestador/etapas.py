@@ -81,6 +81,7 @@ class EtapasLocales:
     def transformar(self, trabajo: Trabajo) -> dict[int, tuple[int, int]]:
         r = self._rutas
         celdas = lectores.leer_celdas(r["grilla"][0])
+        celdas.to_parquet(self._d2 / "celdas.parquet", index=False)  # bloques espaciales de M1
         cache_terreno = self._d2 / "terreno_celdas.parquet"
         if cache_terreno.exists():
             terreno = pd.read_parquet(cache_terreno)
