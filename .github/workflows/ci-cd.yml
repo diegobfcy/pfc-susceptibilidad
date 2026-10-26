@@ -10,6 +10,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: "3.11", cache: pip}
+      - run: pip install --upgrade "pip>=25.3" "setuptools>=84.1"
       - run: pip install -e ".[dev]"
       - run: black --check . && ruff check .
       - run: lint-imports        # contrato de capas (import-linter)
@@ -31,6 +32,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: "3.11", cache: pip}
+      - run: pip install --upgrade "pip>=25.3" "setuptools>=84.1"
       - run: pip install -e ".[dev]"
       - run: sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
       - run: psql "postgresql://postgres:${{ secrets.PG_PRUEBAS }}@db:5432/pfc" -v ON_ERROR_STOP=1 -f datos/sql/01_esquema.sql
