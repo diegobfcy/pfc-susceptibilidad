@@ -24,10 +24,11 @@ jobs:
       db:
         image: postgis/postgis:15-3.4
         env: {POSTGRES_PASSWORD: "${{ secrets.PG_PRUEBAS }}", POSTGRES_DB: pfc}
+        ports: ["55432:5432"]
         options: >-
           --health-cmd "pg_isready -U postgres" --health-interval 5s --health-retries 20
     env:
-      PFC_BD_URL: postgresql+psycopg://postgres:${{ secrets.PG_PRUEBAS }}@db:5432/pfc
+      PFC_BD_URL: postgresql+psycopg://postgres:${{ secrets.PG_PRUEBAS }}@localhost:55432/pfc
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -35,7 +36,7 @@ jobs:
       - run: pip install --upgrade "pip>=25.3" "setuptools>=84.1"
       - run: pip install -e ".[dev]"
       - run: sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
-      - run: psql "postgresql://postgres:${{ secrets.PG_PRUEBAS }}@db:5432/pfc" -v ON_ERROR_STOP=1 -f datos/sql/01_esquema.sql
+      - run: psql "postgresql://postgres:${{ secrets.PG_PRUEBAS }}@localhost:55432/pfc" -v ON_ERROR_STOP=1 -f datos/sql/01_esquema.sql
       - run: pytest --cov --cov-report=xml --junitxml=pruebas.xml
       - uses: actions/upload-artifact@v4
         with: {name: cobertura, path: coverage.xml}
