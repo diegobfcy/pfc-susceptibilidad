@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel de procesamientos</title>
+<link rel="stylesheet" href="../visor/css/visor.css">
+</head>
+<body>
+<main class="panel">
+  <h1>Procesamientos (CU-01)</h1>
+  <form id="form-ingesta">
+    <label>Tipo
+      <select name="tipo"><option>INGESTA</option><option>ENTRENAMIENTO</option></select>
+    </label>
+    <label>Desde <input type="date" name="fecha_desde" min="2000-01-01" max="2026-12-31" required></label>
+    <label>Hasta <input type="date" name="fecha_hasta" min="2000-01-01" max="2026-12-31" required></label>
+    <button type="submit">Iniciar procesamiento</button>
+  </form>
+  <section id="estado" aria-live="polite"></section>
+</main>
+<script type="module" src="js/procesamientos.js"></script>
+</body>
+</html>

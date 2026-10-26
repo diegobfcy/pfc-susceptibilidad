@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Susceptibilidad dinámica a deslizamientos – Norte del Perú</title>
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="css/visor.css">
+</head>
+<body>
+<header class="barra">
+  <div class="titulo">
+    <strong>Susceptibilidad dinámica a deslizamientos</strong>
+    <span>El Niño · Norte del Perú · 2026</span>
+  </div>
+  <nav class="pestanas" role="tablist">
+    <button role="tab" aria-selected="true" data-panel="panel-mapa">Mapa</button>
+    <button role="tab" aria-selected="false" data-panel="panel-auditoria">Auditoría</button>
+  </nav>
+</header>
+<main>
+  <section id="panel-mapa" class="panel activo">
+    <aside class="lateral">
+      <label class="campo">Escenario
+        <select id="sel-escenario"></select>
+      </label>
+      <p id="desc-escenario" class="nota"></p>
+      <label class="campo">Nivel mínimo mostrado
+        <select id="sel-nivel">
+          <option value="1">Todos</option><option value="2">Media o más</option>
+          <option value="3">Alta o más</option><option value="4">Muy alta</option>
+        </select>
+      </label>
+      <label class="campo">Ir a departamento
+        <select id="sel-dep"><option value="">— Dominio completo —</option></select>
+      </label>
+      <fieldset class="campo">
+        <legend>Inventario (filtro temporal)</legend>
+        <div class="fila"><input type="date" id="inv-desde" value="2000-01-01" min="2000-01-01" max="2026-08-31">
+        <input type="date" id="inv-hasta" value="2026-08-31" min="2000-01-01" max="2026-08-31"></div>
+        <label class="check"><input type="checkbox" id="inv-precisos"> Solo ubicaciones puntuales (L1–L3)</label>
+      </fieldset>
+      <label class="campo">Ventana de lluvia (capa precipitación)
+        <select id="sel-ventana"><option value="p1">1 día</option><option value="p3">3 días</option>
+          <option value="p7">7 días</option><option value="p15">15 días</option>
+          <option value="p30" selected>30 días</option></select>
+      </label>
+      <div class="leyenda" id="leyenda"></div>
+      <div class="tarjeta">
+        <h3>TSM Niño 1+2 (últimos 12 meses)</h3>
+        <canvas id="graf-tsm" height="120" aria-label="Serie de anomalía de TSM Niño 1+2"></canvas>
+      </div>
+      <div class="tarjeta" id="resumen-niveles"></div>
+    </aside>
+    <div id="mapa" aria-label="Mapa de susceptibilidad"></div>
+  </section>
+  <section id="panel-auditoria" class="panel">
+    <div class="contenido-auditoria">
+      <h2>Auditoría algorítmica</h2>
+      <p class="nota">Métricas de clasificación sobre el conjunto de prueba independiente (eventos 2017 y 2023)
+        y telemetría de las ejecuciones del motor.</p>
+      <div id="kpis" class="kpis"></div>
+      <h3>Métricas por modelo</h3>
+      <table id="tabla-metricas" class="tabla"></table>
+      <h3>Umbrales de clasificación</h3>
+      <table id="tabla-umbrales" class="tabla"></table>
+      <h3>Ejecuciones del motor</h3>
+      <table id="tabla-ejecuciones" class="tabla"></table>
+    </div>
+  </section>
+</main>
+<script src="vendor/leaflet/leaflet.js"></script>
+<script src="vendor/leaflet.vectorgrid.bundled.min.js"></script>
+<script src="vendor/chart.umd.min.js"></script>
+<script src="js/mapa.js"></script>
+</body>
+</html>
