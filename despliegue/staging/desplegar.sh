@@ -11,7 +11,13 @@ levantar() {
   PFC_VERSION="$1" docker compose pull app worker
   PFC_VERSION="$1" docker compose up -d --wait db
   docker compose exec -T db psql -v ON_ERROR_STOP=1 -U postgres -d pfc < datos/sql/01_esquema.sql
-  PFC_VERSION="$1" docker compose up -d app worker proxy
+  PFC_VERSION="$1" docker compose up -d app worker
+  docker compose up -d --no-deps --force-recreate proxy
+}
+
+diagnostico() {
+  docker compose ps -a
+  docker compose logs --tail 20 app worker proxy
 }
 
 prueba_humo() {
@@ -33,9 +39,14 @@ if prueba_humo; then
   echo "despliegue $VERSION: prueba de humo superada"
 else
   echo "despliegue $VERSION: prueba de humo fallida" >&2
+  diagnostico >&2
   if [ -n "$ANTERIOR" ]; then
     levantar "$ANTERIOR"
-    echo "revertido a $ANTERIOR" >&2
+    if prueba_humo; then
+      echo "revertido a $ANTERIOR: prueba de humo superada" >&2
+    else
+      echo "revertido a $ANTERIOR: prueba de humo fallida; revisar el entorno" >&2
+    fi
   fi
   exit 1
 fi
