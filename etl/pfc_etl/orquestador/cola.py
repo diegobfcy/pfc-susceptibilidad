@@ -39,8 +39,20 @@ def atender(motor: Engine, etapas: Any, bitacora: RegistroBitacora, una_vez: boo
     while True:
         trabajo = tomar_trabajo(motor)
         if trabajo is not None:
-            cerrar_trabajo(motor, ejecutar_trabajo(trabajo, etapas, bitacora))
+            _atender_trabajo(motor, trabajo, etapas, bitacora)
         elif una_vez:
             return
         else:
             time.sleep(ESPERA_S)
+
+
+def _atender_trabajo(
+    motor: Engine, trabajo: Trabajo, etapas: Any, bitacora: RegistroBitacora
+) -> None:
+    try:
+        cerrar_trabajo(motor, ejecutar_trabajo(trabajo, etapas, bitacora))
+    except Exception:
+        # Un error no previsto no deja el trabajo EN_CURSO: se marca FALLIDO y se propaga.
+        trabajo.estado = "FALLIDO"
+        cerrar_trabajo(motor, trabajo)
+        raise

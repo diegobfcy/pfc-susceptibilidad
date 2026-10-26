@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
+import pytest
 from pfc_etl.orquestador.orquestador import FuenteNoDisponibleError, Trabajo, ejecutar_trabajo
 
 
@@ -44,3 +45,24 @@ def test_ingesta_no_transforma(bitacora: Any) -> None:
 def test_fuente_no_disponible_pasa_a_espera(bitacora: Any) -> None:
     t = ejecutar_trabajo(Trabajo(3, "ENTRENAMIENTO", 2017, 2017), _Etapas("verificar"), bitacora)
     assert t.estado == "EN_ESPERA" and bitacora.eventos[-1][0] == "ERROR"
+
+
+def test_inferencia_solo_transforma(bitacora: Any) -> None:
+    etapas = _Etapas()
+    ejecutar_trabajo(Trabajo(4, "INFERENCIA", 2017, 2017), etapas, bitacora)
+    assert etapas.llamadas == ["transformar"]
+
+
+def test_tipo_desconocido_falla_sin_ejecutar_fases(bitacora: Any) -> None:
+    etapas = _Etapas()
+    t = ejecutar_trabajo(Trabajo(5, "OTRO", 2017, 2017), etapas, bitacora)
+    assert t.estado == "FALLIDO" and etapas.llamadas == []
+
+
+def test_error_inesperado_no_se_oculta(bitacora: Any) -> None:
+    class _Rota(_Etapas):
+        def obtener(self, t: Trabajo) -> dict[str, Any]:
+            raise KeyError("columna")
+
+    with pytest.raises(KeyError):
+        ejecutar_trabajo(Trabajo(6, "INGESTA", 2017, 2017), _Rota(), bitacora)
