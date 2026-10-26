@@ -12,3 +12,4 @@ artefactos/
 resultados/logs/
 despliegue/nginx/tls/
 despliegue/staging/.version_actual
+pruebas.xml

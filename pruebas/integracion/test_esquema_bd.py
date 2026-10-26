@@ -61,3 +61,40 @@ def test_particion_anual_de_resultados(motor: Any) -> None:
         n = c.execute(text("""SELECT count(*) FROM pg_inherits
             WHERE inhparent = 'resultado.susceptibilidad'::regclass""")).scalar_one()
     assert n == 27
+
+
+class _EtapasVacias:
+    def obtener(self, t: Any) -> dict[str, int]:
+        return {"ersst_v5": 1}
+
+    def verificar(self, t: Any) -> dict[str, Any]:
+        return {}
+
+
+def test_worker_toma_y_cierra_trabajo(motor: Any) -> None:
+    from pfc_datos.bitacora import BitacoraBD
+    from pfc_datos.repositorios import ProcesamientosBD, UsuariosBD
+    from pfc_etl.orquestador.cola import atender
+
+    usuario = UsuariosBD(motor).por_correo("prueba@ucsm.edu.pe")
+    repo = ProcesamientosBD(motor)
+    nuevo = repo.crear(usuario.id_usuario, "INGESTA", dt.date(2018, 1, 1), dt.date(2018, 12, 31))
+    atender(motor, _EtapasVacias(), BitacoraBD(motor), una_vez=True)
+    assert repo.obtener(nuevo)["estado"] == "COMPLETADO"
+
+
+def test_worker_marca_fallido_un_error_no_previsto(motor: Any) -> None:
+    from pfc_datos.bitacora import BitacoraBD
+    from pfc_datos.repositorios import ProcesamientosBD, UsuariosBD
+    from pfc_etl.orquestador.cola import atender
+
+    class _Rota(_EtapasVacias):
+        def obtener(self, t: Any) -> dict[str, int]:
+            raise KeyError("columna")
+
+    usuario = UsuariosBD(motor).por_correo("prueba@ucsm.edu.pe")
+    repo = ProcesamientosBD(motor)
+    nuevo = repo.crear(usuario.id_usuario, "INGESTA", dt.date(2019, 1, 1), dt.date(2019, 12, 31))
+    with pytest.raises(KeyError):
+        atender(motor, _Rota(), BitacoraBD(motor), una_vez=True)
+    assert repo.obtener(nuevo)["estado"] == "FALLIDO"

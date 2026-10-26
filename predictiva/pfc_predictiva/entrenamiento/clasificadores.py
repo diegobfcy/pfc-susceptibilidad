@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from typing import Any, Protocol
 
 import numpy as np
@@ -21,7 +22,7 @@ def crear_xgboost(params: dict[str, Any], semilla: int, **extra: Any) -> Clasifi
         subsample=0.8,
         colsample_bytree=0.8,
         tree_method="hist",
-        device="cuda",
+        device=os.environ.get("PFC_DISPOSITIVO_XGB", "cuda"),  # cpu en CI sin GPU
         eval_metric="auc",
         random_state=semilla,
         **extra,
