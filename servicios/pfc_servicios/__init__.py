@@ -6,6 +6,7 @@ import os
 from typing import Any
 
 from flask import Flask, jsonify
+from flask_wtf.csrf import CSRFProtect
 from werkzeug.exceptions import HTTPException
 
 from pfc_servicios.seguridad.acceso import registrar_cabeceras
@@ -23,6 +24,7 @@ def crear_app(dependencias: dict[str, Any] | None = None) -> Flask:
         JSON_AS_ASCII=False,
     )
     app.extensions["pfc"] = dependencias if dependencias is not None else _dependencias_bd()
+    CSRFProtect(app)  # POST/DELETE exigen la cabecera X-CSRFToken (OWASP A01)
     registrar_cabeceras(app)
 
     from pfc_servicios.api import autenticacion, ingestas, salud

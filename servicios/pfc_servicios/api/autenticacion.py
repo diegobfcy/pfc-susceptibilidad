@@ -4,11 +4,18 @@ from __future__ import annotations
 
 from flask import Blueprint, abort, current_app, jsonify, session
 from flask.typing import ResponseReturnValue
+from flask_wtf.csrf import generate_csrf
 
 from pfc_servicios.api.validacion import cuerpo_json, texto
 from pfc_servicios.seguridad.claves import autenticar
 
 bp = Blueprint("autenticacion", __name__)
+
+
+@bp.get("/sesion/csrf")
+def token_csrf() -> ResponseReturnValue:
+    """Token CSRF de la sesión actual; se renueva al iniciar sesión."""
+    return jsonify(csrf=generate_csrf()), 200
 
 
 @bp.post("/sesion")

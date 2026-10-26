@@ -37,8 +37,14 @@ def cliente() -> Any:
     return app.test_client()
 
 
+def _csrf(cliente: Any) -> dict[str, str]:
+    return {"X-CSRFToken": cliente.get("/api/sesion/csrf").get_json()["csrf"]}
+
+
 def _entrar(cliente: Any, correo: str, clave: str = CLAVE) -> Any:
-    return cliente.post("/api/sesion", json={"correo": correo, "clave": clave})
+    return cliente.post(
+        "/api/sesion", json={"correo": correo, "clave": clave}, headers=_csrf(cliente)
+    )
 
 
 def test_salud_y_cabeceras(cliente: Any) -> None:
@@ -65,6 +71,7 @@ def test_crear_y_consultar_ingesta(cliente: Any) -> None:
     r = cliente.post(
         "/api/ingestas",
         json={"tipo": "INGESTA", "fecha_desde": "2017-01-01", "fecha_hasta": "2017-12-31"},
+        headers=_csrf(cliente),
     )
     assert r.status_code == 202
     estado = cliente.get(f"/api/ingestas/{r.get_json()['id_procesamiento']}").get_json()
@@ -74,9 +81,16 @@ def test_crear_y_consultar_ingesta(cliente: Any) -> None:
 
 def test_rbac(cliente: Any) -> None:
     cuerpo = {"tipo": "INGESTA", "fecha_desde": "2017-01-01", "fecha_hasta": "2017-12-31"}
-    assert cliente.post("/api/ingestas", json=cuerpo).status_code == 401
+    assert cliente.post("/api/ingestas", json=cuerpo, headers=_csrf(cliente)).status_code == 401
     _entrar(cliente, "esp@ucsm.edu.pe")
-    assert cliente.post("/api/ingestas", json=cuerpo).status_code == 403
+    assert cliente.post("/api/ingestas", json=cuerpo, headers=_csrf(cliente)).status_code == 403
+
+
+def test_post_sin_token_csrf_se_rechaza(cliente: Any) -> None:
+    _entrar(cliente, "inv@ucsm.edu.pe")
+    cuerpo = {"tipo": "INGESTA", "fecha_desde": "2017-01-01", "fecha_hasta": "2017-12-31"}
+    r = cliente.post("/api/ingestas", json=cuerpo)
+    assert r.status_code == 400 and "CSRF" in r.get_json()["detalle"]
 
 
 @pytest.mark.parametrize(
@@ -94,7 +108,8 @@ def test_rbac(cliente: Any) -> None:
 )
 def test_rechazo_de_entradas_invalidas(cliente: Any, cuerpo: dict[str, str]) -> None:
     _entrar(cliente, "inv@ucsm.edu.pe")
-    assert cliente.post("/api/ingestas", json=cuerpo).status_code == 400
+    r = cliente.post("/api/ingestas", json=cuerpo, headers=_csrf(cliente))
+    assert r.status_code == 400 and "CSRF" not in r.get_json()["detalle"]
 
 
 def test_salud_degradada_sin_bd() -> None:

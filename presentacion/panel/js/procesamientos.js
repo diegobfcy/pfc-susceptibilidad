@@ -26,10 +26,11 @@ async function consultarEstado(idProcesamiento) {
 formulario.addEventListener('submit', async (evento) => {
   evento.preventDefault();
   const datos = Object.fromEntries(new FormData(formulario));
+  const { csrf } = await (await fetch('/api/sesion/csrf', { credentials: 'same-origin' })).json();
   const respuesta = await fetch('/api/ingestas', {
     method: 'POST',
     credentials: 'same-origin',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrf },
     body: JSON.stringify(datos),
   });
   if (respuesta.status === 401 || respuesta.status === 403) {
@@ -38,5 +39,5 @@ formulario.addEventListener('submit', async (evento) => {
   }
   const creado = await respuesta.json();
   mostrarEstado(creado);
-  consultarEstado(creado.id_procesamiento);
+  await consultarEstado(creado.id_procesamiento);
 });

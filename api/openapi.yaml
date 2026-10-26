@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: API del sistema de susceptibilidad a deslizamientos (Presentación - Servicios)
-  version: 0.3.0
+  version: 0.4.0
 servers:
   - url: /api
 components:
@@ -33,6 +33,13 @@ components:
         fase: {type: string, nullable: true}
         fecha_desde: {type: string, format: date}
         fecha_hasta: {type: string, format: date}
+  parameters:
+    TokenCsrf:
+      name: X-CSRFToken
+      in: header
+      required: true
+      description: Token obtenido en GET /sesion/csrf; obligatorio en POST y DELETE
+      schema: {type: string}
   responses:
     NoAutenticado:
       description: Sin sesión válida
@@ -44,9 +51,18 @@ components:
       description: Entrada inválida
       content: {application/json: {schema: {$ref: "#/components/schemas/Error"}}}
 paths:
+  /sesion/csrf:
+    get:
+      tags: [Acceso]
+      summary: Token CSRF de la sesión actual (se renueva al iniciar sesión)
+      responses:
+        "200":
+          description: Token vigente
+          content: {application/json: {schema: {type: object, properties: {csrf: {type: string}}}}}
   /sesion:
     post:
       tags: [Acceso]
+      parameters: [{$ref: "#/components/parameters/TokenCsrf"}]
       summary: Inicia sesión (Argon2id; bloqueo tras 5 intentos fallidos)
       requestBody:
         required: true
@@ -67,6 +83,7 @@ paths:
     delete:
       tags: [Acceso]
       summary: Cierra la sesión
+      parameters: [{$ref: "#/components/parameters/TokenCsrf"}]
       responses:
         "204": {description: Sesión cerrada}
   /ingestas:
@@ -74,6 +91,7 @@ paths:
       tags: [Procesamiento]
       summary: Crea un procesamiento de CU-01 (rol INVESTIGADOR)
       security: [{sesion: []}]
+      parameters: [{$ref: "#/components/parameters/TokenCsrf"}]
       requestBody:
         required: true
         content: {application/json: {schema: {$ref: "#/components/schemas/SolicitudIngesta"}}}
