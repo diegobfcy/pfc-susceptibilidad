@@ -47,3 +47,30 @@ def test_continuidad_mensual_con_anio_y_mes() -> None:
     )
     reglas = {"columnas": ["anio", "mes", "n12", "n12_anom"], "rango": {}, "frecuencia": "MS"}
     assert verificar_dataset("ersst_v5", tabla, reglas).faltantes == ["2020-03-01"]
+
+
+def test_cada_regla_es_independiente() -> None:
+    from pfc_etl.verificacion.reglas import ReglaNulos, ReglaRango
+
+    tabla = pd.DataFrame({"a": [1.0, None, 5.0], "b": [0.0, 1.0, 2.0]})
+    faltantes: list[str] = []
+    [(codigo, nulos)] = ReglaNulos(["a"]).evaluar(tabla, faltantes)
+    assert codigo == "VALOR_NULO" and nulos.tolist() == [False, True, False]
+    [(codigo, fuera)] = ReglaRango({"b": [0.0, 1.0]}).evaluar(tabla, faltantes)
+    assert codigo == "RANGO_B" and fuera.tolist() == [False, False, True] and not faltantes
+
+
+def test_tolerancia_en_los_bordes_del_rango() -> None:
+    from pfc_etl.verificacion.reglas import ReglaRango
+
+    tabla = pd.DataFrame({"p1": [500.0 + 1e-12, 500.1]})
+    [(_, fuera)] = ReglaRango({"p1": [0.0, 500.0]}, tolerancia=1e-9).evaluar(tabla, [])
+    assert fuera.tolist() == [False, True]
+
+
+def test_construir_reglas_segun_config() -> None:
+    from pfc_etl.verificacion.reglas import construir_reglas
+
+    nombres = [type(r).__name__ for r in construir_reglas(REGLAS)]
+    assert nombres == ["ReglaIntegridad", "ReglaNulos", "ReglaRango", "ReglaContinuidad"]
+    assert len(construir_reglas({"columnas": ["x"]})) == 2

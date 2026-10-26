@@ -34,6 +34,7 @@ class EtapasLocales:
         self._config = config
         self._bitacora = bitacora
         self._tablas: dict[str, pd.DataFrame] = {}
+        self._tolerancia = config["verificacion"]["tolerancia_flotante"]
 
     def _archivos_fuente(self, trabajo: Trabajo) -> dict[str, list[Path]]:
         raw, proc = self._origen / "raw", self._origen / "processed"
@@ -73,7 +74,7 @@ class EtapasLocales:
         eventos = lectores.leer_eventos(r["inventario"][0])
         informe = {}
         for fuente, tabla in (("ersst_v5", ersst), ("era5_land", era5), ("inventario", eventos)):
-            resultado = verificar_dataset(fuente, tabla, reglas[fuente])
+            resultado = verificar_dataset(fuente, tabla, reglas[fuente], self._tolerancia)
             informe[fuente] = {
                 "filas": resultado.filas,
                 "rechazados": resultado.rechazados,
@@ -96,7 +97,10 @@ class EtapasLocales:
             terreno = variables_terreno(celdas, r["dem_glo30"][0])
             terreno.to_parquet(cache_terreno, index=False)
         verif = verificar_dataset(
-            "dem_glo30", terreno, self._config["verificacion"]["fuentes"]["dem_glo30"]
+            "dem_glo30",
+            terreno,
+            self._config["verificacion"]["fuentes"]["dem_glo30"],
+            self._tolerancia,
         )
         if not verif.es_valido:
             raise DatosIncompletosError(f"dem_glo30: {verif.faltantes}")

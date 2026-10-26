@@ -9,6 +9,8 @@ from typing import Any
 
 import pandas as pd
 
+from pfc_etl.verificacion.reglas import ReglaIntegridad, construir_reglas
+
 
 @dataclass
 class ResultadoVerificacion:
@@ -24,41 +26,18 @@ class ResultadoVerificacion:
 
 
 def verificar_dataset(
-    fuente: str, tabla: pd.DataFrame, reglas: dict[str, Any]
+    fuente: str, tabla: pd.DataFrame, reglas: dict[str, Any], tolerancia: float = 0.0
 ) -> ResultadoVerificacion:
-    """Aplica las cuatro reglas de RF-06 configuradas para la fuente."""
+    """Aplica las reglas de RF-06 configuradas para la fuente (ver reglas.py)."""
     resultado = ResultadoVerificacion(fuente, len(tabla), tabla)
-    faltan = [c for c in reglas.get("columnas", []) if c not in tabla.columns]
-    if faltan:
-        resultado.rechazados["INTEGRIDAD_CAMPOS"] = len(tabla)
-        resultado.validos = tabla.iloc[0:0]
-        resultado.faltantes = [f"columna {c}" for c in faltan]
-        return resultado
-    mascara = pd.Series(True, index=tabla.index)
-    for columna in reglas.get("columnas", []):
-        nulos = tabla[columna].isna()
-        if nulos.any():
-            resultado.rechazados["VALOR_NULO"] = resultado.rechazados.get("VALOR_NULO", 0) + int(
-                (nulos & mascara).sum()
-            )
-            mascara &= ~nulos
-    for columna, (minimo, maximo) in reglas.get("rango", {}).items():
-        fuera = (tabla[columna] < minimo) | (tabla[columna] > maximo)
-        if fuera.any():
-            codigo = f"RANGO_{columna.upper()}"
-            resultado.rechazados[codigo] = int((fuera & mascara).sum())
-            mascara &= ~fuera
-    resultado.validos = tabla[mascara]
-    frecuencia = reglas.get("frecuencia")
-    if frecuencia:
-        if "fecha" in tabla.columns:
-            fechas = pd.DatetimeIndex(tabla["fecha"].unique())
-        else:
-            fechas = pd.DatetimeIndex(
-                pd.to_datetime({"year": tabla["anio"], "month": tabla["mes"], "day": 1})
-            )
-        esperadas = pd.date_range(fechas.min(), fechas.max(), freq=frecuencia)
-        ausentes = esperadas.difference(fechas)
-        if len(ausentes) > 0:
-            resultado.faltantes = [f"{f:%Y-%m-%d}" for f in ausentes]
+    validos = pd.Series(True, index=tabla.index)
+    for regla in construir_reglas(reglas, tolerancia):
+        for codigo, incumple in regla.evaluar(tabla, resultado.faltantes):
+            n = int((incumple & validos).sum())
+            if n:
+                resultado.rechazados[codigo] = resultado.rechazados.get(codigo, 0) + n
+            validos &= ~incumple
+        if isinstance(regla, ReglaIntegridad) and resultado.faltantes:
+            break  # sin las columnas declaradas no se pueden evaluar las demás reglas
+    resultado.validos = tabla[validos]
     return resultado
