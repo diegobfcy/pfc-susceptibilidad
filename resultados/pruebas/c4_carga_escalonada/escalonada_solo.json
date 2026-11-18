@@ -1,0 +1,123 @@
+{
+  "periodo": "2017-03",
+  "escalon_s": 60,
+  "escalones": [
+    {
+      "objetivo_rps": 5,
+      "solicitudes": 278,
+      "lograda_rps": 5.05,
+      "p50_ms": 5.0,
+      "p95_ms": 274.5,
+      "p99_ms": 382.0,
+      "p95_teselas_ms": 281.4,
+      "errores": 0,
+      "tasa_errores": 0.0,
+      "cumple_umbral": true,
+      "saturado": false
+    },
+    {
+      "objetivo_rps": 10,
+      "solicitudes": 554,
+      "lograda_rps": 10.06,
+      "p50_ms": 4.8,
+      "p95_ms": 374.0,
+      "p99_ms": 488.7,
+      "p95_teselas_ms": 384.3,
+      "errores": 0,
+      "tasa_errores": 0.0,
+      "cumple_umbral": true,
+      "saturado": false
+    },
+    {
+      "objetivo_rps": 15,
+      "solicitudes": 827,
+      "lograda_rps": 15.02,
+      "p50_ms": 5.2,
+      "p95_ms": 444.0,
+      "p99_ms": 532.5,
+      "p95_teselas_ms": 466.9,
+      "errores": 0,
+      "tasa_errores": 0.0,
+      "cumple_umbral": true,
+      "saturado": false
+    },
+    {
+      "objetivo_rps": 20,
+      "solicitudes": 1107,
+      "lograda_rps": 20.1,
+      "p50_ms": 5.6,
+      "p95_ms": 632.5,
+      "p99_ms": 739.8,
+      "p95_teselas_ms": 651.6,
+      "errores": 0,
+      "tasa_errores": 0.0,
+      "cumple_umbral": true,
+      "saturado": false
+    },
+    {
+      "objetivo_rps": 25,
+      "solicitudes": 1368,
+      "lograda_rps": 24.84,
+      "p50_ms": 5.4,
+      "p95_ms": 617.7,
+      "p99_ms": 1079.6,
+      "p95_teselas_ms": 661.9,
+      "errores": 0,
+      "tasa_errores": 0.0,
+      "cumple_umbral": true,
+      "saturado": false
+    },
+    {
+      "objetivo_rps": 30,
+      "solicitudes": 1650,
+      "lograda_rps": 29.95,
+      "p50_ms": 5.4,
+      "p95_ms": 706.7,
+      "p99_ms": 1200.7,
+      "p95_teselas_ms": 797.2,
+      "errores": 0,
+      "tasa_errores": 0.0,
+      "cumple_umbral": true,
+      "saturado": false
+    },
+    {
+      "objetivo_rps": 35,
+      "solicitudes": 1903,
+      "lograda_rps": 34.54,
+      "p50_ms": 9.5,
+      "p95_ms": 991.7,
+      "p99_ms": 1689.6,
+      "p95_teselas_ms": 1013.0,
+      "errores": 0,
+      "tasa_errores": 0.0,
+      "cumple_umbral": true,
+      "saturado": false
+    },
+    {
+      "objetivo_rps": 40,
+      "solicitudes": 1769,
+      "lograda_rps": 32.11,
+      "p50_ms": 773.1,
+      "p95_ms": 2210.5,
+      "p99_ms": 3083.2,
+      "p95_teselas_ms": 2304.7,
+      "errores": 0,
+      "tasa_errores": 0.0,
+      "cumple_umbral": false,
+      "saturado": true
+    },
+    {
+      "objetivo_rps": 50,
+      "solicitudes": 1862,
+      "lograda_rps": 33.79,
+      "p50_ms": 1209.9,
+      "p95_ms": 2883.4,
+      "p99_ms": 3588.0,
+      "p95_teselas_ms": 2999.4,
+      "errores": 0,
+      "tasa_errores": 0.0,
+      "cumple_umbral": false,
+      "saturado": true
+    }
+  ]
+}

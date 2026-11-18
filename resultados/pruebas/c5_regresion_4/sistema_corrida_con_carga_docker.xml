@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="1" tests="111" time="597.604" timestamp="2026-11-10T17:56:44.888787-05:00" hostname="diegobfcy-MS-7E47"><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-POST-/ingestas-permitidos0]" time="0.229" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/ingestas/999999-permitidos1]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-POST-/ingestas/999999/archivos-permitidos2]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-POST-/entrenamientos-permitidos3]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-POST-/inferencias-permitidos4]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/inferencias/999999-permitidos5]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-POST-/procesamientos/999999/cancelar-permitidos6]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/mapas/susceptibilidad/2023-03/7/36/66.pbf-permitidos7]" time="0.112" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/consulta-punto?periodo=2023-03&amp;lat=-7&amp;lon=-79-permitidos8]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/indicadores-permitidos9]" time="3.828" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/bitacora-permitidos10]" time="0.006" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/procesamientos/activo-permitidos11]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-POST-/ingestas-permitidos0]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/ingestas/999999-permitidos1]" time="0.001" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-POST-/ingestas/999999/archivos-permitidos2]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-POST-/entrenamientos-permitidos3]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-POST-/inferencias-permitidos4]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/inferencias/999999-permitidos5]" time="0.001" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-POST-/procesamientos/999999/cancelar-permitidos6]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/mapas/susceptibilidad/2023-03/7/36/66.pbf-permitidos7]" time="0.079" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/consulta-punto?periodo=2023-03&amp;lat=-7&amp;lon=-79-permitidos8]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/indicadores-permitidos9]" time="0.001" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/bitacora-permitidos10]" time="0.001" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/procesamientos/activo-permitidos11]" time="0.001" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-POST-/ingestas-permitidos0]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/ingestas/999999-permitidos1]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-POST-/ingestas/999999/archivos-permitidos2]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-POST-/entrenamientos-permitidos3]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-POST-/inferencias-permitidos4]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/inferencias/999999-permitidos5]" time="0.001" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-POST-/procesamientos/999999/cancelar-permitidos6]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/mapas/susceptibilidad/2023-03/7/36/66.pbf-permitidos7]" time="0.001" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/consulta-punto?periodo=2023-03&amp;lat=-7&amp;lon=-79-permitidos8]" time="0.001" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/indicadores-permitidos9]" time="3.846" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/bitacora-permitidos10]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/procesamientos/activo-permitidos11]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[POST-/ingestas-_0]" time="0.007" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/ingestas/999999-_1]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[POST-/ingestas/999999/archivos-_2]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[POST-/entrenamientos-_3]" time="0.006" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[POST-/inferencias-_4]" time="0.006" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/inferencias/999999-_5]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[POST-/procesamientos/999999/cancelar-_6]" time="0.006" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/mapas/susceptibilidad/2023-03/7/36/66.pbf-_7]" time="0.006" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/consulta-punto?periodo=2023-03&amp;lat=-7&amp;lon=-79-_8]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/indicadores-_9]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/bitacora-_10]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/procesamientos/activo-_11]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp15_veinte_envios_simultaneos" time="7.061" /><testcase classname="pruebas.sistema.test_api" name="test_cp11_artefacto_alterado_422_sin_escribir" time="0.022" /><testcase classname="pruebas.sistema.test_api" name="test_cp11_y_cp13_inferencia_integra_reemplaza_sin_duplicar" time="11.067" /><testcase classname="pruebas.sistema.test_api" name="test_cp13_cp12_toda_la_serie_coincide_con_sql" time="17.106" /><testcase classname="pruebas.sistema.test_api" name="test_cp04_carga_manual_real" time="11.505" /><testcase classname="pruebas.sistema.test_api" name="test_cp17_cookie_y_hash" time="0.052" /><testcase classname="pruebas.sistema.test_api" name="test_cp17_bloqueo_y_limite_de_solicitudes" time="25.361" /><testcase classname="pruebas.sistema.test_api" name="test_cp18_indicadores_completos" time="4.255" /><testcase classname="pruebas.sistema.test_api" name="test_cp19_filtros_de_bitacora" time="0.008" /><testcase classname="pruebas.sistema.test_api" name="test_cp20_tesela_decodificada" time="0.342" /><testcase classname="pruebas.sistema.test_api" name="test_cp21_filtro_espacial_en_tesela[departamento=24-left(ubigeo_prov, 2)]" time="0.102" /><testcase classname="pruebas.sistema.test_api" name="test_cp21_filtro_espacial_en_tesela[provincia=1301-ubigeo_prov]" time="0.010" /><testcase classname="pruebas.sistema.test_api" name="test_cabeceras_de_seguridad_en_estaticos_y_api" time="0.007" /><testcase classname="pruebas.sistema.test_api" name="test_inyeccion_en_parametros_se_rechaza" time="0.004" /><testcase classname="pruebas.sistema.test_api" name="test_cp25_contrato_de_capas" time="0.000"><skipped type="pytest.skip" message="se ejecuta con el ciclo C1">/home/diegobfcy/ProyectosIA/proyectos-dev/pfc-susceptibilidad/pruebas/sistema/test_api.py:369: se ejecuta con el ciclo C1</skipped></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp27_rf01_inferencia_limitada_a_un_departamento" time="7.343" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp28_iu06_procesamiento_activo" time="0.011" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp29_cu01_confirmacion_volver_y_fin_correcto[chromium]" time="23.452" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp30_cu01_aviso_si_ya_hay_un_procesamiento[chromium]" time="6.978" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp31_cu01_4a_aviso_de_fuente_y_carga_manual[chromium]" time="13.743" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp32_cu01_6a_regla_incumplida_y_cancelacion[chromium]" time="4.553" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp33_cu03_exporta_los_indicadores_mostrados[chromium]" time="9.585" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp35_cu04_activar_capas_nuevas_y_error_de_una[chromium]" time="9.547" /><testcase classname="pruebas.sistema.test_visor" name="test_cp20_celdas_por_nivel_en_cada_zoom[chromium]" time="14.268" /><testcase classname="pruebas.sistema.test_visor" name="test_cp20_paleta_accesible_y_leyenda[chromium]" time="38.540"><failure message="playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 30000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;body[data-listo=\&quot;1\&quot;]&quot;) to be visible">visor = &lt;pruebas.sistema.conftest.Visor object at 0x775fbba29710&gt;
+
+    def test_cp20_paleta_accesible_y_leyenda(visor: Any) -&gt; None:
+        pagina = visor.abrir("2023-03")
+        pagina.select_option("#sel-paleta", "accesible")
+        visor.esperar_teselas()
+        _ir(visor, -5.2, -80.0, 8)
+        conteo = pagina.evaluate(JS_MUESTRA_LIENZOS)
+        # El nivel Muy alta lleva trama: se tolera la mezcla con las líneas diagonales.
+        assert _fraccion_en_paleta(conteo, PALETA_ACCESIBLE) &gt; 0.8
+        leyenda = pagina.inner_text("#leyenda")
+        for rotulo in (
+            "Baja (0 a 25 %)",
+            "Media (25 a 50 %)",
+            "Alta (50 a 75 %)",
+            "Muy alta (75 a 100 %)",
+        ):
+            assert rotulo in leyenda
+        pagina.reload()
+&gt;       pagina.wait_for_selector('body[data-listo="1"]')
+
+pruebas/sistema/test_visor.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/sync_api/_generated.py:21370: in wait_for_selector
+    self._sync(
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_page.py:431: in wait_for_selector
+    return await self._main_frame.wait_for_selector(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_frame.py:395: in wait_for_selector
+    await self._channel.send(
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_connection.py:78: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright._impl._connection.Connection object at 0x7760361fe710&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x7760341eb1a0&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 30000ms exceeded.
+E           Call log:
+E             - waiting for locator("body[data-listo=\"1\"]") to be visible
+
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_connection.py:636: TimeoutError</failure></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp21_filtro_con_encuadre_y_aviso_sin_datos[chromium]" time="45.294"><failure message="playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 45000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;body[data-listo=\&quot;1\&quot;]&quot;) to be visible">visor = &lt;pruebas.sistema.conftest.Visor object at 0x775fbbd0e250&gt;
+
+    def test_cp21_filtro_con_encuadre_y_aviso_sin_datos(visor: Any) -&gt; None:
+&gt;       pagina = visor.abrir("2023-03")
+                 ^^^^^^^^^^^^^^^^^^^^^^
+
+pruebas/sistema/test_visor.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pruebas/sistema/conftest.py:98: in abrir
+    self.pagina.wait_for_selector('body[data-listo="1"]', timeout=45000)
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/sync_api/_generated.py:21370: in wait_for_selector
+    self._sync(
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_page.py:431: in wait_for_selector
+    return await self._main_frame.wait_for_selector(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_frame.py:395: in wait_for_selector
+    await self._channel.send(
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_connection.py:78: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright._impl._connection.Connection object at 0x7760361fe710&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x7760341ebc40&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 45000ms exceeded.
+E           Call log:
+E             - waiting for locator("body[data-listo=\"1\"]") to be visible
+
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_connection.py:636: TimeoutError</failure></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp22_capas_y_error_de_una_capa[chromium]" time="9.594" /><testcase classname="pruebas.sistema.test_visor" name="test_cp23_consulta_igual_a_la_base_en_diez_celdas[chromium]" time="18.403" /><testcase classname="pruebas.sistema.test_visor" name="test_cp18_panel_resalta_el_indicador_en_alerta[chromium]" time="4.868" /><testcase classname="pruebas.sistema.test_visor" name="test_cp19_panel_filtra_y_avisa_sin_registros[chromium]" time="4.774" /><testcase classname="pruebas.sistema.test_visor" name="test_cu02_especialista_no_ve_el_panel[chromium]" time="0.205" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp29_cu01_confirmacion_volver_y_fin_correcto[firefox]" time="28.390" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp30_cu01_aviso_si_ya_hay_un_procesamiento[firefox]" time="6.679" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp31_cu01_4a_aviso_de_fuente_y_carga_manual[firefox]" time="15.700" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp32_cu01_6a_regla_incumplida_y_cancelacion[firefox]" time="6.288" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp33_cu03_exporta_los_indicadores_mostrados[firefox]" time="10.963" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp35_cu04_activar_capas_nuevas_y_error_de_una[firefox]" time="10.394" /><testcase classname="pruebas.sistema.test_visor" name="test_cp20_celdas_por_nivel_en_cada_zoom[firefox]" time="15.939" /><testcase classname="pruebas.sistema.test_visor" name="test_cp20_paleta_accesible_y_leyenda[firefox]" time="15.904" /><testcase classname="pruebas.sistema.test_visor" name="test_cp21_filtro_con_encuadre_y_aviso_sin_datos[firefox]" time="9.223" /><testcase classname="pruebas.sistema.test_visor" name="test_cp22_capas_y_error_de_una_capa[firefox]" time="10.400" /><testcase classname="pruebas.sistema.test_visor" name="test_cp23_consulta_igual_a_la_base_en_diez_celdas[firefox]" time="19.542" /><testcase classname="pruebas.sistema.test_visor" name="test_cp18_panel_resalta_el_indicador_en_alerta[firefox]" time="5.037" /><testcase classname="pruebas.sistema.test_visor" name="test_cp19_panel_filtra_y_avisa_sin_registros[firefox]" time="5.970" /><testcase classname="pruebas.sistema.test_visor" name="test_cu02_especialista_no_ve_el_panel[firefox]" time="0.319" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp29_cu01_confirmacion_volver_y_fin_correcto[msedge]" time="27.396" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp30_cu01_aviso_si_ya_hay_un_procesamiento[msedge]" time="6.029" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp31_cu01_4a_aviso_de_fuente_y_carga_manual[msedge]" time="7.584" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp32_cu01_6a_regla_incumplida_y_cancelacion[msedge]" time="4.587" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp33_cu03_exporta_los_indicadores_mostrados[msedge]" time="10.335" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp35_cu04_activar_capas_nuevas_y_error_de_una[msedge]" time="10.672" /><testcase classname="pruebas.sistema.test_visor" name="test_cp20_celdas_por_nivel_en_cada_zoom[msedge]" time="15.256" /><testcase classname="pruebas.sistema.test_visor" name="test_cp20_paleta_accesible_y_leyenda[msedge]" time="13.158" /><testcase classname="pruebas.sistema.test_visor" name="test_cp21_filtro_con_encuadre_y_aviso_sin_datos[msedge]" time="8.171" /><testcase classname="pruebas.sistema.test_visor" name="test_cp22_capas_y_error_de_una_capa[msedge]" time="9.243" /><testcase classname="pruebas.sistema.test_visor" name="test_cp23_consulta_igual_a_la_base_en_diez_celdas[msedge]" time="17.650" /><testcase classname="pruebas.sistema.test_visor" name="test_cp18_panel_resalta_el_indicador_en_alerta[msedge]" time="4.411" /><testcase classname="pruebas.sistema.test_visor" name="test_cp19_panel_filtra_y_avisa_sin_registros[msedge]" time="4.819" /><testcase classname="pruebas.sistema.test_visor" name="test_cu02_especialista_no_ve_el_panel[msedge]" time="0.374" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp34_cu04_capas_nuevas_en_mvt[pendiente-atributos0]" time="0.337" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp34_cu04_capas_nuevas_en_mvt[tsm-atributos1]" time="0.026" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp34_cu04_capas_nuevas_en_mvt[inventario-atributos2]" time="0.035" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp36_rf13_cada_operacion_queda_en_el_historial" time="0.177" /></testsuite></testsuites>

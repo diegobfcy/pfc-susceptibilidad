@@ -10,6 +10,7 @@ bp = Blueprint("salud", __name__)
 
 @bp.get("/salud")
 def salud() -> ResponseReturnValue:
+    """GET /salud: 200 si la base de datos responde y 503 si no; no requiere sesión."""
     comprobar = current_app.extensions["pfc"].get("comprobar_bd")
     bd_ok = bool(comprobar()) if comprobar else False
     return jsonify(estado="ok" if bd_ok else "degradado", base_datos=bd_ok), (

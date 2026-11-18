@@ -1,0 +1,199 @@
+{
+  "inicio": "2026-11-07T14:02:42-0500",
+  "etl": {
+    "estado": "COMPLETADO",
+    "fase": null,
+    "fecha_desde": "2000-01-01",
+    "fecha_hasta": "2026-06-30",
+    "finalizado_en": "2026-11-07T14:03:05.912614-05:00",
+    "id_procesamiento": 129,
+    "iniciado_en": "2026-11-07T14:02:43.412563-05:00",
+    "memoria_max_gb": 2.03,
+    "resumen": {
+      "archivos": {
+        "dem_glo30": 1,
+        "era5_land": 28,
+        "ersst_v5": 1,
+        "grilla": 2,
+        "inventario": 1
+      },
+      "matriz": {
+        "2000": [
+          1193071,
+          4
+        ],
+        "2001": [
+          1301532,
+          15
+        ],
+        "2002": [
+          1301532,
+          6
+        ],
+        "2003": [
+          1301532,
+          6
+        ],
+        "2004": [
+          1301532,
+          6
+        ],
+        "2005": [
+          1301532,
+          13
+        ],
+        "2006": [
+          1301532,
+          25
+        ],
+        "2007": [
+          1301532,
+          13
+        ],
+        "2008": [
+          1301532,
+          34
+        ],
+        "2009": [
+          1301532,
+          21
+        ],
+        "2010": [
+          1301532,
+          11
+        ],
+        "2011": [
+          1301532,
+          6
+        ],
+        "2012": [
+          1301532,
+          21
+        ],
+        "2013": [
+          1301532,
+          12
+        ],
+        "2014": [
+          1301532,
+          11
+        ],
+        "2015": [
+          1301532,
+          43
+        ],
+        "2016": [
+          1301532,
+          13
+        ],
+        "2017": [
+          1301532,
+          197
+        ],
+        "2018": [
+          1301532,
+          31
+        ],
+        "2019": [
+          1301532,
+          172
+        ],
+        "2020": [
+          1301532,
+          62
+        ],
+        "2021": [
+          1301532,
+          130
+        ],
+        "2022": [
+          1301532,
+          126
+        ],
+        "2023": [
+          1301532,
+          284
+        ],
+        "2024": [
+          1301532,
+          150
+        ],
+        "2025": [
+          1301532,
+          332
+        ],
+        "2026": [
+          650766,
+          255
+        ]
+      },
+      "memoria_max_gb": 2.03,
+      "verificacion": {
+        "era5_land": {
+          "faltantes": 0,
+          "filas": 10006821,
+          "pixeles_imputados": 68,
+          "rechazados": {}
+        },
+        "ersst_v5": {
+          "faltantes": 0,
+          "filas": 330,
+          "rechazados": {}
+        },
+        "inventario": {
+          "faltantes": 0,
+          "filas": 3175,
+          "rechazados": {}
+        }
+      }
+    },
+    "tiempos_s": {
+      "obtener": 1.8,
+      "transformar": 19.5,
+      "verificar": 1.3
+    },
+    "tipo": "ENTRENAMIENTO",
+    "segundos_reloj": 25.0
+  },
+  "inferencia": {
+    "estado": "COMPLETADO",
+    "fase": null,
+    "fecha_desde": "2000-02-01",
+    "fecha_hasta": "2026-06-30",
+    "finalizado_en": "2026-11-07T14:05:21.817310-05:00",
+    "id_procesamiento": 130,
+    "iniciado_en": "2026-11-07T14:03:11.994426-05:00",
+    "memoria_max_gb": 0.95,
+    "resumen": {
+      "filas": 34382137,
+      "lotes": 27,
+      "memoria_gb": {
+        "analyze": 0.95,
+        "clasificar": 0.95,
+        "copy": 0.95,
+        "leer_matriz": 0.95,
+        "predecir": 0.95,
+        "verificar_artefacto": 0.37
+      }
+    },
+    "tiempos_s": {
+      "analyze": 30.6,
+      "clasificar": 0.0,
+      "copy": 94.2,
+      "leer_matriz": 2.6,
+      "predecir": 2.7,
+      "verificar_artefacto": 0.1
+    },
+    "tipo": "INFERENCIA",
+    "segundos_reloj": 135.1
+  },
+  "matriz": {
+    "anios": 27,
+    "filas_a": 34382137,
+    "filas_b": 34382137,
+    "anios_distintos": [],
+    "identicas": true
+  },
+  "segundos_total": 165.5,
+  "fin": "2026-11-07T14:05:28-0500"
+}

@@ -15,11 +15,14 @@ TIPOS = frozenset({"INFORMATIVO", "ADVERTENCIA", "ERROR"})
 
 
 class BitacoraArchivo:
+    """Bitácora en un archivo JSONL de solo agregado, para la estación de entrenamiento."""
+
     def __init__(self, ruta: Path) -> None:
         self._ruta = ruta
         ruta.parent.mkdir(parents=True, exist_ok=True)
 
     def registrar(self, tipo: str, componente: str, descripcion: str, **detalle: Any) -> None:
+        """Agrega un evento con su fecha en UTC. Rechaza tipos fuera de TIPOS."""
         if tipo not in TIPOS:
             raise ValueError(f"tipo de evento no permitido: {tipo}")
         evento = {
@@ -34,22 +37,32 @@ class BitacoraArchivo:
 
 
 class BitacoraBD:
+    """Bitácora en la tabla sistema.bitacora de D1, que solo admite inserciones."""
+
     def __init__(self, motor: Engine) -> None:
         self._motor = motor
 
     def registrar(self, tipo: str, componente: str, descripcion: str, **detalle: Any) -> None:
+        """Inserta un evento. id_usuario e id_procesamiento van a sus columnas; el resto del
+        detalle, a la columna jsonb.
+        """
         if tipo not in TIPOS:
             raise ValueError(f"tipo de evento no permitido: {tipo}")
+        id_usuario = detalle.pop("id_usuario", None)
+        id_procesamiento = detalle.pop("id_procesamiento", None)
         with self._motor.begin() as conexion:
             conexion.execute(
                 text(
-                    "INSERT INTO sistema.bitacora (tipo, componente, descripcion, detalle) "
-                    "VALUES (:t, :c, :d, CAST(:j AS jsonb))"
+                    "INSERT INTO sistema.bitacora "
+                    "(tipo, componente, descripcion, id_usuario, id_procesamiento, detalle) "
+                    "VALUES (:t, :c, :d, :u, :p, CAST(:j AS jsonb))"
                 ),
                 {
                     "t": tipo,
                     "c": componente,
                     "d": descripcion,
+                    "u": id_usuario,
+                    "p": id_procesamiento,
                     "j": json.dumps(detalle, default=str),
                 },
             )

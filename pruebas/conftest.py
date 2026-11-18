@@ -38,7 +38,19 @@ class ProcesamientosMemoria:
     def __init__(self) -> None:
         self.filas: dict[int, dict[str, Any]] = {}
 
-    def crear(self, id_usuario: int, tipo: str, desde: dt.date, hasta: dt.date) -> int:
+    def crear(
+        self,
+        id_usuario: int,
+        tipo: str,
+        desde: dt.date,
+        hasta: dt.date,
+        id_modelo_version: int | None = None,
+        ubigeo_dep: str | None = None,
+    ) -> int:
+        from pfc_datos.repositorios import ProcesamientoActivoError
+
+        if any(f["estado"] in ("PENDIENTE", "EN_CURSO", "EN_ESPERA") for f in self.filas.values()):
+            raise ProcesamientoActivoError
         nuevo = len(self.filas) + 1
         self.filas[nuevo] = {
             "id_procesamiento": nuevo,
@@ -47,11 +59,23 @@ class ProcesamientosMemoria:
             "fecha_desde": desde,
             "fecha_hasta": hasta,
             "id_usuario": id_usuario,
+            "ubigeo_dep": ubigeo_dep,
         }
         return nuevo
 
     def obtener(self, id_procesamiento: int) -> dict[str, Any] | None:
         return self.filas.get(id_procesamiento)
+
+    def activo(self) -> dict[str, Any] | None:
+        activos = ("PENDIENTE", "EN_CURSO", "EN_ESPERA")
+        return next((f for f in self.filas.values() if f["estado"] in activos), None)
+
+    def cancelar(self, id_procesamiento: int) -> bool:
+        self.filas[id_procesamiento]["estado"] = "CANCELADO"
+        return True
+
+    def reanudar(self, id_procesamiento: int) -> None:
+        self.filas[id_procesamiento]["estado"] = "PENDIENTE"
 
 
 @pytest.fixture

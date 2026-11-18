@@ -1,0 +1,218 @@
+................................................F.....F.F.sF...F.F.F...F [ 96%]
+...                                                                      [100%]
+=================================== FAILURES ===================================
+_________________________ test_cp04_carga_manual_real __________________________
+
+clientes = {'INVESTIGADOR': <cliente_pruebas.Cliente object at 0x7eb3371f1250>, 'ESPECIALISTA': <cliente_pruebas.Cliente object at 0x7eb338f15650>, 'ASESOR': <cliente_pruebas.Cliente object at 0x7eb337389a50>}
+motor_bd = Engine(postgresql+psycopg://postgres:***@127.0.0.1:55433/pfc)
+tmp_path = PosixPath('/tmp/pytest-of-diegobfcy/pytest-18/test_cp04_carga_manual_real0')
+
+    def test_cp04_carga_manual_real(clientes: dict, motor_bd: Any, tmp_path: Path) -> None:
+        inv = clientes[INV]
+        identificador = _crear_en_espera(motor_bd)
+        ruta = f"{inv.base}/ingestas/{identificador}/archivos"
+    
+        def subir(nombre: str, contenido: Any, fuente: str = "dem_glo30") -> Any:
+            return inv.s.post(
+                ruta,
+                headers=inv.csrf(),
+                data={"fuente": fuente},
+                files={"archivo": (nombre, contenido)},
+            )
+    
+        assert subir("malware.exe", b"MZ\x90").status_code == 415
+        assert subir("falso.nc", b"MZ\x90").status_code == 415
+        # Archivo real de más de 2 GB (disperso): atraviesa nginx y se rechaza por tamaño.
+        grande = tmp_path / "grande.nc"
+        with grande.open("wb") as f:
+            f.truncate(2 * 1024**3 + 1024)
+        with grande.open("rb") as f:
+            r = inv.s.post(
+                ruta,
+                headers={**inv.csrf(), "Content-Type": "application/octet-stream"},
+                data=f,
+            )
+>       assert r.status_code == 422, r.text
+E       AssertionError: {"detalle":"The data value transmitted exceeds the capacity limit.","error":"Request Entity Too Large"}
+E         
+E       assert 413 == 422
+E        +  where 413 = <Response [413]>.status_code
+
+pruebas/sistema/test_api.py:203: AssertionError
+__ test_cp21_filtro_espacial_en_tesela[departamento=24-left(ubigeo_prov, 2)] ___
+
+clientes = {'INVESTIGADOR': <cliente_pruebas.Cliente object at 0x7eb3371f1250>, 'ESPECIALISTA': <cliente_pruebas.Cliente object at 0x7eb338f15650>, 'ASESOR': <cliente_pruebas.Cliente object at 0x7eb337389a50>}
+motor_bd = Engine(postgresql+psycopg://postgres:***@127.0.0.1:55433/pfc)
+filtro = 'departamento=24', columna = 'left(ubigeo_prov, 2)'
+
+    @pytest.mark.parametrize(
+        ("filtro", "columna"),
+        [("departamento=24", "left(ubigeo_prov, 2)"), ("provincia=1301", "ubigeo_prov")],
+    )
+    def test_cp21_filtro_espacial_en_tesela(
+        clientes: dict, motor_bd: Any, filtro: str, columna: str
+    ) -> None:
+        import mapbox_vector_tile
+    
+        valor = filtro.split("=")[1]
+        zona = {"24": (7, 35, 63), "1301": (7, 36, 66)}[valor]
+        z, x, y = zona
+        r = clientes[ESP].get(f"/mapas/susceptibilidad/2023-03/{z}/{x}/{y}.pbf?{filtro}")
+>       assert r.status_code == 200, r.status_code
+E       AssertionError: 204
+E       assert 204 == 200
+E        +  where 204 = <Response [204]>.status_code
+
+pruebas/sistema/test_api.py:311: AssertionError
+________________ test_cabeceras_de_seguridad_en_estaticos_y_api ________________
+
+    def test_cabeceras_de_seguridad_en_estaticos_y_api() -> None:
+        c = Cliente()
+        for ruta in (f"{c.base}/salud", c.base.removesuffix("/api") + "/visor/"):
+            h = c.s.get(ruta).headers
+            assert "frame-ancestors 'none'" in h["Content-Security-Policy"]
+>           assert h["X-Frame-Options"] == "DENY" and h["X-Content-Type-Options"] == "nosniff"
+E           AssertionError: assert ('DENY, DENY' == 'DENY'
+E             
+E             - DENY
+E             + DENY, DENY)
+
+pruebas/sistema/test_api.py:330: AssertionError
+______________ test_cp20_celdas_por_nivel_en_cada_zoom[chromium] _______________
+
+visor = <pruebas.sistema.conftest.Visor object at 0x7eb334135690>
+
+    def test_cp20_celdas_por_nivel_en_cada_zoom(visor: Any) -> None:
+        visor.abrir("2023-03")
+        for z in range(6, 13):
+            _ir(visor, -5.2, -80.0, z)
+            conteo = visor.pagina.evaluate(JS_MUESTRA_LIENZOS)
+>           assert sum(conteo.values()) > 0, f"sin celdas en zoom {z}"
+E           AssertionError: sin celdas en zoom 6
+E           assert 0 > 0
+E            +  where 0 = sum(dict_values([]))
+E            +    where dict_values([]) = <built-in method values of dict object at 0x7eb31fbd81c0>()
+E            +      where <built-in method values of dict object at 0x7eb31fbd81c0> = {}.values
+
+pruebas/sistema/test_visor.py:49: AssertionError
+_________ test_cp23_consulta_igual_a_la_base_en_diez_celdas[chromium] __________
+
+visor = <pruebas.sistema.conftest.Visor object at 0x7eb2b6092b10>
+motor_bd = Engine(postgresql+psycopg://postgres:***@127.0.0.1:55433/pfc)
+
+    def test_cp23_consulta_igual_a_la_base_en_diez_celdas(visor: Any, motor_bd: Any) -> None:
+        with motor_bd.connect() as c:
+            control = c.execute(
+                text("""SELECT c.id_celda, ST_Y(ST_Transform(ST_Centroid(c.geom), 4326)) AS lat,
+                               ST_X(ST_Transform(ST_Centroid(c.geom), 4326)) AS lon,
+                               s.nivel, s.probabilidad::float8 AS p, s.precip_mes_mm::float8 AS m
+                        FROM ref.celda_analisis c JOIN resultado.susceptibilidad s USING (id_celda)
+                        WHERE s.periodo = '2023-03-01' AND c.id_celda % 10846 = 7
+                        ORDER BY c.id_celda LIMIT 10""")
+            ).all()
+        assert len(control) == 10
+        pagina = visor.abrir("2023-03")
+        niveles = {1: "Baja", 2: "Media", 3: "Alta", 4: "Muy alta"}
+        for fila in control:
+            _ir(visor, fila.lat, fila.lon, 12)
+            punto = pagina.evaluate(
+                "([a, o]) => { const p = window.mapaVisor.latLngToContainerPoint([a, o]);"
+                " const r = document.getElementById('mapa').getBoundingClientRect();"
+                " return [p.x + r.left, p.y + r.top]; }",
+                [fila.lat, fila.lon],
+            )
+            pagina.mouse.click(*punto)
+            pagina.wait_for_selector(f'#ventana-consulta[data-celda="{fila.id_celda}"]', timeout=15000)
+            texto = pagina.inner_text("#ventana-consulta")
+>           assert (
+                niveles[fila.nivel] in texto and f"{fila.p:.4f}" in texto and f"{fila.m:.1f}" in texto
+            )
+E           AssertionError: assert ('Media' in 'Celda 7 · Barranca, Lima\nBaja\nPuntaje del modelo\t0.2020\nPrecipitación del mes\t108.2 mm\nMáximo en 3 días\t28.9 mm\nAntecedente de 90 días\t213.3 mm\nAnomalía de TSM Niño 1+2\t1.49 °C\nPendiente media / p90\t24.9° / 36.0°')
+
+pruebas/sistema/test_visor.py:148: AssertionError
+____________ test_cp19_panel_filtra_y_avisa_sin_registros[chromium] ____________
+
+panel = <pruebas.sistema.conftest.Visor object at 0x7eb2f84b2510>
+
+    def test_cp19_panel_filtra_y_avisa_sin_registros(panel: Any) -> None:
+        pagina = panel.pagina
+        pagina.goto("https://127.0.0.1:8444/panel/")
+        pagina.wait_for_selector('body[data-listo="1"]')
+        pagina.select_option('#form-historial select[name="tipo"]', "ERROR")
+        pagina.click('#form-historial button[type="submit"]')
+        pagina.wait_for_selector('#tabla-historial tr[data-tipo="ERROR"]')
+>       assert pagina.locator('#tabla-historial tr:not([data-tipo="ERROR"])').count() == 0
+E       assert 23 == 0
+E        +  where 23 = count()
+E        +    where count = <Locator frame=<Frame name= url='https://127.0.0.1:8444/panel/'> selector='#tabla-historial tr:not([data-tipo="ERROR"])'>.count
+E        +      where <Locator frame=<Frame name= url='https://127.0.0.1:8444/panel/'> selector='#tabla-historial tr:not([data-tipo="ERROR"])'> = locator('#tabla-historial tr:not([data-tipo="ERROR"])')
+E        +        where locator = <Page url='https://127.0.0.1:8444/panel/'>.locator
+
+pruebas/sistema/test_visor.py:173: AssertionError
+_______________ test_cp20_celdas_por_nivel_en_cada_zoom[firefox] _______________
+
+visor = <pruebas.sistema.conftest.Visor object at 0x7eb31e5ef550>
+
+    def test_cp20_celdas_por_nivel_en_cada_zoom(visor: Any) -> None:
+        visor.abrir("2023-03")
+        for z in range(6, 13):
+            _ir(visor, -5.2, -80.0, z)
+            conteo = visor.pagina.evaluate(JS_MUESTRA_LIENZOS)
+>           assert sum(conteo.values()) > 0, f"sin celdas en zoom {z}"
+E           AssertionError: sin celdas en zoom 6
+E           assert 0 > 0
+E            +  where 0 = sum(dict_values([]))
+E            +    where dict_values([]) = <built-in method values of dict object at 0x7eb2b5d85600>()
+E            +      where <built-in method values of dict object at 0x7eb2b5d85600> = {}.values
+
+pruebas/sistema/test_visor.py:49: AssertionError
+__________ test_cp23_consulta_igual_a_la_base_en_diez_celdas[firefox] __________
+
+visor = <pruebas.sistema.conftest.Visor object at 0x7eb2f815f290>
+motor_bd = Engine(postgresql+psycopg://postgres:***@127.0.0.1:55433/pfc)
+
+    def test_cp23_consulta_igual_a_la_base_en_diez_celdas(visor: Any, motor_bd: Any) -> None:
+        with motor_bd.connect() as c:
+            control = c.execute(
+                text("""SELECT c.id_celda, ST_Y(ST_Transform(ST_Centroid(c.geom), 4326)) AS lat,
+                               ST_X(ST_Transform(ST_Centroid(c.geom), 4326)) AS lon,
+                               s.nivel, s.probabilidad::float8 AS p, s.precip_mes_mm::float8 AS m
+                        FROM ref.celda_analisis c JOIN resultado.susceptibilidad s USING (id_celda)
+                        WHERE s.periodo = '2023-03-01' AND c.id_celda % 10846 = 7
+                        ORDER BY c.id_celda LIMIT 10""")
+            ).all()
+        assert len(control) == 10
+        pagina = visor.abrir("2023-03")
+        niveles = {1: "Baja", 2: "Media", 3: "Alta", 4: "Muy alta"}
+        for fila in control:
+            _ir(visor, fila.lat, fila.lon, 12)
+            punto = pagina.evaluate(
+                "([a, o]) => { const p = window.mapaVisor.latLngToContainerPoint([a, o]);"
+                " const r = document.getElementById('mapa').getBoundingClientRect();"
+                " return [p.x + r.left, p.y + r.top]; }",
+                [fila.lat, fila.lon],
+            )
+            pagina.mouse.click(*punto)
+            pagina.wait_for_selector(f'#ventana-consulta[data-celda="{fila.id_celda}"]', timeout=15000)
+            texto = pagina.inner_text("#ventana-consulta")
+>           assert (
+                niveles[fila.nivel] in texto and f"{fila.p:.4f}" in texto and f"{fila.m:.1f}" in texto
+            )
+E           AssertionError: assert ('Media' in 'Celda 7 · Barranca, Lima\nBaja\nPuntaje del modelo\t0.2020\nPrecipitación del mes\t108.2 mm\nMáximo en 3 días\t28.9 mm\nAntecedente de 90 días\t213.3 mm\nAnomalía de TSM Niño 1+2\t1.49 °C\nPendiente media / p90\t24.9° / 36.0°')
+
+pruebas/sistema/test_visor.py:148: AssertionError
+=============================== warnings summary ===============================
+pruebas/sistema/test_api.py: 57 warnings
+  /home/diegobfcy/anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/urllib3/connectionpool.py:1129: InsecureRequestWarning: Unverified HTTPS request is being made to host '127.0.0.1'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED pruebas/sistema/test_api.py::test_cp04_carga_manual_real - AssertionEr...
+FAILED pruebas/sistema/test_api.py::test_cp21_filtro_espacial_en_tesela[departamento=24-left(ubigeo_prov, 2)]
+FAILED pruebas/sistema/test_api.py::test_cabeceras_de_seguridad_en_estaticos_y_api
+FAILED pruebas/sistema/test_visor.py::test_cp20_celdas_por_nivel_en_cada_zoom[chromium]
+FAILED pruebas/sistema/test_visor.py::test_cp23_consulta_igual_a_la_base_en_diez_celdas[chromium]
+FAILED pruebas/sistema/test_visor.py::test_cp19_panel_filtra_y_avisa_sin_registros[chromium]
+FAILED pruebas/sistema/test_visor.py::test_cp20_celdas_por_nivel_en_cada_zoom[firefox]
+FAILED pruebas/sistema/test_visor.py::test_cp23_consulta_igual_a_la_base_en_diez_celdas[firefox]

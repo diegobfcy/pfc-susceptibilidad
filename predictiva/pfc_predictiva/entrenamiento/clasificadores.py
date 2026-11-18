@@ -9,12 +9,20 @@ import numpy as np
 
 
 class Clasificador(Protocol):
-    def fit(self, X: Any, y: Any, **kwargs: Any) -> Any: ...
+    """Interfaz común de XGBoost y Random Forest que usan el entrenamiento y la inferencia."""
 
-    def predict_proba(self, X: Any) -> np.ndarray: ...
+    def fit(self, X: Any, y: Any, **kwargs: Any) -> Any:
+        """Ajusta el clasificador a las variables X y al objetivo y."""
+
+    def predict_proba(self, X: Any) -> np.ndarray:
+        """Probabilidades por clase; la columna 1 es la de deslizamiento."""
 
 
 def crear_xgboost(params: dict[str, Any], semilla: int, **extra: Any) -> Clasificador:
+    """XGBoost con los hiperparámetros dados, histogramas y la semilla del proyecto.
+
+    El dispositivo se toma de PFC_DISPOSITIVO_XGB: cuda en la estación y cpu en CI y en el VPS.
+    """
     import xgboost as xgb
 
     return xgb.XGBClassifier(
@@ -30,6 +38,7 @@ def crear_xgboost(params: dict[str, Any], semilla: int, **extra: Any) -> Clasifi
 
 
 def crear_random_forest(semilla: int) -> Clasificador:
+    """Random Forest de la línea base, con pesos de clase balanceados por muestra."""
     from sklearn.ensemble import RandomForestClassifier
 
     return RandomForestClassifier(

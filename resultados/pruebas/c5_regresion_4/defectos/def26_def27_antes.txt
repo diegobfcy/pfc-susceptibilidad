@@ -1,0 +1,5 @@
+# Reproducción del comportamiento anterior del conector del inventario — 2026-11-10T17:50:33-0500
+## DEF-26: verify=True con las CA de certifi (como hacía el conector)
+SSLError: HTTPSConnectionPool(host='geocatmin.ingemmet.gob.pe', port=443): Max retries exceeded with url: /arcgis/rest/services/SERV_PELIGROS_GEOLOGICOS/MapServer/0/query?where=1%3D1&returnCountOnly=true&f=json (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verif
+## DEF-27: la única consulta que hacía el conector (where=1=1, f=geojson)
+{"registros_recibidos": 2000, "exceededTransferLimit": true, "registros_en_el_servicio": 28915}

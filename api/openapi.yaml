@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: API del sistema de susceptibilidad a deslizamientos (Presentación - Servicios)
-  version: 0.4.0
+  version: 0.5.0
 servers:
   - url: /api
 components:
@@ -18,12 +18,21 @@ components:
         detalle: {type: string}
     SolicitudIngesta:
       type: object
-      required: [tipo, fecha_desde, fecha_hasta]
+      required: [fecha_desde, fecha_hasta]
       additionalProperties: false
       properties:
-        tipo: {type: string, enum: [INGESTA, ENTRENAMIENTO, INFERENCIA]}
+        tipo: {type: string, enum: [INGESTA, ENTRENAMIENTO]}
         fecha_desde: {type: string, format: date, description: "Desde 2000-01-01"}
         fecha_hasta: {type: string, format: date}
+    SolicitudInferencia:
+      type: object
+      required: [fecha_desde, fecha_hasta, id_modelo_version]
+      additionalProperties: false
+      properties:
+        fecha_desde: {type: string, format: date}
+        fecha_hasta: {type: string, format: date}
+        id_modelo_version: {type: integer, minimum: 1}
+        departamento: {type: string, pattern: "^[0-9]{2}$", description: "Zona (RF-01): ubigeo del departamento; si se omite, la macrorregión completa"}
     Procesamiento:
       type: object
       properties:
@@ -59,11 +68,11 @@ paths:
         "200":
           description: Token vigente
           content: {application/json: {schema: {type: object, properties: {csrf: {type: string}}}}}
-  /sesion:
+  /auth/login:
     post:
       tags: [Acceso]
       parameters: [{$ref: "#/components/parameters/TokenCsrf"}]
-      summary: Inicia sesión (Argon2id; bloqueo tras 5 intentos fallidos)
+      summary: Inicia sesión (Argon2id; bloqueo al quinto intento fallido)
       requestBody:
         required: true
         content:
@@ -75,10 +84,18 @@ paths:
                 correo: {type: string, maxLength: 150}
                 clave: {type: string, maxLength: 128}
       responses:
-        "200":
-          description: Sesión iniciada
-          content: {application/json: {schema: {type: object, properties: {rol: {type: string}}}}}
+        "204": {description: "Sesión iniciada con cookie HttpOnly, Secure y SameSite=Strict"}
         "400": {$ref: "#/components/responses/Invalida"}
+        "401": {$ref: "#/components/responses/NoAutenticado"}
+        "423": {description: Cuenta bloqueada por intentos fallidos}
+        "429": {description: Límite de solicitudes excedido (lo aplica el proxy)}
+  /sesion:
+    get:
+      tags: [Acceso]
+      summary: Rol y correo de la sesión actual
+      security: [{sesion: []}]
+      responses:
+        "200": {description: Sesión vigente}
         "401": {$ref: "#/components/responses/NoAutenticado"}
     delete:
       tags: [Acceso]
@@ -102,6 +119,19 @@ paths:
         "400": {$ref: "#/components/responses/Invalida"}
         "401": {$ref: "#/components/responses/NoAutenticado"}
         "403": {$ref: "#/components/responses/Prohibido"}
+        "409": {description: Ya hay un procesamiento activo}
+  /procesamientos/activo:
+    get:
+      tags: [Procesamiento]
+      summary: Procesamiento pendiente, en curso o en espera, con su motivo de espera (IU-06, IU-08, IU-10)
+      security: [{sesion: []}]
+      responses:
+        "200":
+          description: Procesamiento activo
+          content: {application/json: {schema: {$ref: "#/components/schemas/Procesamiento"}}}
+        "204": {description: No hay procesamiento activo}
+        "401": {$ref: "#/components/responses/NoAutenticado"}
+        "403": {$ref: "#/components/responses/Prohibido"}
   /ingestas/{id}:
     get:
       tags: [Procesamiento]
@@ -114,7 +144,184 @@ paths:
           description: Estado actual
           content: {application/json: {schema: {$ref: "#/components/schemas/Procesamiento"}}}
         "401": {$ref: "#/components/responses/NoAutenticado"}
+        "403": {$ref: "#/components/responses/Prohibido"}
         "404": {description: No existe}
+  /ingestas/{id}/archivos:
+    post:
+      tags: [Procesamiento]
+      summary: Carga manual cuando la fuente no responde (RF-02); reanuda el procesamiento
+      security: [{sesion: []}]
+      parameters:
+        - {$ref: "#/components/parameters/TokenCsrf"}
+        - {name: id, in: path, required: true, schema: {type: integer, minimum: 1}}
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [archivo, fuente]
+              properties:
+                archivo: {type: string, format: binary}
+                fuente: {type: string, enum: [ersst_v5, era5_land, dem_glo30, inventario]}
+      responses:
+        "201": {description: Archivo registrado en D2 con su SHA-256}
+        "400": {$ref: "#/components/responses/Invalida"}
+        "401": {$ref: "#/components/responses/NoAutenticado"}
+        "403": {$ref: "#/components/responses/Prohibido"}
+        "404": {description: No existe}
+        "409": {description: El procesamiento no está en espera}
+        "415": {description: Extensión no permitida o contenido que no corresponde}
+        "422": {description: Supera el límite de 2 GB}
+  /entrenamientos:
+    post:
+      tags: [Procesamiento]
+      summary: Encola un entrenamiento sobre datos verificados
+      security: [{sesion: []}]
+      parameters:
+        - {$ref: "#/components/parameters/TokenCsrf"}
+      requestBody:
+        required: true
+        content: {application/json: {schema: {$ref: "#/components/schemas/SolicitudIngesta"}}}
+      responses:
+        "202": {description: Encolado}
+        "400": {$ref: "#/components/responses/Invalida"}
+        "401": {$ref: "#/components/responses/NoAutenticado"}
+        "403": {$ref: "#/components/responses/Prohibido"}
+        "409": {description: Ya hay un procesamiento activo}
+        "422": {description: Sin datos verificados para la ventana}
+  /inferencias:
+    post:
+      tags: [Inferencia]
+      summary: Estima y clasifica por lotes con una versión del modelo (RF-03, RF-07)
+      security: [{sesion: []}]
+      parameters:
+        - {$ref: "#/components/parameters/TokenCsrf"}
+      requestBody:
+        required: true
+        content: {application/json: {schema: {$ref: "#/components/schemas/SolicitudInferencia"}}}
+      responses:
+        "202": {description: Inferencia encolada}
+        "400": {$ref: "#/components/responses/Invalida"}
+        "401": {$ref: "#/components/responses/NoAutenticado"}
+        "403": {$ref: "#/components/responses/Prohibido"}
+        "409": {description: Ya hay un procesamiento activo}
+        "422": {description: Versión no aplicable o SHA-256 que no coincide}
+  /inferencias/{id}:
+    get:
+      tags: [Inferencia]
+      summary: Estado de la inferencia, tiempos por fase y memoria
+      security: [{sesion: []}]
+      parameters:
+        - {name: id, in: path, required: true, schema: {type: integer, minimum: 1}}
+      responses:
+        "200":
+          description: Estado actual
+          content: {application/json: {schema: {$ref: "#/components/schemas/Procesamiento"}}}
+        "401": {$ref: "#/components/responses/NoAutenticado"}
+        "403": {$ref: "#/components/responses/Prohibido"}
+        "404": {description: No existe}
+  /procesamientos/{id}/cancelar:
+    post:
+      tags: [Procesamiento]
+      summary: Cancela un procesamiento activo (CU-01, flujo 6a)
+      security: [{sesion: []}]
+      parameters:
+        - {$ref: "#/components/parameters/TokenCsrf"}
+        - {name: id, in: path, required: true, schema: {type: integer, minimum: 1}}
+      responses:
+        "204": {description: Cancelado}
+        "401": {$ref: "#/components/responses/NoAutenticado"}
+        "403": {$ref: "#/components/responses/Prohibido"}
+        "404": {description: No existe}
+        "409": {description: El procesamiento ya terminó}
+  /mapas/{capa}/{periodo}/{z}/{x}/{y}.pbf:
+    get:
+      tags: [Mapas]
+      summary: Tesela vectorial filtrable por departamento o provincia (RF-08 a RF-10)
+      security: [{sesion: []}]
+      parameters:
+        - {name: capa, in: path, required: true, schema: {type: string, enum: [susceptibilidad, precipitacion, pendiente, tsm, inventario]}}
+        - {name: periodo, in: path, required: true, schema: {type: string, description: AAAA-MM}}
+        - {name: z, in: path, required: true, schema: {type: integer, minimum: 0, maximum: 16}}
+        - {name: x, in: path, required: true, schema: {type: integer, minimum: 0}}
+        - {name: y, in: path, required: true, schema: {type: integer, minimum: 0}}
+        - {name: departamento, in: query, schema: {type: string, description: Ubigeo de 2 dígitos}}
+        - {name: provincia, in: query, schema: {type: string, description: Ubigeo de 4 dígitos}}
+      responses:
+        "200":
+          description: Tesela MVT
+          content: {application/vnd.mapbox-vector-tile: {schema: {type: string, format: binary}}}
+        "204": {description: Periodo disponible sin celdas en esta tesela}
+        "400": {$ref: "#/components/responses/Invalida"}
+        "401": {$ref: "#/components/responses/NoAutenticado"}
+        "403": {$ref: "#/components/responses/Prohibido"}
+        "404": {description: Periodo sin resultados o capa inexistente}
+  /consulta-punto:
+    get:
+      tags: [Mapas]
+      summary: Nivel, puntaje y variables de la celda en un punto (RF-11)
+      security: [{sesion: []}]
+      parameters:
+        - {name: periodo, in: query, required: true, schema: {type: string}}
+        - {name: lat, in: query, required: true, schema: {type: number}}
+        - {name: lon, in: query, required: true, schema: {type: number}}
+      responses:
+        "200": {description: Valores de la celda}
+        "400": {$ref: "#/components/responses/Invalida"}
+        "401": {$ref: "#/components/responses/NoAutenticado"}
+        "403": {$ref: "#/components/responses/Prohibido"}
+        "404": {description: Sin datos para el punto o el periodo}
+  /periodos:
+    get:
+      tags: [Mapas]
+      summary: Periodos con resultados
+      security: [{sesion: []}]
+      responses:
+        "200": {description: Lista de periodos AAAA-MM}
+        "401": {$ref: "#/components/responses/NoAutenticado"}
+        "403": {$ref: "#/components/responses/Prohibido"}
+  /ambitos:
+    get:
+      tags: [Mapas]
+      summary: Departamentos y provincias con su caja envolvente
+      security: [{sesion: []}]
+      responses:
+        "200": {description: Ámbitos}
+        "401": {$ref: "#/components/responses/NoAutenticado"}
+        "403": {$ref: "#/components/responses/Prohibido"}
+  /capas/limites:
+    get:
+      tags: [Mapas]
+      summary: Límites provinciales simplificados en GeoJSON
+      security: [{sesion: []}]
+      responses:
+        "200": {description: GeoJSON}
+        "401": {$ref: "#/components/responses/NoAutenticado"}
+        "403": {$ref: "#/components/responses/Prohibido"}
+  /indicadores:
+    get:
+      tags: [Panel]
+      summary: Métricas por versión, deriva, tiempos por fase, memoria y distribución (RF-12)
+      security: [{sesion: []}]
+      responses:
+        "200": {description: Indicadores}
+        "401": {$ref: "#/components/responses/NoAutenticado"}
+        "403": {$ref: "#/components/responses/Prohibido"}
+  /bitacora:
+    get:
+      tags: [Panel]
+      summary: Historial filtrable por fecha y tipo (RF-14)
+      security: [{sesion: []}]
+      parameters:
+        - {name: desde, in: query, schema: {type: string, format: date}}
+        - {name: hasta, in: query, schema: {type: string, format: date}}
+        - {name: tipo, in: query, schema: {type: string, enum: [INFORMATIVO, ADVERTENCIA, ERROR]}}
+      responses:
+        "200": {description: Eventos ordenados por fecha descendente}
+        "400": {$ref: "#/components/responses/Invalida"}
+        "401": {$ref: "#/components/responses/NoAutenticado"}
+        "403": {$ref: "#/components/responses/Prohibido"}
   /salud:
     get:
       tags: [Técnico]

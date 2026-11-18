@@ -1,0 +1,56 @@
+[
+  {
+    "trabajo": "calidad-estatica",
+    "paso": "black --check",
+    "estado": "aprobado",
+    "segundos": 0.2
+  },
+  {
+    "trabajo": "calidad-estatica",
+    "paso": "ruff check",
+    "estado": "aprobado",
+    "segundos": 0.0
+  },
+  {
+    "trabajo": "calidad-estatica",
+    "paso": "lint-imports",
+    "estado": "aprobado",
+    "segundos": 0.1
+  },
+  {
+    "trabajo": "calidad-estatica",
+    "paso": "openapi-spec-validator",
+    "estado": "aprobado",
+    "segundos": 0.2
+  },
+  {
+    "trabajo": "calidad-estatica",
+    "paso": "docstrings",
+    "estado": "aprobado",
+    "segundos": 0.0
+  },
+  {
+    "trabajo": "calidad-estatica",
+    "paso": "pip-audit (producci\u00f3n)",
+    "estado": "aprobado",
+    "segundos": 5.0
+  },
+  {
+    "trabajo": "pruebas",
+    "paso": "pytest --cov",
+    "estado": "aprobado",
+    "segundos": 50.6
+  },
+  {
+    "trabajo": "analisis-sonarqube",
+    "paso": "analisis-sonarqube",
+    "estado": "no ejecutado",
+    "segundos": 0.0
+  },
+  {
+    "trabajo": "desplegar-staging",
+    "paso": "desplegar-staging",
+    "estado": "no ejecutado",
+    "segundos": 0.0
+  }
+]

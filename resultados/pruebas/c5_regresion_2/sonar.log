@@ -1,0 +1,172 @@
+15:56:08.583 WARN  Property 'sonar.working.directory' with value '/tmp/.scannerwork' is overridden with value '/tmp/scannerwork'
+15:56:08.588 INFO  Scanner configuration file: /opt/sonar-scanner/conf/sonar-scanner.properties
+15:56:08.588 INFO  Project root configuration file: /home/diegobfcy/ProyectosIA/proyectos-dev/pfc-susceptibilidad/sonar-project.properties
+15:56:08.596 INFO  SonarScanner CLI 8.1.0.6389
+15:56:08.599 INFO  Linux 7.0.0-38-generic amd64
+15:56:09.175 INFO  Communicating with SonarQube Community Build 26.10.0.133078
+15:56:09.175 INFO  JRE provisioning: os[linux], arch[x86_64]
+15:56:10.139 INFO  Starting SonarScanner Engine...
+15:56:10.139 INFO  Java 21.0.12.1 Eclipse Adoptium (64-bit)
+15:56:10.732 INFO  Load global settings
+15:56:10.805 INFO  Load global settings (done) | time=72ms
+15:56:10.807 INFO  Server id: 147B411E-AaHA6YmqyFtKiurtzMbb
+15:56:10.813 INFO  Loading required plugins
+15:56:10.813 INFO  Load plugins index
+15:56:10.822 INFO  Load plugins index (done) | time=9ms
+15:56:10.823 INFO  Load/download plugins
+15:56:10.980 INFO  Load/download plugins (done) | time=158ms
+15:56:11.153 INFO  Load project settings for component key: 'pfc-susceptibilidad'
+15:56:11.164 INFO  Load project settings for component key: 'pfc-susceptibilidad' (done) | time=11ms
+15:56:11.172 INFO  Process project properties
+15:56:11.180 INFO  Process project properties (done) | time=7ms
+15:56:11.185 INFO  Project key: pfc-susceptibilidad
+15:56:11.186 INFO  Base dir: /home/diegobfcy/ProyectosIA/proyectos-dev/pfc-susceptibilidad
+15:56:11.186 INFO  Working dir: /tmp/scannerwork
+15:56:11.249 INFO  Load quality profiles
+15:56:11.318 INFO  Load quality profiles (done) | time=70ms
+15:56:11.336 INFO  Load active rules
+15:56:11.457 INFO  Load active rules (done) | time=121ms
+15:56:11.460 INFO  Load analysis cache
+15:56:11.473 INFO  Load analysis cache | time=13ms
+15:56:11.519 INFO  Preprocessing files...
+15:56:11.580 INFO  4 languages detected in 93 preprocessed files (done) | time=61ms
+15:56:11.580 INFO  0 files ignored because of inclusion/exclusion patterns
+15:56:11.581 INFO  15 directories skipped because of exclusion patterns (content not counted)
+15:56:11.581 INFO  24 files ignored because of scm ignore settings
+15:56:11.581 INFO  Loading plugins for detected languages
+15:56:11.581 INFO  Load/download plugins
+15:56:12.035 INFO  Load/download plugins (done) | time=454ms
+15:56:12.139 INFO  Load project repositories
+15:56:12.196 INFO  Load project repositories (done) | time=58ms
+15:56:12.212 INFO  Indexing files...
+15:56:12.212 INFO  Project configuration:
+15:56:12.213 INFO    Excluded sources: presentacion/visor/vendor/**, **/__pycache__/**
+15:56:12.213 INFO    Excluded sources for coverage: presentacion/**, **/__main__.py
+15:56:12.223 INFO  93 files indexed (done) | time=11ms
+15:56:12.224 INFO  Quality profile for css: Sonar way core
+15:56:12.224 INFO  Quality profile for js: Sonar way core
+15:56:12.224 INFO  Quality profile for py: Sonar way core
+15:56:12.224 INFO  Quality profile for web: Sonar way core
+15:56:12.224 INFO  ------------- Run sensors on module pfc-susceptibilidad
+15:56:12.248 INFO  Load metrics repository
+15:56:12.262 INFO  Load metrics repository (done) | time=14ms
+15:56:12.596 INFO  Reflections took 42 ms to scan 1 urls, producing 30 keys and 303 values
+15:56:12.649 INFO  Sensor IaC YAML File Type Classification Sensor [iac]
+15:56:12.651 INFO  Sensor IaC YAML File Type Classification Sensor [iac] (done) | time=2ms
+15:56:12.651 INFO  Sensor IaC hadolint report Sensor [iac]
+15:56:12.651 INFO  Sensor IaC hadolint report Sensor [iac] (done) | time=0ms
+15:56:12.652 INFO  Sensor Java Config Sensor [iac]
+15:56:12.652 INFO  There are no files to be analyzed for the Java language
+15:56:12.652 INFO  Sensor Java Config Sensor [iac] (done) | time=0ms
+15:56:12.652 INFO  Sensor IaC Docker Sensor [iac]
+15:56:12.655 INFO  There are no files to be analyzed for the Docker language
+15:56:12.655 INFO  Sensor IaC Docker Sensor [iac] (done) | time=2ms
+15:56:12.655 INFO  Sensor Python Sensor [python]
+15:56:12.978 INFO  Starting global symbols computation
+15:56:12.979 INFO  83 source files to be analyzed
+15:56:13.469 INFO  83/83 source files have been analyzed
+15:56:13.469 INFO  Finished step global symbols computation in 490ms
+15:56:13.499 INFO  Starting rules execution
+15:56:13.499 INFO  83 source files to be analyzed
+15:56:14.047 INFO  83/83 source files have been analyzed
+15:56:14.047 INFO  Finished step rules execution in 548ms
+15:56:14.048 INFO  The Python analyzer was able to leverage cached data from previous analyses for 0 out of 83 files. These files were not parsed.
+15:56:14.048 INFO  Sensor Python Sensor [python] (done) | time=1393ms
+15:56:14.049 INFO  Sensor Cobertura Sensor for Python coverage [python]
+15:56:14.096 INFO  Python test coverage
+15:56:14.097 INFO  Parsing report '/home/diegobfcy/ProyectosIA/proyectos-dev/pfc-susceptibilidad/resultados/pruebas/c5_regresion_2/coverage.xml'
+15:56:14.132 INFO  Sensor Cobertura Sensor for Python coverage [python] (done) | time=82ms
+15:56:14.132 INFO  Sensor PythonXUnitSensor [python]
+15:56:14.175 INFO  Sensor PythonXUnitSensor [python] (done) | time=43ms
+15:56:14.175 INFO  Sensor Python Dependency Sensor [python]
+15:56:14.176 INFO  Sensor Python Dependency Sensor [python] (done) | time=1ms
+15:56:14.177 INFO  Sensor HTML [web]
+15:56:14.214 INFO  Sensor HTML [web] (done) | time=37ms
+15:56:14.215 INFO  Sensor TextAndSecretsSensor [text]
+15:56:14.223 INFO  Available processors: 16
+15:56:14.223 INFO  Using 16 threads for analysis.
+15:56:14.358 INFO  Start fetching files for the text and secrets analysis
+15:56:14.361 INFO  Using Git CLI to retrieve dirty files
+15:56:14.374 INFO  Retrieving language associated files and files included via "sonar.text.inclusions" that are tracked by git
+15:56:14.374 INFO  Starting the text and secrets analysis
+15:56:14.375 INFO  91 source files to be analyzed for the text and secrets analysis
+15:56:14.437 INFO  91/91 source files have been analyzed for the text and secrets analysis
+15:56:14.438 INFO  Sensor TextAndSecretsSensor [text] (done) | time=223ms
+15:56:14.439 INFO  ------------- Run sensors on project
+15:56:14.532 INFO  Sensor JavaScript/TypeScript/CSS analysis [javascript]
+15:56:14.678 INFO  Detected os: Linux arch: amd64 alpine: false. Platform: LINUX_X64
+15:56:14.679 INFO  Deploy location /opt/sonar-scanner/.sonar/js/node-runtime, tagetRuntime: /opt/sonar-scanner/.sonar/js/node-runtime/node,  version: /opt/sonar-scanner/.sonar/js/node-runtime/version.txt
+15:56:16.210 INFO  Using embedded Node.js runtime.
+15:56:16.210 INFO  Using Node.js executable: '/opt/sonar-scanner/.sonar/js/node-runtime/node'.
+15:56:17.310 INFO  Memory configuration: OS (31134 MB), Node.js (4288 MB).
+15:56:17.371 INFO  gRPC analyze-project server listening on 127.0.0.1:40561
+15:56:17.442 INFO  Plugin version: [14.0.0.46108]
+15:56:18.476 INFO  Found 0 tsconfig.json file(s): []
+15:56:19.043 INFO  6 source files to be analyzed
+15:56:19.043 INFO  Analyzing 3 file(s) using default options [lib: lib.esnext.d.ts, lib.dom.d.ts]
+15:56:19.043 INFO  6/6 source files have been analyzed
+15:56:19.049 INFO  Hit the cache for 0 out of 5
+15:56:19.049 INFO  Miss the cache for 5 out of 5: ANALYSIS_MODE_INELIGIBLE [5/5]
+15:56:19.050 INFO  Sensor JavaScript/TypeScript/CSS analysis [javascript] (done) | time=4518ms
+15:56:19.050 INFO  Sensor IaC Project Sensor [iac]
+15:56:19.050 INFO  Sensor IaC Project Sensor [iac] (done) | time=0ms
+15:56:19.050 INFO  Sensor Zero Coverage Sensor
+15:56:19.051 INFO  Sensor Zero Coverage Sensor (done) | time=0ms
+15:56:19.051 INFO  ------------- Gather SCA dependencies on project
+15:56:19.054 INFO  Dependency analysis skipped
+15:56:19.057 INFO  SCM Publisher SCM provider for this project is: git
+15:56:19.057 INFO  SCM Publisher 39 source files to be analyzed
+15:56:19.330 INFO  SCM Publisher 0/39 source files have been analyzed (done) | time=273ms
+15:56:19.330 WARN  Missing blame information for the following files:
+15:56:19.330 WARN    * servicios/pfc_servicios/seguridad/acceso.py
+15:56:19.330 WARN    * presentacion/panel/index.html
+15:56:19.330 WARN    * pruebas/integracion/test_fuentes_reales.py
+15:56:19.331 WARN    * servicios/pfc_servicios/api/mapas.py
+15:56:19.331 WARN    * servicios/pfc_servicios/api/autenticacion.py
+15:56:19.331 WARN    * etl/pfc_etl/orquestador/cola.py
+15:56:19.331 WARN    * predictiva/pfc_predictiva/inferencia/inferencia.py
+15:56:19.331 WARN    * etl/pfc_etl/orquestador/etapas.py
+15:56:19.331 WARN    * pruebas/conftest.py
+15:56:19.331 WARN    * servicios/pfc_servicios/__init__.py
+15:56:19.331 WARN    * pruebas/sistema/conftest.py
+15:56:19.331 WARN    * servicios/pfc_servicios/api/validacion.py
+15:56:19.331 WARN    * datos/pfc_datos/resultados.py
+15:56:19.331 WARN    * presentacion/visor/js/mapa.js
+15:56:19.332 WARN    * pruebas/integracion/test_esquema_bd.py
+15:56:19.332 WARN    * servicios/pfc_servicios/admin.py
+15:56:19.332 WARN    * servicios/pfc_servicios/api/indicadores.py
+15:56:19.332 WARN    * servicios/pfc_servicios/seguridad/claves.py
+15:56:19.332 WARN    * servicios/pfc_servicios/api/ingestas.py
+15:56:19.332 WARN    * pruebas/unitarias/test_casos_caja_blanca.py
+15:56:19.332 WARN    * pruebas/integracion/test_inferencia_bd.py
+15:56:19.332 WARN    * predictiva/pfc_predictiva/inferencia/trabajador.py
+15:56:19.332 WARN    * pruebas/sistema/test_visor.py
+15:56:19.332 WARN    * pruebas/unitarias/test_servicios.py
+15:56:19.332 WARN    * pruebas/carga/locustfile.py
+15:56:19.332 WARN    * etl/pfc_etl/orquestador/orquestador.py
+15:56:19.332 WARN    * pruebas/sistema/test_api.py
+15:56:19.332 WARN    * datos/pfc_datos/repositorios.py
+15:56:19.332 WARN    * servicios/pfc_servicios/teselas/mvt.py
+15:56:19.333 WARN    * servicios/pfc_servicios/seguridad/archivos.py
+15:56:19.333 WARN    * presentacion/comun/comun.js
+15:56:19.333 WARN    * presentacion/visor/css/visor.css
+15:56:19.333 WARN    * datos/pfc_datos/bitacora.py
+15:56:19.333 WARN    * pruebas/unitarias/test_servicios_contrato.py
+15:56:19.333 WARN    * pruebas/integracion/conftest.py
+15:56:19.333 WARN    * pruebas/unitarias/test_orquestador.py
+15:56:19.333 WARN    * servicios/pfc_servicios/api/inferencias.py
+15:56:19.333 WARN    * presentacion/visor/index.html
+15:56:19.333 WARN    * presentacion/panel/js/panel.js
+15:56:19.333 WARN  This may lead to missing/broken features in SonarQube
+15:56:19.335 INFO  CPD Executor 14 files had no CPD blocks
+15:56:19.335 INFO  CPD Executor Calculating CPD for 52 files
+15:56:19.343 INFO  CPD Executor CPD calculation finished (done) | time=8ms
+15:56:19.346 INFO  SCM revision ID 'd9b568959d9bf875f2392e4a2e1a43a9c6922ca9'
+15:56:19.388 INFO  Analysis report generated in 39ms, dir size=818.8 kB
+15:56:19.482 INFO  Analysis report compressed in 94ms, zip size=472.3 kB
+15:56:19.495 INFO  Analysis report uploaded in 13ms
+15:56:19.496 INFO  ------------- Check Quality Gate status
+15:56:19.496 INFO  Waiting for the analysis report to be processed (max 300s)
+15:56:24.624 ERROR QUALITY GATE STATUS: FAILED - View details on http://127.0.0.1:9010/dashboard?id=pfc-susceptibilidad
+15:56:24.669 INFO  EXECUTION FAILURE
+15:56:24.669 INFO  Total time: 16.083s

@@ -1,17 +1,39 @@
 # Imagen worker: capas de Ingesta y ETL y Predictiva (también se usa en la estación de entrenamiento)
-FROM python:3.11.11-slim-bookworm
+# Debian 13 con Python 3.11.18, la misma versión de las pruebas; parches del sistema al construir
+# Etapa expat (DEF-20): libexpat 2.10.0 corrige CVE-2026-113351, -115506, -117610 y -118370, que
+# afectan a la 2.9.0 de Debian 13 sin corrección publicada. El tarball oficial se fija por SHA-256
+# (firma GPG de Sebastian Pipping verificada al fijarlo, 10/11/2026).
+FROM python:3.11.18-slim-trixie AS expat
+ARG EXPAT_SHA256=c624ba2998fc65df1163a49641ff3f9ab73138b11641d92c86bee0fb01b1bc7f
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential curl ca-certificates \
+        xz-utils \
+    && curl -fsSL -o /tmp/expat.tar.xz \
+        https://github.com/libexpat/libexpat/releases/download/R_2_10_0/expat-2.10.0.tar.xz \
+    && echo "$EXPAT_SHA256  /tmp/expat.tar.xz" | sha256sum -c - \
+    && tar -xJf /tmp/expat.tar.xz -C /tmp && cd /tmp/expat-2.10.0 \
+    && ./configure --prefix=/opt/expat --without-docbook --without-examples --without-tests \
+    && make -j"$(nproc)" && make install
+
+FROM python:3.11.18-slim-trixie
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PFC_CONFIG=/srv/config/config.yaml
 WORKDIR /srv
-# libexpat1: dependencia nativa de rasterio (GDAL) ausente en la imagen slim
-RUN apt-get update && apt-get install -y --no-install-recommends libexpat1 \
-    && rm -rf /var/lib/apt/lists/*
+# libexpat: dependencia nativa de rasterio (GDAL) ausente en la imagen slim; se usa la 2.10.0 compilada
+# arriba en lugar del paquete libexpat1 de Debian
+RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
+COPY --from=expat /opt/expat/lib/libexpat.so.1* /usr/local/lib/
+RUN ldconfig
 COPY pyproject.toml README.md ./
 COPY datos/pfc_datos datos/pfc_datos
 COPY etl/pfc_etl etl/pfc_etl
 COPY predictiva/pfc_predictiva predictiva/pfc_predictiva
 COPY servicios servicios
 COPY config config
-RUN pip install --no-cache-dir ".[geo]" dask scipy && useradd --system --uid 10001 pfc \
+# pip se desinstala al final: no se usa en ejecución y trae una copia vulnerable de setuptools
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel && pip install --no-cache-dir ".[geo]" dask scipy \
+    && pip uninstall -y pip && useradd --system --uid 10001 pfc \
     && mkdir -p /datos/d2 && chown pfc /datos/d2  # el volumen d2 hereda el propietario
+# Endurecimiento (DEF-20): sin los paquetes base con CVE altas que la aplicación no usa
+COPY despliegue/endurecer_imagen.sh /tmp/endurecer_imagen.sh
+RUN sh /tmp/endurecer_imagen.sh && rm /tmp/endurecer_imagen.sh
 USER pfc
 CMD ["python", "-m", "pfc_etl.orquestador", "--cola"]

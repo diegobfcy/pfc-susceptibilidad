@@ -32,11 +32,19 @@ class AlmacenArchivos:
         raiz.mkdir(parents=True, exist_ok=True)
 
     def ruta_temporal(self, fuente: str, nombre: str) -> Path:
+        """Ruta de descarga con sufijo .parcial: el archivo no cuenta como registrado hasta que se
+        mueve.
+        """
         destino = self._raiz / "fuentes" / fuente / f"{nombre}.part"
         destino.parent.mkdir(parents=True, exist_ok=True)
         return destino
 
     def registrar(self, fuente: str, ruta: Path, sha256: str) -> ArchivoRegistrado:
+        """Mueve el archivo descargado a su destino en D2 si su huella coincide.
+
+        Rechaza el archivo y lo borra si la huella no coincide con la esperada; si ya existe un
+        archivo con la misma huella, no lo vuelve a escribir (idempotencia).
+        """
         final = ruta.with_suffix("") if ruta.suffix == ".part" else ruta
         if final != ruta:
             shutil.move(ruta, final)
@@ -68,12 +76,14 @@ class MatrizParquet:
         self._raiz.mkdir(parents=True, exist_ok=True)
 
     def escribir_anio(self, anio: int, matriz: pd.DataFrame) -> Path:
+        """Escribe la matriz de un año en su archivo Parquet y devuelve la ruta."""
         destino = self._raiz / f"anio={anio}" / "parte.parquet"
         destino.parent.mkdir(parents=True, exist_ok=True)
         matriz.to_parquet(destino, index=False, compression="zstd")
         return destino
 
     def leer(self, anios: range, columnas: list[str] | None = None) -> pd.DataFrame:
+        """Lee los años pedidos de la matriz, solo con las columnas indicadas si se dan."""
         partes = [
             pd.read_parquet(self._raiz / f"anio={a}" / "parte.parquet", columns=columnas)
             for a in anios
@@ -82,4 +92,5 @@ class MatrizParquet:
         return pd.concat(partes, ignore_index=True)
 
     def anios_disponibles(self) -> list[int]:
+        """Años que tienen un archivo Parquet escrito en D2, en orden."""
         return sorted(int(p.name.split("=")[1]) for p in self._raiz.glob("anio=*"))

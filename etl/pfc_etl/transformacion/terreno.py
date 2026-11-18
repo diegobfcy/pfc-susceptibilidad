@@ -27,6 +27,11 @@ def tabla_celdas(celdas: pd.DataFrame) -> tuple[np.ndarray, float, float]:
 
 
 def percentil_histograma(histograma: np.ndarray, q: float) -> np.ndarray:
+    """Percentil q de cada fila de un histograma de pendiente por clases de 1°.
+
+    Devuelve la primera clase en la que el acumulado alcanza la fracción q del total; las filas
+    vacías dan 0.
+    """
     acumulado = np.cumsum(histograma, axis=1)
     total = np.maximum(acumulado[:, -1:], 1)
     return np.argmax(acumulado >= q * total, axis=1).astype("float32")

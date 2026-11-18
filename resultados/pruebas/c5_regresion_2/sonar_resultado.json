@@ -1,0 +1,305 @@
+{
+ "servidor": "SonarQube Community Build 26.10.0.133078 local (puerto 9010, contenedor aparte)",
+ "puerta_PFC": [
+  {
+   "id": "69ff21cd-ce7b-4c15-98de-fce286607371",
+   "metric": "new_security_hotspots_reviewed",
+   "op": "LT",
+   "error": "100",
+   "isCaycCondition": true
+  },
+  {
+   "id": "93c3f810-66b5-4979-a172-43d4cbafc613",
+   "metric": "new_duplicated_lines_density",
+   "op": "GT",
+   "error": "3",
+   "isCaycCondition": true
+  },
+  {
+   "id": "77b9c26f-f0f3-46d5-8f7a-cb1443d6eb65",
+   "metric": "new_coverage",
+   "op": "LT",
+   "error": "80",
+   "isCaycCondition": true
+  },
+  {
+   "id": "a52c84c8-9db1-415c-bbf4-48d0874f4c96",
+   "metric": "new_violations",
+   "op": "GT",
+   "error": "0",
+   "isCaycCondition": true
+  },
+  {
+   "id": "cc7b4e1f-052b-46df-aef7-a4cfbcf4b327",
+   "metric": "reliability_rating",
+   "op": "GT",
+   "error": "1",
+   "isCaycCondition": false
+  },
+  {
+   "id": "db138b49-ece6-41e1-99d8-e3d20294bf38",
+   "metric": "security_rating",
+   "op": "GT",
+   "error": "1",
+   "isCaycCondition": false
+  },
+  {
+   "id": "13eac48b-75fb-4608-b68a-0a299b4271d1",
+   "metric": "sqale_rating",
+   "op": "GT",
+   "error": "1",
+   "isCaycCondition": false
+  },
+  {
+   "id": "d9e00814-0c67-4296-b6b0-13058cf0e8ff",
+   "metric": "security_hotspots_reviewed",
+   "op": "LT",
+   "error": "100",
+   "isCaycCondition": false
+  },
+  {
+   "id": "2f25904d-71e0-44e5-9cb8-939ca1fe89ab",
+   "metric": "duplicated_lines_density",
+   "op": "GT",
+   "error": "3",
+   "isCaycCondition": false
+  },
+  {
+   "id": "c6ec3bcc-b635-4dac-bd4f-58da8a58f879",
+   "metric": "coverage",
+   "op": "LT",
+   "error": "80",
+   "isCaycCondition": false
+  }
+ ],
+ "analisis": [
+  {
+   "fecha": "2026-11-09T15:56:11+0000",
+   "eventos": [
+    {
+     "key": "809a6183-317a-4935-a1d1-d9f7c226944e",
+     "category": "VERSION",
+     "name": "1.0.0-rc.1"
+    }
+   ]
+  },
+  {
+   "fecha": "2026-11-09T15:44:52+0000",
+   "eventos": [
+    {
+     "key": "c46afd75-1d3e-40fb-9746-a000ecb287b0",
+     "category": "SQ_UPGRADE",
+     "name": "26.10.0.133078"
+    },
+    {
+     "key": "a358da57-bd67-476c-83c4-84925353a03f",
+     "category": "QUALITY_GATE",
+     "name": "Failed",
+     "description": "Reliability Rating > 1, Security Rating > 1"
+    }
+   ]
+  }
+ ],
+ "estado_final": {
+  "status": "OK",
+  "conditions": [
+   {
+    "status": "OK",
+    "metricKey": "reliability_rating",
+    "comparator": "GT",
+    "errorThreshold": "1",
+    "actualValue": "1"
+   },
+   {
+    "status": "OK",
+    "metricKey": "security_rating",
+    "comparator": "GT",
+    "errorThreshold": "1",
+    "actualValue": "1"
+   },
+   {
+    "status": "OK",
+    "metricKey": "sqale_rating",
+    "comparator": "GT",
+    "errorThreshold": "1",
+    "actualValue": "1"
+   },
+   {
+    "status": "OK",
+    "metricKey": "new_coverage",
+    "comparator": "LT",
+    "errorThreshold": "80",
+    "actualValue": "100.0"
+   },
+   {
+    "status": "OK",
+    "metricKey": "coverage",
+    "comparator": "LT",
+    "errorThreshold": "80",
+    "actualValue": "88.1"
+   },
+   {
+    "status": "OK",
+    "metricKey": "new_duplicated_lines_density",
+    "comparator": "GT",
+    "errorThreshold": "3",
+    "actualValue": "0.0"
+   },
+   {
+    "status": "OK",
+    "metricKey": "duplicated_lines_density",
+    "comparator": "GT",
+    "errorThreshold": "3",
+    "actualValue": "0.0"
+   },
+   {
+    "status": "OK",
+    "metricKey": "new_security_hotspots_reviewed",
+    "comparator": "LT",
+    "errorThreshold": "100"
+   },
+   {
+    "status": "OK",
+    "metricKey": "new_violations",
+    "comparator": "GT",
+    "errorThreshold": "0",
+    "actualValue": "0"
+   },
+   {
+    "status": "OK",
+    "metricKey": "security_hotspots_reviewed",
+    "comparator": "LT",
+    "errorThreshold": "100"
+   }
+  ],
+  "ignoredConditions": false,
+  "period": {
+   "mode": "PREVIOUS_VERSION",
+   "date": "2026-11-09T15:44:52+0000"
+  },
+  "caycStatus": "over-compliant"
+ },
+ "medidas_final": {
+  "coverage": "88.1",
+  "complexity": "501",
+  "reliability_rating": "1.0",
+  "code_smells": "0",
+  "duplicated_lines_density": "0.0",
+  "ncloc_language_distribution": "css=93;js=332;py=2451;web=134",
+  "security_rating": "1.0",
+  "security_hotspots": "0",
+  "sqale_rating": "1.0",
+  "bugs": "0",
+  "lines_to_cover": "1525",
+  "cognitive_complexity": "266",
+  "ncloc": "3010",
+  "vulnerabilities": "0"
+ },
+ "hallazgos": [
+  {
+   "tipo": "BUG",
+   "regla": "javascript:S9383",
+   "archivo": "presentacion/visor/js/mapa.js",
+   "linea": null,
+   "mensaje": "Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.",
+   "estado": "CLOSED",
+   "resolucion": "FIXED",
+   "creado": "2026-11-09T15:44:52+0000",
+   "cerrado": "2026-11-09T15:56:11+0000",
+   "comentarios": []
+  },
+  {
+   "tipo": "BUG",
+   "regla": "javascript:S9383",
+   "archivo": "presentacion/visor/js/mapa.js",
+   "linea": null,
+   "mensaje": "Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.",
+   "estado": "CLOSED",
+   "resolucion": "FIXED",
+   "creado": "2026-11-09T15:44:52+0000",
+   "cerrado": "2026-11-09T15:56:11+0000",
+   "comentarios": []
+  },
+  {
+   "tipo": "BUG",
+   "regla": "javascript:S9383",
+   "archivo": "presentacion/visor/js/mapa.js",
+   "linea": null,
+   "mensaje": "Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.",
+   "estado": "CLOSED",
+   "resolucion": "FIXED",
+   "creado": "2026-11-09T15:44:52+0000",
+   "cerrado": "2026-11-09T15:56:11+0000",
+   "comentarios": []
+  },
+  {
+   "tipo": "BUG",
+   "regla": "javascript:S9383",
+   "archivo": "presentacion/visor/js/mapa.js",
+   "linea": null,
+   "mensaje": "Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.",
+   "estado": "CLOSED",
+   "resolucion": "FIXED",
+   "creado": "2026-11-09T15:44:52+0000",
+   "cerrado": "2026-11-09T15:56:11+0000",
+   "comentarios": []
+  },
+  {
+   "tipo": "BUG",
+   "regla": "javascript:S9383",
+   "archivo": "presentacion/visor/js/mapa.js",
+   "linea": null,
+   "mensaje": "Promises must be awaited, end with a call to .catch, end with a call to .then with a rejection handler or be explicitly marked as ignored with the `void` operator.",
+   "estado": "CLOSED",
+   "resolucion": "FIXED",
+   "creado": "2026-11-09T15:44:52+0000",
+   "cerrado": "2026-11-09T15:56:11+0000",
+   "comentarios": []
+  },
+  {
+   "tipo": "VULNERABILITY",
+   "regla": "python:S4502",
+   "archivo": "servicios/pfc_servicios/__init__.py",
+   "linea": null,
+   "mensaje": "Make sure disabling CSRF protection is safe here.",
+   "estado": "CLOSED",
+   "resolucion": "FIXED",
+   "creado": "2026-11-09T15:44:52+0000",
+   "cerrado": "2026-11-09T15:56:11+0000",
+   "comentarios": []
+  },
+  {
+   "tipo": "VULNERABILITY",
+   "regla": "python:S4502",
+   "archivo": "servicios/pfc_servicios/__init__.py",
+   "linea": 40,
+   "mensaje": "Make sure disabling CSRF protection is safe here.",
+   "estado": "RESOLVED",
+   "resolucion": "FALSE-POSITIVE",
+   "creado": "2026-11-09T15:44:52+0000",
+   "cerrado": null,
+   "comentarios": [
+    "Falso positivo: la regla no reconoce la subclase CSRFCabecera(CSRFProtect), aplicada en la línea siguiente de crear_app(). La protección CSRF está activa en todas las solicitudes POST y DELETE, incluida la carga manual; lo verifican test_post_sin_token_csrf_se_rechaza y test_carga_manual_sin_token_csrf_se_rechaza (400) y el escaneo de OWASP ZAP."
+   ]
+  }
+ ],
+ "primera_pasada": {
+  "fecha": "2026-11-09T15:44:52+0000",
+  "estado": "ERROR",
+  "fuente": "api/qualitygates/project_status y api/measures/component tras el primer análisis; registro en c5_regresion/sonar_primera_pasada.log",
+  "condiciones": {
+   "reliability_rating": "3 (C)",
+   "security_rating": "4 (D)",
+   "sqale_rating": "1 (A)",
+   "coverage": "88.0",
+   "duplicated_lines_density": "0.0"
+  },
+  "medidas": {
+   "bugs": 5,
+   "vulnerabilities": 1,
+   "code_smells": 0,
+   "security_hotspots": 0,
+   "ncloc": 3006
+  }
+ }
+}

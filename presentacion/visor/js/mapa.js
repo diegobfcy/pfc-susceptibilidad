@@ -1,201 +1,232 @@
-/* Visor SIG de susceptibilidad dinámica (Leaflet + teselas vectoriales PostGIS). */
-(() => {
-  "use strict";
-  const NIVELES = {1: ["Baja", "#0ca30c"], 2: ["Media", "#fab219"], 3: ["Alta", "#ec835a"], 4: ["Muy alta", "#d03b3b"]};
-  const PREC_COLOR = {L1: "#2a78d6", L2: "#2a78d6", L3: "#6250d6", L4: "#52514e"};
-  const $ = (id) => document.getElementById(id);
-  const estado = {escenario: null, nivel: 1, capas: {}};
-  const fmt = (v, d = 3) => (v === null || v === undefined ? "—" : Number(v).toFixed(d));
-  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
+/* P1. Visor de susceptibilidad: Leaflet con teselas MVT de S3 (RF-08 a RF-11, CU-02, CU-04). */
+import {api, ErrorApi, exigirSesion, h, salir} from "../../comun/comun.js";
 
-  async function api(ruta) {
-    const r = await fetch(ruta, {headers: {Accept: "application/json"}});
-    if (!r.ok) throw new Error(`${ruta}: ${r.status}`);
-    return r.json();
+const NOMBRES = {1: "Baja", 2: "Media", 3: "Alta", 4: "Muy alta"};
+const RANGOS = {1: "0 a 25 %", 2: "25 a 50 %", 3: "50 a 75 %", 4: "75 a 100 %"};
+const PALETAS = {
+  estandar: {1: "#0ca30c", 2: "#fab219", 3: "#ec835a", 4: "#d03b3b"},
+  accesible: {1: "#ffffd4", 2: "#fed98e", 3: "#fe9929", 4: "#cc4c02"},
+};
+const RAMPA_LLUVIA = [[50, "#deebf7"], [150, "#9ecae1"], [300, "#4292c6"], [Infinity, "#08519c"]];
+const RAMPA_PENDIENTE = [[5, "#f7f4f0"], [15, "#d9c3a5"], [30, "#a67c52"], [Infinity, "#5c3d1e"]];
+const RAMPA_TSM = [[-0.5, "#4575b4"], [0.5, "#f7f7f7"], [1.5, "#fdae61"], [Infinity, "#d73027"]];
+/* Capas por teselas MVT de S3 (CU-04, IU-13); los límites provinciales van aparte, en GeoJSON. */
+const CAPAS_MVT = ["tsm", "pendiente", "susceptibilidad", "precipitacion", "inventario"];
+const $ = (id) => document.getElementById(id);
+const fmt = (v, d = 1) => (v === null || v === undefined ? "—" : Number(v).toFixed(d));
+const estado = {periodo: null, paleta: "estandar", disponibles: new Set(), capas: {}, cajas: {}};
+
+const mapa = L.map("mapa", {minZoom: 6, maxZoom: 12}).setView([-7.0, -79.0], 7);
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+  {attribution: "© OpenStreetMap", maxZoom: 19}).addTo(mapa);
+L.control.scale({imperial: false}).addTo(mapa);
+
+function leerPaleta() {
+  try { return localStorage.getItem("pfc-paleta") || "estandar"; } catch { return "estandar"; }
+}
+function guardarPaleta(valor) {
+  try { localStorage.setItem("pfc-paleta", valor); } catch { /* preferencia opcional */ }
+}
+
+/* Trama diagonal: en la paleta accesible el nivel Muy alta no depende solo del color. */
+function trama(color) {
+  const lienzo = document.createElement("canvas");
+  lienzo.width = lienzo.height = 8;
+  const ctx = lienzo.getContext("2d");
+  ctx.fillStyle = color; ctx.fillRect(0, 0, 8, 8);
+  ctx.strokeStyle = "#3b1802"; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(0, 8); ctx.lineTo(8, 0); ctx.stroke();
+  return ctx.createPattern(lienzo, "repeat");
+}
+
+function rellenoNivel(nivel) {
+  const color = PALETAS[estado.paleta][nivel];
+  return estado.paleta === "accesible" && nivel === 4 ? trama(color) : color;
+}
+
+const colorLluvia = (mm) => RAMPA_LLUVIA.find(([tope]) => mm < tope)[1];
+const colorRampa = (rampa, v) => rampa.find(([tope]) => v < tope)[1];
+
+const ESTILOS = {
+  susceptibilidad: (p) => ({fill: true, fillColor: rellenoNivel(p.nivel), fillOpacity: 0.72, stroke: false}),
+  precipitacion: (p) => ({fill: true, fillColor: colorLluvia(p.precip_mes_mm), fillOpacity: 0.72, stroke: false}),
+  pendiente: (p) => ({fill: true, fillColor: colorRampa(RAMPA_PENDIENTE, p.pend_media_g), fillOpacity: 0.65, stroke: false}),
+  tsm: (p) => ({fill: true, fillColor: colorRampa(RAMPA_TSM, p.anom_tsm), fillOpacity: 0.35, color: "#555", weight: 1}),
+  inventario: (p) => ({radius: p.del_periodo ? 6 : 3, fill: true, fillOpacity: 0.9, weight: 1, color: "#111",
+    fillColor: p.del_periodo ? "#e11d48" : "#6b7280"}),
+};
+const PANELES = {tsm: "tilePane", pendiente: "shadowPane", susceptibilidad: "overlayPane", precipitacion: "shadowPane", inventario: "markerPane"};
+
+function urlTesela(capa, z = "{z}", x = "{x}", y = "{y}") {
+  const filtros = new URLSearchParams();
+  if ($("sel-departamento").value) filtros.set("departamento", $("sel-departamento").value);
+  if ($("sel-provincia").value) filtros.set("provincia", $("sel-provincia").value);
+  const consulta = filtros.toString();
+  return `/api/mapas/${capa}/${estado.periodo}/${z}/${x}/${y}.pbf${consulta ? `?${consulta}` : ""}`;
+}
+
+function avisoCapa(capa, texto) {
+  const zona = $(`error-${capa}`);
+  zona.hidden = !texto;
+  zona.textContent = texto || "";
+}
+
+async function dibujarCapa(capa) {
+  if (estado.capas[capa]) { mapa.removeLayer(estado.capas[capa]); delete estado.capas[capa]; }
+  avisoCapa(capa, "");
+  if (!$(`capa-${capa}`).checked || !estado.disponibles.has(estado.periodo)) return;
+  try {
+    const prueba = await fetch(urlTesela(capa, 6, 18, 33), {credentials: "same-origin"});
+    if (!prueba.ok) throw new Error(String(prueba.status));
+  } catch {
+    avisoCapa(capa, "Esta capa no está disponible; las demás siguen visibles.");
+    return;
   }
+  const estilo = {};
+  estilo[capa] = ESTILOS[capa];
+  const capaMapa = L.vectorGrid.protobuf(urlTesela(capa), {
+    rendererFactory: L.canvas.tile, vectorTileLayerStyles: estilo, interactive: false,
+    maxNativeZoom: 12, fetchOptions: {credentials: "same-origin"},
+    pane: PANELES[capa],
+  });
+  capaMapa.addTo(mapa);
+  estado.capas[capa] = capaMapa;
+}
 
-  // ---------------- Mapa base y capas ----------------
-  const mapa = L.map("mapa", {preferCanvas: true, minZoom: 6, maxZoom: 13}).setView([-7.0, -79.0], 7);
-  const osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {attribution: "© OpenStreetMap", maxZoom: 19});
-  const sat = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    {attribution: "© Esri"});
-  osm.addTo(mapa);
-
-  const pendiente = L.tileLayer("/tiles/pendiente/{z}/{x}/{y}.png", {opacity: 0.7, maxNativeZoom: 11, tms: false});
-  const precipitacion = L.geoJSON(null, {style: () => ({weight: 0, fillOpacity: 0.65})});
-  const tsm = L.layerGroup();
-  const inventario = L.layerGroup();
-  let susceptibilidad = null;
-
-  const control = L.control.layers({"OpenStreetMap": osm, "Imagen satelital": sat}, {}, {collapsed: false}).addTo(mapa);
-  L.control.scale({imperial: false}).addTo(mapa);
-
-  function capaSusceptibilidad() {
-    if (susceptibilidad) { control.removeLayer(susceptibilidad); mapa.removeLayer(susceptibilidad); }
-    susceptibilidad = L.vectorGrid.protobuf(
-      `/api/tiles/susceptibilidad/{z}/{x}/{y}.pbf?escenario=${estado.escenario}&nivel_min=${estado.nivel}`, {
-        rendererFactory: L.canvas.tile, interactive: true, maxNativeZoom: 13,
-        vectorTileLayerStyles: {susceptibilidad: (p) => ({
-          fill: true, fillColor: NIVELES[p.nivel][1], fillOpacity: 0.62, stroke: false, weight: 0})},
-      });
-    susceptibilidad.on("click", (e) => consultar(e.latlng));
-    susceptibilidad.addTo(mapa);
-    control.addOverlay(susceptibilidad, "Susceptibilidad");
+async function dibujarLimites() {
+  if (estado.capas.limites) { mapa.removeLayer(estado.capas.limites); delete estado.capas.limites; }
+  avisoCapa("limites", "");
+  if (!$("capa-limites").checked) return;
+  try {
+    estado.geoLimites ??= await api("/capas/limites");
+    estado.capas.limites = L.geoJSON(estado.geoLimites,
+      {style: {color: "#1f2937", weight: 1, fill: false}, interactive: false}).addTo(mapa);
+  } catch {
+    avisoCapa("limites", "Esta capa no está disponible; las demás siguen visibles.");
   }
+}
 
-  const rampa = ["#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95", "#0d366b"];
-  function colorRampa(v, max) { const i = Math.min(rampa.length - 1, Math.floor((v / max) * rampa.length)); return rampa[Math.max(0, i)]; }
-  const div = ["#184f95", "#3987e5", "#9ec5f4", "#f0efec", "#f3a5a4", "#e34948", "#a32828"];
-  function colorDiv(v) { const i = Math.round(Math.max(-3, Math.min(3, v))) + 3; return div[i]; }
-
-  async function cargarPrecipitacion() {
-    const g = await api(`/api/capas/precipitacion?escenario=${estado.escenario}&ventana=${$("sel-ventana").value}`);
-    const max = Math.max(1, ...g.features.map((f) => f.properties.valor));
-    precipitacion.clearLayers();
-    precipitacion.addData(g);
-    precipitacion.eachLayer((l) => {
-      l.setStyle({fillColor: colorRampa(l.feature.properties.valor, max), weight: 0, fillOpacity: 0.65});
-      l.bindTooltip(`${fmt(l.feature.properties.valor, 1)} mm`);
-    });
+async function consultar(latlng) {
+  if (!estado.disponibles.has(estado.periodo)) return;
+  try {
+    const parametros = new URLSearchParams({periodo: estado.periodo, lat: latlng.lat.toFixed(5), lon: latlng.lng.toFixed(5)});
+    const r = await api(`/consulta-punto?${parametros}`);
+    const filas = [
+      ["Puntaje del modelo", fmt(r.probabilidad, 4)],
+      ["Precipitación del mes", `${fmt(r.precip_mes_mm)} mm`],
+      ["Máximo en 3 días", `${fmt(r.precip_max3d_mm)} mm`],
+      ["Antecedente de 90 días", `${fmt(r.precip_ant90_mm)} mm`],
+      ["Anomalía de TSM Niño 1+2", `${fmt(r.anom_tsm, 2)} °C`],
+      ["Pendiente media / p90", `${fmt(r.pend_media_g)}° / ${fmt(r.pend_p90_g)}°`],
+    ];
+    const contenido = h("div", {id: "ventana-consulta", "data-celda": r.id_celda},
+      h("b", {}, `Celda ${r.id_celda}`), ` · ${r.provincia}, ${r.departamento}`, h("br"),
+      h("span", {clase: `insignia n${r.nivel}`}, NOMBRES[r.nivel]),
+      h("table", {clase: "popup-tabla"}, ...filas.map(([a, b]) => h("tr", {}, h("td", {}, a), h("td", {}, b)))));
+    L.popup().setLatLng(latlng).setContent(contenido).openOn(mapa);
+  } catch (e) {
+    if (e instanceof ErrorApi && e.estado === 404) return; // fuera del dominio de análisis
+    errorGeneral(e);
   }
+}
 
-  let grafico = null;
-  async function cargarTSM() {
-    const d = await api(`/api/capas/tsm?escenario=${estado.escenario}`);
-    tsm.clearLayers();
-    d.campo.forEach((c) => L.rectangle([[c.lat - 0.25, c.lon - 0.25], [c.lat + 0.25, c.lon + 0.25]],
-      {stroke: false, fillColor: colorDiv(c.anom), fillOpacity: 0.7}).bindTooltip(`${fmt(c.anom, 2)} °C`).addTo(tsm));
-    const ctx = $("graf-tsm");
-    const datos = {labels: d.serie.map((s) => s.fecha), datasets: [{data: d.serie.map((s) => s.anom),
-      borderColor: "#2a78d6", borderWidth: 2, pointRadius: 0, fill: false, tension: 0.2}]};
-    if (grafico) grafico.destroy();
-    grafico = new Chart(ctx, {type: "line", data: datos, options: {
-      animation: false, plugins: {legend: {display: false},
-        tooltip: {mode: "index", intersect: false, callbacks: {label: (c) => `${c.parsed.y.toFixed(2)} °C`}}},
-      interaction: {mode: "index", intersect: false},
-      scales: {x: {ticks: {maxTicksLimit: 4}, grid: {display: false}}, y: {title: {display: true, text: "°C"}}}}});
-  }
-
-  async function cargarInventario() {
-    const prec = $("inv-precisos").checked ? "L1,L2,L3" : "L1,L2,L3,L4";
-    const g = await api(`/api/inventario?desde=${$("inv-desde").value}&hasta=${$("inv-hasta").value}&precision=${prec}`);
-    inventario.clearLayers();
-    g.features.forEach((f) => {
-      const [lon, lat] = f.geometry.coordinates;
-      L.circleMarker([lat, lon], {radius: 4, color: "#fcfcfb", weight: 1, fillColor: PREC_COLOR[f.properties.precision], fillOpacity: 0.9})
-        .bindPopup(`<b>${esc(f.properties.id)}</b><br>${esc(f.properties.fecha)} · ${esc(f.properties.tipo)}<br>` +
-          `${esc(f.properties.distrito)} (${esc(f.properties.departamento)})<br>Precisión ${esc(f.properties.precision)}`)
-        .addTo(inventario);
-    });
-  }
-
-  async function consultar(latlng) {
-    try {
-      const r = await api(`/api/consulta?escenario=${estado.escenario}&lat=${latlng.lat.toFixed(5)}&lon=${latlng.lng.toFixed(5)}`);
-      const [et, col] = NIVELES[r.nivel] || ["—", "#999"];
-      L.popup().setLatLng(latlng).setContent(
-        `<b>Celda ${r.id_celda}</b> · ${esc(r.distrito)}, ${esc(r.provincia)} (${esc(r.departamento)})<br>` +
-        `<span class="badge" style="background:${col}">${et}</span>` +
-        `<table class="popup-tabla">` +
-        `<tr><td>Probabilidad combinada</td><td>${fmt(r.prob, 4)}</td></tr>` +
-        `<tr><td>P(detonación distrital)</td><td>${fmt(r.prob_distrito, 4)}</td></tr>` +
-        `<tr><td>Susceptibilidad base</td><td>${fmt(r.s_estatica, 3)}</td></tr>` +
-        `<tr><td>Pendiente media / p90</td><td>${fmt(r.pend_media, 1)}° / ${fmt(r.pend_p90, 0)}°</td></tr>` +
-        `<tr><td>TWI medio</td><td>${fmt(r.twi_media, 2)}</td></tr>` +
-        `<tr><td>Litología</td><td>${esc(r.litologia_nombre)}</td></tr>` +
-        `<tr><td>Cobertura</td><td>${esc(r.lulc_nombre)}</td></tr>` +
-        `<tr><td>Lluvia 3 / 30 días</td><td>${fmt(r.p3, 1)} / ${fmt(r.p30, 1)} mm</td></tr>` +
-        `<tr><td>Anomalía TSM Niño 1+2</td><td>${fmt(r.tsm_anom, 2)} °C</td></tr></table>`).openOn(mapa);
-    } catch (e) { /* fuera del área de estudio */ }
-  }
-
-  async function resumen() {
-    const filas = await api(`/api/susceptibilidad/resumen?escenario=${estado.escenario}`);
-    const tot = {};
-    filas.forEach((f) => { tot[f.nivel] = (tot[f.nivel] || 0) + f.celdas; });
-    const n = Object.values(tot).reduce((a, b) => a + b, 0) || 1;
-    $("resumen-niveles").innerHTML = "<h3>Área por nivel (celdas de 1 km²)</h3>" +
-      [1, 2, 3, 4].map((k) => `<div class="fila"><span style="flex:1">${NIVELES[k][0]}</span>` +
-        `<span>${(tot[k] || 0).toLocaleString("es-PE")} (${((100 * (tot[k] || 0)) / n).toFixed(1)} %)</span></div>`).join("");
-  }
-
-  function leyenda() {
-    $("leyenda").innerHTML = "<b>Nivel de susceptibilidad</b>" +
-      [1, 2, 3, 4].map((k) => `<div><i style="background:${NIVELES[k][1]}"></i>${NIVELES[k][0]}</div>`).join("");
-  }
-
-  async function cambiarEscenario() {
-    estado.escenario = $("sel-escenario").value;
-    const e = estado.lista.find((x) => x.codigo === estado.escenario);
-    $("desc-escenario").textContent = `Fecha de referencia ${e.fecha_ref} · anomalía TSM Niño 1+2 ${fmt(e.tsm_anom, 2)} °C`;
-    capaSusceptibilidad();
-    await Promise.all([cargarPrecipitacion(), cargarTSM(), resumen()]);
-  }
-
-  // ---------------- Auditoría ----------------
-  function errorVisor(error) {
-    console.error("visor:", error);
-    document.body.dataset.error = String(error);
-  }
-
-  async function auditoria() {
-    const d = await api("/api/auditoria");
-    const nombre = {xgb_d: "XGBoost", lstm_d: "LSTM", ensamble_d: "XGBoost + LSTM"};
-    const mejor = d.metricas.reduce((a, b) => (b.auc > (a?.auc ?? 0) ? b : a), null);
-    const ult = d.ejecuciones[0] || {};
-    $("kpis").innerHTML = [
-      ["AUC-ROC (prueba)", fmt(mejor?.auc, 3), nombre[mejor?.nombre] || ""],
-      ["F1-score", fmt(mejor?.f1, 3), "modelo de mayor AUC"],
-      ["Latencia media", `${fmt(ult.lat_media_ms, 3)} ms`, "por unidad de terreno (lote)"],
-      ["CPU máx. / RAM máx.", `${fmt(ult.cpu_max_pct, 0)} % · ${fmt(ult.ram_max_mb, 0)} MB`, `ejecución ${esc(ult.codigo || "")}`],
-    ].map(([t, v, s]) => `<div class="kpi"><span>${t}</span><b>${v}</b><span>${s}</span></div>`).join("");
-    $("tabla-metricas").innerHTML =
-      d.metricas.map((m) => `<tr><td>${nombre[m.nombre] || esc(m.nombre)}</td><td>${fmt(m.auc)}</td><td>${fmt(m.pr_auc)}</td>` +
-        `<td>${fmt(m.precision)}</td><td>${fmt(m.recall)}</td><td>${fmt(m.f1)}</td><td>${fmt(m.cv_auc_pct, 2)}</td></tr>`).join("");
-    $("tabla-umbrales").innerHTML =
-      d.umbrales.map((u) => `<tr><td>${esc(u.etiqueta)}</td><td>${Number(u.p_min).toExponential(3)}</td><td>${Number(u.p_max).toExponential(3)}</td></tr>`).join("");
-    $("tabla-ejecuciones").innerHTML =
-      d.ejecuciones.map((x) => `<tr><td>${esc(x.codigo)}</td><td>${esc(x.modo)}</td><td>${(x.n_unidades || 0).toLocaleString("es-PE")}</td>` +
-        `<td>${fmt(x.duracion_s, 2)}</td><td>${fmt(x.lat_media_ms, 4)}</td><td>${fmt(x.lat_p95_ms, 2)}</td><td>${fmt(x.cpu_max_pct, 0)}</td><td>${fmt(x.ram_max_mb, 0)}</td></tr>`).join("");
-  }
-
-  document.querySelectorAll(".pestanas button").forEach((b) => b.addEventListener("click", () => {
-    document.querySelectorAll(".pestanas button").forEach((x) => x.setAttribute("aria-selected", x === b));
-    document.querySelectorAll(".panel").forEach((p) => p.classList.toggle("activo", p.id === b.dataset.panel));
-    if (b.dataset.panel === "panel-mapa") mapa.invalidateSize(); else auditoria().catch(errorVisor);
+function dibujarLeyenda() {
+  const zona = $("leyenda");
+  zona.replaceChildren(h("b", {}, "Nivel de susceptibilidad"), ...[1, 2, 3, 4].map((n) => {
+    const muestra = h("i", {fondo: PALETAS[estado.paleta][n], clase: estado.paleta === "accesible" && n === 4 ? "con-trama" : ""});
+    return h("div", {}, muestra, `${NOMBRES[n]} (${RANGOS[n]})`);
   }));
-
-  async function iniciar() {
-    leyenda();
-    estado.lista = await api("/api/escenarios");
-    $("sel-escenario").innerHTML = estado.lista.filter((e) => e.id_ejecucion)
-      .map((e) => `<option value="${esc(e.codigo)}">${esc(e.codigo)} · ${esc(e.nombre)}</option>`).join("");
-    const e4 = estado.lista.find((e) => e.codigo === "E4" && e.id_ejecucion);
-    if (e4) $("sel-escenario").value = "E4";
-    const deps = await api("/api/departamentos");
-    estado.deps = {};
-    deps.features.forEach((f) => { estado.deps[f.properties.nombre] = f.properties.bbox; });
-    $("sel-dep").innerHTML += Object.keys(estado.deps).map((n) => `<option>${esc(n)}</option>`).join("");
-    L.geoJSON(deps, {style: {color: "#52514e", weight: 1, fill: false}, interactive: false}).addTo(mapa);
-    control.addOverlay(pendiente, "Pendiente (30 m)");
-    control.addOverlay(precipitacion, "Precipitación acumulada");
-    control.addOverlay(tsm, "Anomalía TSM (mensual)");
-    control.addOverlay(inventario, "Inventario de deslizamientos");
-    inventario.addTo(mapa);
-    await cambiarEscenario();
-    await cargarInventario();
-    $("sel-escenario").addEventListener("change", cambiarEscenario);
-    $("sel-nivel").addEventListener("change", () => { estado.nivel = $("sel-nivel").value; capaSusceptibilidad(); });
-    $("sel-ventana").addEventListener("change", cargarPrecipitacion);
-    ["inv-desde", "inv-hasta", "inv-precisos"].forEach((id) => $(id).addEventListener("change", cargarInventario));
-    $("sel-dep").addEventListener("change", () => {
-      const b = estado.deps[$("sel-dep").value];
-      if (b) mapa.fitBounds([[b[1], b[0]], [b[3], b[2]]]); else mapa.setView([-7.0, -79.0], 7);
-    });
-    mapa.on("click", (e) => consultar(e.latlng));
-    window.visorListo = true;
-    document.body.dataset.listo = "1";
+  const rampas = [
+    ["precipitacion", "Precipitación mensual", RAMPA_LLUVIA, ["menos de 50 mm", "50 a 150 mm", "150 a 300 mm", "300 mm o más"]],
+    ["pendiente", "Pendiente media", RAMPA_PENDIENTE, ["menos de 5°", "5° a 15°", "15° a 30°", "30° o más"]],
+    ["tsm", "Anomalía de TSM Niño 1+2", RAMPA_TSM, ["menor que −0.5 °C", "−0.5 a 0.5 °C", "0.5 a 1.5 °C", "1.5 °C o más"]],
+  ];
+  for (const [capa, titulo, rampa, rotulos] of rampas) {
+    if (!$(`capa-${capa}`).checked) continue;
+    zona.append(h("b", {}, titulo));
+    rampa.forEach(([, color], i) => zona.append(h("div", {}, h("i", {fondo: color}), rotulos[i])));
   }
-  iniciar().catch(errorVisor);
-})();
+  if ($("capa-inventario").checked) {
+    zona.append(h("b", {}, "Inventario de deslizamientos"),
+      h("div", {}, h("i", {fondo: "#e11d48", clase: "punto"}), "Evento del mes"),
+      h("div", {}, h("i", {fondo: "#6b7280", clase: "punto"}), "Evento anterior"));
+  }
+}
+
+function errorGeneral(error) {
+  const zona = $("error-general");
+  zona.hidden = false;
+  zona.textContent = error.message;
+  console.error("visor:", error);
+}
+
+function avisoPeriodo() {
+  const sin = !estado.disponibles.has(estado.periodo);
+  const zona = $("aviso-periodo");
+  zona.hidden = !sin;
+  zona.textContent = sin ? "No existen datos procesados para el periodo seleccionado" : "";  // CU-02, escenario 2 (DEF-30)
+}
+
+async function redibujar() {
+  avisoPeriodo();
+  dibujarLeyenda();
+  await Promise.all(CAPAS_MVT.map(dibujarCapa));
+  document.body.dataset.dibujado = `${estado.periodo}|${estado.paleta}|${Date.now()}`;
+}
+
+function encuadrar(caja) {
+  if (!caja) { mapa.setView([-7.0, -79.0], 7); return; }
+  const anillo = caja.coordinates[0];
+  mapa.fitBounds([[anillo[0][1], anillo[0][0]], [anillo[2][1], anillo[2][0]]]);
+}
+
+function llenarProvincias() {
+  const dep = $("sel-departamento").value;
+  const lista = estado.ambitos.provincias.filter((p) => !dep || p.id_departamento === dep);
+  $("sel-provincia").replaceChildren(h("option", {value: ""}, "Todas"),
+    ...lista.map((p) => h("option", {value: p.id}, p.nombre)));
+}
+
+async function iniciar() {
+  const sesion = await exigirSesion();
+  $("salir").hidden = false;
+  $("salir").addEventListener("click", salir);
+  $("enlace-panel").hidden = sesion.rol === "ESPECIALISTA";
+  if (sesion.rol === "ASESOR") { location.replace("/panel/"); return; }
+  estado.paleta = leerPaleta();
+  $("sel-paleta").value = estado.paleta;
+  const [{periodos}, ambitos] = await Promise.all([api("/periodos"), api("/ambitos")]);
+  estado.disponibles = new Set(periodos);
+  estado.ambitos = ambitos;
+  ambitos.departamentos.forEach((d) => { estado.cajas[d.id] = d.caja; });
+  ambitos.provincias.forEach((p) => { estado.cajas[p.id] = p.caja; });
+  $("sel-departamento").append(...ambitos.departamentos.map((d) => h("option", {value: d.id}, d.nombre)));
+  llenarProvincias();
+  const inicial = new URLSearchParams(location.search).get("periodo");
+  estado.periodo = inicial && /^\d{4}-\d{2}$/.test(inicial) ? inicial : periodos.at(-1);
+  $("sel-periodo").value = estado.periodo;
+
+  $("sel-periodo").addEventListener("change", (e) => {
+    estado.periodo = e.target.value; redibujar().catch(errorGeneral);
+  });
+  $("sel-paleta").addEventListener("change", (e) => {
+    estado.paleta = e.target.value; guardarPaleta(estado.paleta); redibujar().catch(errorGeneral);
+  });
+  $("sel-departamento").addEventListener("change", (e) => {
+    llenarProvincias(); encuadrar(estado.cajas[e.target.value]); redibujar().catch(errorGeneral);
+  });
+  $("sel-provincia").addEventListener("change", (e) => {
+    encuadrar(estado.cajas[e.target.value] || estado.cajas[$("sel-departamento").value]);
+    redibujar().catch(errorGeneral);
+  });
+  CAPAS_MVT.forEach((c) => $(`capa-${c}`).addEventListener("change", () => {
+    dibujarCapa(c).catch(errorGeneral); dibujarLeyenda();
+  }));
+  $("capa-limites").addEventListener("change", () => { dibujarLimites().catch(errorGeneral); });
+  mapa.on("click", (e) => consultar(e.latlng));
+  await Promise.all([redibujar(), dibujarLimites()]);
+  window.mapaVisor = mapa;
+  document.body.dataset.listo = "1";
+}
+
+iniciar().catch(errorGeneral);

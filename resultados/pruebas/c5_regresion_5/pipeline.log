@@ -1,0 +1,7 @@
+black --check aprobado
+ruff check aprobado
+lint-imports aprobado
+openapi-spec-validator aprobado
+docstrings aprobado
+pip-audit (producción) aprobado
+pytest --cov aprobado

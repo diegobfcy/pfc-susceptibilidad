@@ -1,0 +1,36 @@
+...................................................F
+=================================== FAILURES ===================================
+________________ test_cp13_cp12_toda_la_serie_coincide_con_sql _________________
+
+motor_bd = Engine(postgresql+psycopg://postgres:***@127.0.0.1:55433/pfc)
+
+    def test_cp13_cp12_toda_la_serie_coincide_con_sql(motor_bd: Any) -> None:
+        with motor_bd.connect() as c:
+            meses = c.execute(text("""SELECT periodo, count(*) FROM resultado.susceptibilidad
+                        GROUP BY periodo HAVING count(*) <> 108461""")).all()
+            total, n_meses = c.execute(
+                text("SELECT count(*), count(DISTINCT periodo) FROM resultado.susceptibilidad")
+            ).one()
+            huerfanas = c.execute(text("""SELECT count(*) FROM resultado.susceptibilidad s
+                        LEFT JOIN ref.celda_analisis c USING (id_celda)
+                        WHERE s.periodo = '2023-03-01' AND c.id_celda IS NULL""")).scalar_one()
+            diferentes = c.execute(
+                text("""SELECT count(*) FROM resultado.susceptibilidad
+                        WHERE nivel <> CASE WHEN probabilidad < 0.25 THEN 1
+                                            WHEN probabilidad < 0.5 THEN 2
+                                            WHEN probabilidad < 0.75 THEN 3 ELSE 4 END""")
+            ).scalar_one()
+>       assert meses == [] and (total, n_meses) == (34382137, 317)
+E       assert ([(datetime.da...9, 3, 1), 20)] == []
+E         
+E         Left contains 3 more items, first extra item: (datetime.date(2019, 1, 1), 20)
+E         Use -v to get more diff)
+
+pruebas/sistema/test_api.py:175: AssertionError
+=============================== warnings summary ===============================
+pruebas/sistema/test_api.py: 51 warnings
+  /home/diegobfcy/anaconda3/envs/pfc/lib/python3.11/site-packages/urllib3/connectionpool.py:1129: InsecureRequestWarning: Unverified HTTPS request is being made to host '127.0.0.1'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!

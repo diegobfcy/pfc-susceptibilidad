@@ -3,22 +3,100 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Panel de procesamientos</title>
+<title>Panel de control – Susceptibilidad a deslizamientos</title>
 <link rel="stylesheet" href="../visor/css/visor.css">
 </head>
-<body>
-<main class="panel">
-  <h1>Procesamientos (CU-01)</h1>
-  <form id="form-ingesta">
-    <label>Tipo
-      <select name="tipo"><option>INGESTA</option><option>ENTRENAMIENTO</option></select>
-    </label>
-    <label>Desde <input type="date" name="fecha_desde" min="2000-01-01" max="2026-12-31" required></label>
-    <label>Hasta <input type="date" name="fecha_hasta" min="2000-01-01" max="2026-12-31" required></label>
-    <button type="submit">Iniciar procesamiento</button>
+<body class="desplazable">
+<header class="barra">
+  <div class="titulo"><strong>Panel de control</strong><span id="sesion"></span></div>
+  <nav class="pestanas">
+    <a id="enlace-visor" class="boton" href="/visor/" hidden>Visor</a>
+    <button id="salir" type="button" hidden>Cerrar sesión</button>
+  </nav>
+</header>
+<div id="acceso" class="acceso" hidden>
+  <form id="form-acceso" class="tarjeta formulario" method="post">
+    <h1>Iniciar sesión</h1>
+    <label class="campo">Correo <input type="email" name="correo" autocomplete="username" required maxlength="150"></label>
+    <label class="campo">Clave <input type="password" name="clave" autocomplete="current-password" required maxlength="128"></label>
+    <button type="submit" class="primario">Entrar</button>
+    <p id="acceso-mensaje" class="aviso" role="alert"></p>
   </form>
-  <section id="estado" aria-live="polite"></section>
+</div>
+<main class="pagina" id="contenido" hidden>
+  <section id="seccion-procesos" hidden>
+    <h1>Procesamientos (CU-01)</h1>
+    <form id="form-proceso" class="fila-form">
+      <label class="campo">Tipo
+        <select name="tipo"><option>INGESTA</option><option>ENTRENAMIENTO</option><option>INFERENCIA</option></select>
+      </label>
+      <label class="campo">Desde <input type="date" name="fecha_desde" min="2000-01-01" max="2026-12-31" required></label>
+      <label class="campo">Hasta <input type="date" name="fecha_hasta" min="2000-01-01" max="2026-12-31" required></label>
+      <label class="campo">Zona geográfica
+        <select name="departamento" id="sel-zona"><option value="">Macrorregión norte completa</option></select>
+      </label>
+      <button type="submit" class="primario">Iniciar procesamiento</button>
+    </form>
+    <p class="nota" id="nota-zona">Variables del proyecto: TSM absoluta y anomalía (Niño 1+2), precipitación diaria y pendiente del terreno. La ingesta y el entrenamiento cubren siempre la macrorregión del modelo; la inferencia puede limitarse a un departamento.</p>
+    <p id="estado" role="status" aria-live="polite"></p>
+    <button type="button" id="cancelar" hidden>Cancelar procesamiento</button>
+    <div id="fin-ok" class="tarjeta exito" role="status" hidden></div>
+    <div id="alerta-espera" class="tarjeta alerta-espera" role="alert" hidden>
+      <h2 id="alerta-titulo"></h2>
+      <p id="alerta-detalle"></p>
+      <form id="form-carga" class="fila-form">
+        <label class="campo">Fuente
+          <select name="fuente" id="sel-fuente">
+            <option value="ersst_v5">NOAA ERSST v5 (TSM)</option>
+            <option value="era5_land">Copernicus ERA5-Land (precipitación)</option>
+            <option value="dem_glo30">Copernicus DEM GLO-30 (pendiente)</option>
+            <option value="inventario">Inventario de deslizamientos</option>
+          </select>
+        </label>
+        <label class="campo">Archivo (.nc, .tif, .gpkg, .csv o .ascii; máx. 2 GB)
+          <input type="file" name="archivo" id="archivo" required></label>
+        <button type="submit" class="primario">Cargar archivo y reanudar</button>
+      </form>
+    </div>
+    <p id="carga-resultado" role="status"></p>
+  </section>
+  <dialog id="dlg-confirmar" aria-labelledby="dlg-confirmar-titulo">
+    <h2 id="dlg-confirmar-titulo">Confirmar inicio del procesamiento</h2>
+    <dl id="resumen-proceso" class="resumen"></dl>
+    <p id="dlg-confirmar-aviso" class="aviso" role="alert" hidden></p>
+    <div class="acciones"><button type="button" id="volver">Volver</button>
+      <button type="button" id="confirmar" class="primario">Confirmar e iniciar</button></div>
+  </dialog>
+  <dialog id="dlg-cancelar" aria-labelledby="dlg-cancelar-titulo">
+    <h2 id="dlg-cancelar-titulo">¿Cancelar el procesamiento?</h2>
+    <p id="dlg-cancelar-texto"></p>
+    <div class="acciones"><button type="button" id="no-cancelar">No, continuar</button>
+      <button type="button" id="si-cancelar" class="primario">Sí, cancelar</button></div>
+  </dialog>
+  <section id="seccion-indicadores">
+    <h1>Indicadores de rendimiento (CU-03)</h1>
+    <button type="button" id="exportar">Exportar indicadores (CSV)</button>
+    <div id="kpis" class="kpis"></div>
+    <h2>Tiempo y memoria del último procesamiento por tipo</h2>
+    <table class="tabla"><thead><tr><th>Tipo</th><th class="txt">Tiempo por fase (s)</th><th>Memoria máx. (GB)</th></tr></thead>
+      <tbody id="tabla-procesos"></tbody></table>
+  </section>
+  <section id="seccion-historial">
+    <h2>Historial de operaciones (CU-05)</h2>
+    <form id="form-historial" class="fila-form">
+      <label class="campo">Desde <input type="date" name="desde"></label>
+      <label class="campo">Hasta <input type="date" name="hasta"></label>
+      <label class="campo">Tipo
+        <select name="tipo"><option value="">Todos</option><option>INFORMATIVO</option><option>ADVERTENCIA</option><option>ERROR</option></select>
+      </label>
+      <button type="submit">Filtrar</button>
+    </form>
+    <p id="historial-vacio" class="aviso" role="status" hidden>No existen registros para el criterio seleccionado.</p>
+    <table class="tabla"><thead><tr><th>Fecha</th><th class="txt">Tipo</th><th class="txt">Componente</th><th class="txt">Descripción</th><th class="txt">Usuario</th></tr></thead>
+      <tbody id="tabla-historial"></tbody></table>
+  </section>
+  <p id="error-general" class="aviso" role="alert" hidden></p>
 </main>
-<script type="module" src="js/procesamientos.js"></script>
+<script type="module" src="js/panel.js"></script>
 </body>
 </html>

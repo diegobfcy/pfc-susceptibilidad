@@ -1,0 +1,485 @@
+Using the Automation Framework
+Total of 57 URLs
+PASS: Vulnerable JS Library (Powered by Retire.js) [10003]
+PASS: In Page Banner Information Leak [10009]
+PASS: Cookie No HttpOnly Flag [10010]
+PASS: Cookie Without Secure Flag [10011]
+PASS: Cross-Domain JavaScript Source File Inclusion [10017]
+PASS: Content-Type Header Missing [10019]
+PASS: Anti-clickjacking Header [10020]
+PASS: X-Content-Type-Options Header Missing [10021]
+PASS: Information Disclosure - Debug Error Messages [10023]
+PASS: Information Disclosure - Sensitive Information in HTTP Referrer Header [10025]
+PASS: HTTP Parameter Override [10026]
+PASS: Information Disclosure - Suspicious Comments [10027]
+PASS: Off-site Redirect [10028]
+PASS: Cookie Poisoning [10029]
+PASS: User Controllable Charset [10030]
+PASS: User Controllable HTML Element Attribute (Potential XSS) [10031]
+PASS: Viewstate [10032]
+PASS: Directory Browsing [10033]
+PASS: Heartbleed OpenSSL Vulnerability (Indicative) [10034]
+PASS: Strict-Transport-Security Header [10035]
+PASS: HTTP Server Response Header [10036]
+PASS: Server Leaks Information via "X-Powered-By" HTTP Response Header Field(s) [10037]
+PASS: Content Security Policy (CSP) Header Not Set [10038]
+PASS: X-Backend-Server Header Information Leak [10039]
+PASS: Secure Pages Include Mixed Content [10040]
+PASS: HTTP to HTTPS Insecure Transition in Form Post [10041]
+PASS: HTTPS to HTTP Insecure Transition in Form Post [10042]
+PASS: User Controllable JavaScript Event (XSS) [10043]
+PASS: Big Redirect Detected (Potential Sensitive Information Leak) [10044]
+PASS: Retrieved from Cache [10050]
+PASS: X-ChromeLogger-Data (XCOLD) Header Information Leak [10052]
+PASS: Cookie without SameSite Attribute [10054]
+PASS: CSP [10055]
+PASS: X-Debug-Token Information Leak [10056]
+PASS: Username Hash Found [10057]
+PASS: X-AspNet-Version Response Header [10061]
+PASS: PII Disclosure [10062]
+PASS: Timestamp Disclosure [10096]
+PASS: Hash Disclosure [10097]
+PASS: Cross-Domain Misconfiguration [10098]
+PASS: Source Code Disclosure [10099]
+PASS: Weak Authentication Method [10105]
+PASS: Reverse Tabnabbing [10108]
+PASS: Modern Web Application [10109]
+PASS: Dangerous JS Functions [10110]
+PASS: Authentication Request Identified [10111]
+PASS: Session Management Response Identified [10112]
+PASS: Verification Request Identified [10113]
+PASS: Script Served From Malicious Domain (polyfill) [10115]
+PASS: ZAP is Out of Date [10116]
+PASS: Absence of Anti-CSRF Tokens [10202]
+PASS: Full Path Disclosure [110009]
+PASS: Private IP Disclosure [2]
+PASS: Server Side Technology Version with Known Vulnerabilities [20020]
+PASS: Session ID in URL Rewrite [3]
+PASS: Script Passive Scan Rules [50001]
+PASS: Stats Passive Scan Rule [50003]
+PASS: Insecure JSF ViewState [90001]
+PASS: Java Serialization Object [90002]
+PASS: Sub Resource Integrity Attribute Missing [90003]
+PASS: Charset Mismatch [90011]
+PASS: Application Error Disclosure [90022]
+PASS: WSDL File Detection [90030]
+PASS: Loosely Scoped Cookie [90033]
+WARN-NEW: Re-examine Cache-control Directives [10015] x 5 
+	https://127.0.0.1:8444/ (200 OK)
+	https://127.0.0.1:8444/panel/ (200 OK)
+	https://127.0.0.1:8444/panel/?fecha_desde=2026-11-09&fecha_hasta=2026-11-09&tipo=ENTRENAMIENTO (200 OK)
+	https://127.0.0.1:8444/visor/ (200 OK)
+	https://127.0.0.1:8444/visor/?clave=ZAP&correo=foo-bar%40example.com (200 OK)
+WARN-NEW: Information Disclosure - Sensitive Information in URL [10024] x 5 
+	https://127.0.0.1:8444/panel/?clave=ZAP&correo=foo-bar%40example.com (200 OK)
+	https://127.0.0.1:8444/panel/?clave=ZAP&correo=foo-bar%40example.com&desde=2026-11-09&fecha_desde=2026-11-09&fecha_hasta=2026-11-09&hasta=2026-11-09&tipo=ENTRENAMIENTO&tipo=INFORMATIVO (200 OK)
+	https://127.0.0.1:8444/panel/?clave=ZAP&correo=foo-bar%40example.com&desde=2026-11-09&hasta=2026-11-09&tipo=INFORMATIVO (200 OK)
+	https://127.0.0.1:8444/panel/?clave=ZAP&correo=foo-bar%40example.com&fecha_desde=2026-11-09&fecha_hasta=2026-11-09&tipo=ENTRENAMIENTO (200 OK)
+	https://127.0.0.1:8444/visor/?clave=ZAP&correo=foo-bar%40example.com (200 OK)
+WARN-NEW: Non-Storable Content [10049] x 6 
+	https://127.0.0.1:8444/ (302 Found)
+	https://127.0.0.1:8444/robots.txt (404 Not Found)
+	https://127.0.0.1:8444/sitemap.xml (404 Not Found)
+	https://127.0.0.1:8444/visor (301 Moved Permanently)
+	https://127.0.0.1:8444/visor/css/visor.css (200 OK)
+WARN-NEW: Permissions Policy Header Not Set [10063] x 5 
+	https://127.0.0.1:8444/panel/?clave=ZAP&correo=foo-bar%40example.com&desde=2026-11-09&fecha_desde=2026-11-09&fecha_hasta=2026-11-09&hasta=2026-11-09&tipo=ENTRENAMIENTO&tipo=INFORMATIVO (200 OK)
+	https://127.0.0.1:8444/robots.txt (404 Not Found)
+	https://127.0.0.1:8444/sitemap.xml (404 Not Found)
+	https://127.0.0.1:8444/visor/ (200 OK)
+	https://127.0.0.1:8444/visor/vendor/leaflet/leaflet.js (200 OK)
+WARN-NEW: Base64 Disclosure [10094] x 4 
+	https://127.0.0.1:8444/api/sesion/csrf (200 OK)
+	https://127.0.0.1:8444/api/sesion/csrf (200 OK)
+	https://127.0.0.1:8444/api/sesion/csrf (200 OK)
+	https://127.0.0.1:8444/visor/vendor/leaflet/leaflet.js (200 OK)
+WARN-NEW: Cross-Origin-Embedder-Policy Header Missing or Invalid [90004] x 11 
+	https://127.0.0.1:8444/panel/?clave=ZAP&correo=foo-bar%40example.com&desde=2026-11-09&fecha_desde=2026-11-09&fecha_hasta=2026-11-09&hasta=2026-11-09&tipo=ENTRENAMIENTO&tipo=INFORMATIVO (200 OK)
+	https://127.0.0.1:8444/panel/?fecha_desde=2026-11-09&fecha_hasta=2026-11-09&tipo=ENTRENAMIENTO (200 OK)
+	https://127.0.0.1:8444/visor/ (200 OK)
+	https://127.0.0.1:8444/panel/?clave=ZAP&correo=foo-bar%40example.com&desde=2026-11-09&fecha_desde=2026-11-09&fecha_hasta=2026-11-09&hasta=2026-11-09&tipo=ENTRENAMIENTO&tipo=INFORMATIVO (200 OK)
+	https://127.0.0.1:8444/panel/?fecha_desde=2026-11-09&fecha_hasta=2026-11-09&tipo=ENTRENAMIENTO (200 OK)
+WARN-NEW: Sec-Fetch-Dest Header is Missing [90005] x 20 
+	https://127.0.0.1:8444/ (302 Found)
+	https://127.0.0.1:8444/robots.txt (404 Not Found)
+	https://127.0.0.1:8444/sitemap.xml (404 Not Found)
+	https://127.0.0.1:8444/visor/css/visor.css (200 OK)
+	https://127.0.0.1:8444/visor/vendor/leaflet/leaflet.css (200 OK)
+FAIL-NEW: 0	FAIL-INPROG: 0	WARN-NEW: 7	WARN-INPROG: 0	INFO: 0	IGNORE: 0	PASS: 64
+Using the Automation Framework
+Total of 57 URLs
+PASS: Vulnerable JS Library (Powered by Retire.js) [10003]
+PASS: In Page Banner Information Leak [10009]
+PASS: Cookie No HttpOnly Flag [10010]
+PASS: Cookie Without Secure Flag [10011]
+PASS: Cross-Domain JavaScript Source File Inclusion [10017]
+PASS: Content-Type Header Missing [10019]
+PASS: Anti-clickjacking Header [10020]
+PASS: X-Content-Type-Options Header Missing [10021]
+PASS: Information Disclosure - Debug Error Messages [10023]
+PASS: Information Disclosure - Sensitive Information in HTTP Referrer Header [10025]
+PASS: HTTP Parameter Override [10026]
+PASS: Information Disclosure - Suspicious Comments [10027]
+PASS: Off-site Redirect [10028]
+PASS: Cookie Poisoning [10029]
+PASS: User Controllable Charset [10030]
+PASS: User Controllable HTML Element Attribute (Potential XSS) [10031]
+PASS: Viewstate [10032]
+PASS: Directory Browsing [10033]
+PASS: Heartbleed OpenSSL Vulnerability (Indicative) [10034]
+PASS: Strict-Transport-Security Header [10035]
+PASS: HTTP Server Response Header [10036]
+PASS: Server Leaks Information via "X-Powered-By" HTTP Response Header Field(s) [10037]
+PASS: Content Security Policy (CSP) Header Not Set [10038]
+PASS: X-Backend-Server Header Information Leak [10039]
+PASS: Secure Pages Include Mixed Content [10040]
+PASS: HTTP to HTTPS Insecure Transition in Form Post [10041]
+PASS: HTTPS to HTTP Insecure Transition in Form Post [10042]
+PASS: User Controllable JavaScript Event (XSS) [10043]
+PASS: Big Redirect Detected (Potential Sensitive Information Leak) [10044]
+PASS: Retrieved from Cache [10050]
+PASS: X-ChromeLogger-Data (XCOLD) Header Information Leak [10052]
+PASS: Cookie without SameSite Attribute [10054]
+PASS: CSP [10055]
+PASS: X-Debug-Token Information Leak [10056]
+PASS: Username Hash Found [10057]
+PASS: X-AspNet-Version Response Header [10061]
+PASS: PII Disclosure [10062]
+PASS: Timestamp Disclosure [10096]
+PASS: Hash Disclosure [10097]
+PASS: Cross-Domain Misconfiguration [10098]
+PASS: Source Code Disclosure [10099]
+PASS: Weak Authentication Method [10105]
+PASS: Reverse Tabnabbing [10108]
+PASS: Modern Web Application [10109]
+PASS: Dangerous JS Functions [10110]
+PASS: Authentication Request Identified [10111]
+PASS: Session Management Response Identified [10112]
+PASS: Verification Request Identified [10113]
+PASS: Script Served From Malicious Domain (polyfill) [10115]
+PASS: ZAP is Out of Date [10116]
+PASS: Absence of Anti-CSRF Tokens [10202]
+PASS: Full Path Disclosure [110009]
+PASS: Private IP Disclosure [2]
+PASS: Server Side Technology Version with Known Vulnerabilities [20020]
+PASS: Session ID in URL Rewrite [3]
+PASS: Script Passive Scan Rules [50001]
+PASS: Stats Passive Scan Rule [50003]
+PASS: Insecure JSF ViewState [90001]
+PASS: Java Serialization Object [90002]
+PASS: Sub Resource Integrity Attribute Missing [90003]
+PASS: Charset Mismatch [90011]
+PASS: Application Error Disclosure [90022]
+PASS: WSDL File Detection [90030]
+PASS: Loosely Scoped Cookie [90033]
+WARN-NEW: Re-examine Cache-control Directives [10015] x 3 
+	https://127.0.0.1:8444/panel/ (200 OK)
+	https://127.0.0.1:8444/visor/ (200 OK)
+	https://127.0.0.1:8444/visor/?clave=ZAP&correo=foo-bar%40example.com (200 OK)
+WARN-NEW: Information Disclosure - Sensitive Information in URL [10024] x 5 
+	https://127.0.0.1:8444/panel/?clave=ZAP&correo=foo-bar%40example.com (200 OK)
+	https://127.0.0.1:8444/panel/?clave=ZAP&correo=foo-bar%40example.com&desde=2026-11-09&fecha_desde=2026-11-09&fecha_hasta=2026-11-09&hasta=2026-11-09&tipo=ENTRENAMIENTO&tipo=INFORMATIVO (200 OK)
+	https://127.0.0.1:8444/panel/?clave=ZAP&correo=foo-bar%40example.com&desde=2026-11-09&hasta=2026-11-09&tipo=INFORMATIVO (200 OK)
+	https://127.0.0.1:8444/panel/?clave=ZAP&correo=foo-bar%40example.com&fecha_desde=2026-11-09&fecha_hasta=2026-11-09&tipo=ENTRENAMIENTO (200 OK)
+	https://127.0.0.1:8444/visor/?clave=ZAP&correo=foo-bar%40example.com (200 OK)
+WARN-NEW: Non-Storable Content [10049] x 6 
+	https://127.0.0.1:8444/ (302 Found)
+	https://127.0.0.1:8444/panel (301 Moved Permanently)
+	https://127.0.0.1:8444/robots.txt (404 Not Found)
+	https://127.0.0.1:8444/sitemap.xml (404 Not Found)
+	https://127.0.0.1:8444/visor/css/visor.css (200 OK)
+WARN-NEW: Permissions Policy Header Not Set [10063] x 5 
+	https://127.0.0.1:8444/panel/?clave=ZAP&correo=foo-bar%40example.com&desde=2026-11-09&fecha_desde=2026-11-09&fecha_hasta=2026-11-09&hasta=2026-11-09&tipo=ENTRENAMIENTO&tipo=INFORMATIVO (200 OK)
+	https://127.0.0.1:8444/panel/?clave=ZAP&correo=foo-bar%40example.com&fecha_desde=2026-11-09&fecha_hasta=2026-11-09&tipo=ENTRENAMIENTO (200 OK)
+	https://127.0.0.1:8444/panel/?desde=2026-11-09&fecha_desde=2026-11-09&fecha_hasta=2026-11-09&hasta=2026-11-09&tipo=ENTRENAMIENTO&tipo=INFORMATIVO (200 OK)
+	https://127.0.0.1:8444/robots.txt (404 Not Found)
+	https://127.0.0.1:8444/sitemap.xml (404 Not Found)
+WARN-NEW: Base64 Disclosure [10094] x 7 
+	https://127.0.0.1:8444/api/sesion/csrf (200 OK)
+	https://127.0.0.1:8444/api/sesion/csrf (200 OK)
+	https://127.0.0.1:8444/api/sesion/csrf (200 OK)
+	https://127.0.0.1:8444/api/sesion/csrf (200 OK)
+	https://127.0.0.1:8444/api/sesion/csrf (200 OK)
+WARN-NEW: Cross-Origin-Embedder-Policy Header Missing or Invalid [90004] x 13 
+	https://127.0.0.1:8444/panel/?clave=ZAP&correo=foo-bar%40example.com (200 OK)
+	https://127.0.0.1:8444/panel/?clave=ZAP&correo=foo-bar%40example.com&desde=2026-11-09&fecha_desde=2026-11-09&fecha_hasta=2026-11-09&hasta=2026-11-09&tipo=ENTRENAMIENTO&tipo=INFORMATIVO (200 OK)
+	https://127.0.0.1:8444/panel/?clave=ZAP&correo=foo-bar%40example.com&fecha_desde=2026-11-09&fecha_hasta=2026-11-09&tipo=ENTRENAMIENTO (200 OK)
+	https://127.0.0.1:8444/panel/?desde=2026-11-09&fecha_desde=2026-11-09&fecha_hasta=2026-11-09&hasta=2026-11-09&tipo=ENTRENAMIENTO&tipo=INFORMATIVO (200 OK)
+	https://127.0.0.1:8444/panel/?clave=ZAP&correo=foo-bar%40example.com (200 OK)
+WARN-NEW: Sec-Fetch-Dest Header is Missing [90005] x 12 
+	https://127.0.0.1:8444/ (302 Found)
+	https://127.0.0.1:8444/sitemap.xml (404 Not Found)
+	https://127.0.0.1:8444/visor/css/visor.css (200 OK)
+	https://127.0.0.1:8444/ (302 Found)
+	https://127.0.0.1:8444/sitemap.xml (404 Not Found)
+FAIL-NEW: 0	FAIL-INPROG: 0	WARN-NEW: 7	WARN-INPROG: 0	INFO: 0	IGNORE: 0	PASS: 64
+2026-11-09 15:45:39,583 Number of Imported URLs: 29
+Total of 99 URLs
+PASS: Directory Browsing [0]
+PASS: Vulnerable JS Library (Powered by Retire.js) [10003]
+PASS: Swagger UI Secret & Vulnerability Detector [100043]
+PASS: In Page Banner Information Leak [10009]
+PASS: Cookie No HttpOnly Flag [10010]
+PASS: Cookie Without Secure Flag [10011]
+PASS: Re-examine Cache-control Directives [10015]
+PASS: Cross-Domain JavaScript Source File Inclusion [10017]
+PASS: Content-Type Header Missing [10019]
+PASS: Anti-clickjacking Header [10020]
+PASS: X-Content-Type-Options Header Missing [10021]
+PASS: Information Disclosure - Debug Error Messages [10023]
+PASS: Information Disclosure - Sensitive Information in URL [10024]
+PASS: Information Disclosure - Sensitive Information in HTTP Referrer Header [10025]
+PASS: HTTP Parameter Override [10026]
+PASS: Information Disclosure - Suspicious Comments [10027]
+PASS: Off-site Redirect [10028]
+PASS: Cookie Poisoning [10029]
+PASS: User Controllable Charset [10030]
+PASS: User Controllable HTML Element Attribute (Potential XSS) [10031]
+PASS: Viewstate [10032]
+PASS: Directory Browsing [10033]
+PASS: Heartbleed OpenSSL Vulnerability (Indicative) [10034]
+PASS: Strict-Transport-Security Header [10035]
+PASS: HTTP Server Response Header [10036]
+PASS: Server Leaks Information via "X-Powered-By" HTTP Response Header Field(s) [10037]
+PASS: Content Security Policy (CSP) Header Not Set [10038]
+PASS: X-Backend-Server Header Information Leak [10039]
+PASS: Secure Pages Include Mixed Content [10040]
+PASS: HTTP to HTTPS Insecure Transition in Form Post [10041]
+PASS: HTTPS to HTTP Insecure Transition in Form Post [10042]
+PASS: User Controllable JavaScript Event (XSS) [10043]
+PASS: Big Redirect Detected (Potential Sensitive Information Leak) [10044]
+PASS: Source Code Disclosure - /WEB-INF Folder [10045]
+PASS: HTTPS Content Available via HTTP [10047]
+PASS: Remote Code Execution - Shell Shock [10048]
+PASS: Content Cacheability [10049]
+PASS: Retrieved from Cache [10050]
+PASS: X-ChromeLogger-Data (XCOLD) Header Information Leak [10052]
+PASS: Cookie without SameSite Attribute [10054]
+PASS: CSP [10055]
+PASS: X-Debug-Token Information Leak [10056]
+PASS: Username Hash Found [10057]
+PASS: GET for POST [10058]
+PASS: X-AspNet-Version Response Header [10061]
+PASS: PII Disclosure [10062]
+PASS: Permissions Policy Header Not Set [10063]
+PASS: Base64 Disclosure [10094]
+PASS: Timestamp Disclosure [10096]
+PASS: Hash Disclosure [10097]
+PASS: Cross-Domain Misconfiguration [10098]
+PASS: Source Code Disclosure [10099]
+PASS: User Agent Fuzzer [10104]
+PASS: Weak Authentication Method [10105]
+PASS: HTTP Only Site [10106]
+PASS: Reverse Tabnabbing [10108]
+PASS: Modern Web Application [10109]
+PASS: Dangerous JS Functions [10110]
+PASS: Authentication Request Identified [10111]
+PASS: Session Management Response Identified [10112]
+PASS: Verification Request Identified [10113]
+PASS: Script Served From Malicious Domain (polyfill) [10115]
+PASS: ZAP is Out of Date [10116]
+PASS: Absence of Anti-CSRF Tokens [10202]
+PASS: Full Path Disclosure [110009]
+PASS: Private IP Disclosure [2]
+PASS: Heartbleed OpenSSL Vulnerability [20015]
+PASS: Source Code Disclosure - CVE-2012-1823 [20017]
+PASS: Remote Code Execution - CVE-2012-1823 [20018]
+PASS: External Redirect [20019]
+PASS: Server Side Technology Version with Known Vulnerabilities [20020]
+PASS: Session ID in URL Rewrite [3]
+PASS: Buffer Overflow [30001]
+PASS: Format String Error [30002]
+PASS: CRLF Injection [40003]
+PASS: Parameter Tampering [40008]
+PASS: Server Side Include [40009]
+PASS: Cross Site Scripting (Reflected) [40012]
+PASS: Cross Site Scripting (Persistent) [40014]
+PASS: Cross Site Scripting (Persistent) - Prime [40016]
+PASS: Cross Site Scripting (Persistent) - Spider [40017]
+PASS: SQL Injection [40018]
+PASS: SQL Injection - MySQL (Time Based) [40019]
+PASS: SQL Injection - Hypersonic SQL (Time Based) [40020]
+PASS: SQL Injection - Oracle (Time Based) [40021]
+PASS: SQL Injection - PostgreSQL (Time Based) [40022]
+PASS: Cross Site Scripting (DOM Based) [40026]
+PASS: SQL Injection - MsSQL (Time Based) [40027]
+PASS: ELMAH Information Leak [40028]
+PASS: Trace.axd Information Leak [40029]
+PASS: .htaccess Information Leak [40032]
+PASS: .env Information Leak [40034]
+PASS: Hidden File Finder [40035]
+PASS: Spring Actuator Information Leak [40042]
+PASS: Log4Shell [40043]
+PASS: Exponential Entity Expansion (Billion Laughs Attack) [40044]
+PASS: Spring4Shell [40045]
+PASS: Remote Code Execution (React2Shell) [40048]
+PASS: Script Active Scan Rules [50000]
+PASS: Script Passive Scan Rules [50001]
+PASS: Path Traversal [6]
+PASS: Remote File Inclusion [7]
+PASS: Insecure JSF ViewState [90001]
+PASS: Java Serialization Object [90002]
+PASS: Sub Resource Integrity Attribute Missing [90003]
+PASS: Fetch Metadata Request Headers [90005]
+PASS: Charset Mismatch [90011]
+PASS: XSLT Injection [90017]
+PASS: Server Side Code Injection [90019]
+PASS: Remote OS Command Injection [90020]
+PASS: XPath Injection [90021]
+PASS: Application Error Disclosure [90022]
+PASS: XML External Entity Attack [90023]
+PASS: Generic Padding Oracle [90024]
+PASS: SOAP Action Spoofing [90026]
+PASS: SOAP XML Injection [90029]
+PASS: WSDL File Detection [90030]
+PASS: Loosely Scoped Cookie [90033]
+PASS: Cloud Metadata Potentially Exposed [90034]
+PASS: Server Side Template Injection [90035]
+PASS: Server Side Template Injection (Blind) [90036]
+PASS: Remote OS Command Injection (Time Based) [90037]
+WARN-NEW: Unexpected Content-Type was returned [100001] x 13 
+	https://127.0.0.1:8444/4061054770618490929 (404 Not Found)
+	https://127.0.0.1:8444 (302 Moved Temporarily)
+	https://127.0.0.1:8444/api (301 Moved Permanently)
+	https://127.0.0.1:8444/api/auth/login (429 Too Many Requests)
+	https://127.0.0.1:8444/latest/meta-data/ (404 Not Found)
+WARN-NEW: Cross-Origin-Resource-Policy Header Missing or Invalid [90004] x 2 
+	https://127.0.0.1:8444/api/sesion/csrf (200 OK)
+	https://127.0.0.1:8444/api/salud (200 OK)
+FAIL-NEW: 0	FAIL-INPROG: 0	WARN-NEW: 2	WARN-INPROG: 0	INFO: 0	IGNORE: 0	PASS: 122
+2026-11-09 15:45:58,611 Number of Imported URLs: 29
+Total of 99 URLs
+PASS: Directory Browsing [0]
+PASS: Vulnerable JS Library (Powered by Retire.js) [10003]
+PASS: Swagger UI Secret & Vulnerability Detector [100043]
+PASS: In Page Banner Information Leak [10009]
+PASS: Cookie No HttpOnly Flag [10010]
+PASS: Cookie Without Secure Flag [10011]
+PASS: Re-examine Cache-control Directives [10015]
+PASS: Cross-Domain JavaScript Source File Inclusion [10017]
+PASS: Content-Type Header Missing [10019]
+PASS: Anti-clickjacking Header [10020]
+PASS: X-Content-Type-Options Header Missing [10021]
+PASS: Information Disclosure - Debug Error Messages [10023]
+PASS: Information Disclosure - Sensitive Information in URL [10024]
+PASS: Information Disclosure - Sensitive Information in HTTP Referrer Header [10025]
+PASS: HTTP Parameter Override [10026]
+PASS: Information Disclosure - Suspicious Comments [10027]
+PASS: Off-site Redirect [10028]
+PASS: Cookie Poisoning [10029]
+PASS: User Controllable Charset [10030]
+PASS: User Controllable HTML Element Attribute (Potential XSS) [10031]
+PASS: Viewstate [10032]
+PASS: Directory Browsing [10033]
+PASS: Heartbleed OpenSSL Vulnerability (Indicative) [10034]
+PASS: Strict-Transport-Security Header [10035]
+PASS: HTTP Server Response Header [10036]
+PASS: Server Leaks Information via "X-Powered-By" HTTP Response Header Field(s) [10037]
+PASS: Content Security Policy (CSP) Header Not Set [10038]
+PASS: X-Backend-Server Header Information Leak [10039]
+PASS: Secure Pages Include Mixed Content [10040]
+PASS: HTTP to HTTPS Insecure Transition in Form Post [10041]
+PASS: HTTPS to HTTP Insecure Transition in Form Post [10042]
+PASS: User Controllable JavaScript Event (XSS) [10043]
+PASS: Big Redirect Detected (Potential Sensitive Information Leak) [10044]
+PASS: Source Code Disclosure - /WEB-INF Folder [10045]
+PASS: HTTPS Content Available via HTTP [10047]
+PASS: Remote Code Execution - Shell Shock [10048]
+PASS: Content Cacheability [10049]
+PASS: Retrieved from Cache [10050]
+PASS: X-ChromeLogger-Data (XCOLD) Header Information Leak [10052]
+PASS: Cookie without SameSite Attribute [10054]
+PASS: CSP [10055]
+PASS: X-Debug-Token Information Leak [10056]
+PASS: Username Hash Found [10057]
+PASS: GET for POST [10058]
+PASS: X-AspNet-Version Response Header [10061]
+PASS: PII Disclosure [10062]
+PASS: Permissions Policy Header Not Set [10063]
+PASS: Base64 Disclosure [10094]
+PASS: Timestamp Disclosure [10096]
+PASS: Hash Disclosure [10097]
+PASS: Cross-Domain Misconfiguration [10098]
+PASS: Source Code Disclosure [10099]
+PASS: User Agent Fuzzer [10104]
+PASS: Weak Authentication Method [10105]
+PASS: HTTP Only Site [10106]
+PASS: Reverse Tabnabbing [10108]
+PASS: Modern Web Application [10109]
+PASS: Dangerous JS Functions [10110]
+PASS: Authentication Request Identified [10111]
+PASS: Session Management Response Identified [10112]
+PASS: Verification Request Identified [10113]
+PASS: Script Served From Malicious Domain (polyfill) [10115]
+PASS: ZAP is Out of Date [10116]
+PASS: Absence of Anti-CSRF Tokens [10202]
+PASS: Full Path Disclosure [110009]
+PASS: Private IP Disclosure [2]
+PASS: Heartbleed OpenSSL Vulnerability [20015]
+PASS: Source Code Disclosure - CVE-2012-1823 [20017]
+PASS: Remote Code Execution - CVE-2012-1823 [20018]
+PASS: External Redirect [20019]
+PASS: Server Side Technology Version with Known Vulnerabilities [20020]
+PASS: Session ID in URL Rewrite [3]
+PASS: Buffer Overflow [30001]
+PASS: Format String Error [30002]
+PASS: CRLF Injection [40003]
+PASS: Parameter Tampering [40008]
+PASS: Server Side Include [40009]
+PASS: Cross Site Scripting (Reflected) [40012]
+PASS: Cross Site Scripting (Persistent) [40014]
+PASS: Cross Site Scripting (Persistent) - Prime [40016]
+PASS: Cross Site Scripting (Persistent) - Spider [40017]
+PASS: SQL Injection [40018]
+PASS: SQL Injection - MySQL (Time Based) [40019]
+PASS: SQL Injection - Hypersonic SQL (Time Based) [40020]
+PASS: SQL Injection - Oracle (Time Based) [40021]
+PASS: SQL Injection - PostgreSQL (Time Based) [40022]
+PASS: Cross Site Scripting (DOM Based) [40026]
+PASS: SQL Injection - MsSQL (Time Based) [40027]
+PASS: ELMAH Information Leak [40028]
+PASS: Trace.axd Information Leak [40029]
+PASS: .htaccess Information Leak [40032]
+PASS: .env Information Leak [40034]
+PASS: Hidden File Finder [40035]
+PASS: Spring Actuator Information Leak [40042]
+PASS: Log4Shell [40043]
+PASS: Exponential Entity Expansion (Billion Laughs Attack) [40044]
+PASS: Spring4Shell [40045]
+PASS: Remote Code Execution (React2Shell) [40048]
+PASS: Script Active Scan Rules [50000]
+PASS: Script Passive Scan Rules [50001]
+PASS: Path Traversal [6]
+PASS: Remote File Inclusion [7]
+PASS: Insecure JSF ViewState [90001]
+PASS: Java Serialization Object [90002]
+PASS: Sub Resource Integrity Attribute Missing [90003]
+PASS: Fetch Metadata Request Headers [90005]
+PASS: Charset Mismatch [90011]
+PASS: XSLT Injection [90017]
+PASS: Server Side Code Injection [90019]
+PASS: Remote OS Command Injection [90020]
+PASS: XPath Injection [90021]
+PASS: Application Error Disclosure [90022]
+PASS: XML External Entity Attack [90023]
+PASS: Generic Padding Oracle [90024]
+PASS: SOAP Action Spoofing [90026]
+PASS: SOAP XML Injection [90029]
+PASS: WSDL File Detection [90030]
+PASS: Loosely Scoped Cookie [90033]
+PASS: Cloud Metadata Potentially Exposed [90034]
+PASS: Server Side Template Injection [90035]
+PASS: Server Side Template Injection (Blind) [90036]
+PASS: Remote OS Command Injection (Time Based) [90037]
+WARN-NEW: Unexpected Content-Type was returned [100001] x 13 
+	https://127.0.0.1:8444/2262091672436232687 (404 Not Found)
+	https://127.0.0.1:8444 (302 Moved Temporarily)
+	https://127.0.0.1:8444/api (301 Moved Permanently)
+	https://127.0.0.1:8444/api/auth/login (429 Too Many Requests)
+	https://127.0.0.1:8444/latest/meta-data/ (404 Not Found)
+WARN-NEW: Cross-Origin-Resource-Policy Header Missing or Invalid [90004] x 4 
+	https://127.0.0.1:8444/api/sesion (200 OK)
+	https://127.0.0.1:8444/api/sesion/csrf (200 OK)
+	https://127.0.0.1:8444/api/indicadores (200 OK)
+	https://127.0.0.1:8444/api/salud (200 OK)
+FAIL-NEW: 0	FAIL-INPROG: 0	WARN-NEW: 2	WARN-INPROG: 0	INFO: 0	IGNORE: 0	PASS: 122

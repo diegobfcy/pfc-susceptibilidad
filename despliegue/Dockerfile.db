@@ -1,0 +1,17 @@
+# Imagen db: PostgreSQL 18.6 y PostGIS 3.7.0, las mismas versiones del entorno de pruebas.
+# gosu está compilado con un runtime de Go con vulnerabilidades altas y críticas (Trivy);
+# su-exec cumple la misma función, con la misma sintaxis, y está escrito en C. La segunda
+# etapa copia el sistema de archivos para que el binario de gosu no quede en ninguna capa.
+FROM postgis/postgis:18-3.7-alpine AS base
+RUN apk upgrade --no-cache && apk add --no-cache su-exec \
+    && rm /usr/local/bin/gosu && ln -s /sbin/su-exec /usr/local/bin/gosu
+
+FROM scratch
+COPY --from=base / /
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin LANG=en_US.utf8 \
+    PG_MAJOR=18 PG_VERSION=18.6 PGDATA=/var/lib/postgresql/18/docker POSTGIS_VERSION=3.7.0
+VOLUME /var/lib/postgresql
+EXPOSE 5432
+STOPSIGNAL SIGINT
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["postgres"]

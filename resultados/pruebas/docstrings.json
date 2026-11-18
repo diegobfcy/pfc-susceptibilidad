@@ -1,0 +1,34 @@
+{
+  "Ingesta y ETL": {
+    "modulos": 23,
+    "modulos_sin_docstring": [],
+    "definiciones_publicas": 61,
+    "con_docstring": 61,
+    "faltan": []
+  },
+  "Predictiva": {
+    "modulos": 12,
+    "modulos_sin_docstring": [],
+    "definiciones_publicas": 35,
+    "con_docstring": 35,
+    "faltan": []
+  },
+  "Servicios": {
+    "modulos": 16,
+    "modulos_sin_docstring": [],
+    "definiciones_publicas": 46,
+    "con_docstring": 46,
+    "faltan": []
+  },
+  "Datos espaciales": {
+    "modulos": 10,
+    "modulos_sin_docstring": [],
+    "definiciones_publicas": 67,
+    "con_docstring": 67,
+    "faltan": []
+  },
+  "total": {
+    "definiciones_publicas": 209,
+    "con_docstring": 209
+  }
+}

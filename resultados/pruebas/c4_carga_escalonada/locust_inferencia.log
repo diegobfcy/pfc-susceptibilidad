@@ -1,0 +1,45 @@
+[2026-11-10 16:38:18,669] diegobfcy-MS-7E47/INFO/locust.main: Starting Locust 2.47.0
+[2026-11-10 16:38:18,670] diegobfcy-MS-7E47/INFO/locust.runners: Shape test starting.
+[2026-11-10 16:38:18,670] diegobfcy-MS-7E47/INFO/locust.runners: Shape worker starting
+[2026-11-10 16:38:18,670] diegobfcy-MS-7E47/INFO/locust.runners: Shape test updating to 5 users at 5.00 spawn rate
+[2026-11-10 16:38:18,744] diegobfcy-MS-7E47/INFO/locust.runners: Ramping to 5 users at a rate of 5.00 per second
+[2026-11-10 16:38:18,744] diegobfcy-MS-7E47/INFO/locust.runners: All users spawned: {"UsuarioVisor": 5} (5 total users)
+ESCALON {"objetivo_rps": 5, "solicitudes": 275, "lograda_rps": 4.99, "p50_ms": 6.1, "p95_ms": 458.9, "p99_ms": 663.2, "p95_teselas_ms": 489.5, "errores": 0, "tasa_errores": 0.0, "cumple_umbral": true, "saturado": false}
+[2026-11-10 16:39:18,751] diegobfcy-MS-7E47/INFO/locust.runners: Shape test updating to 10 users at 10.00 spawn rate
+[2026-11-10 16:39:18,752] diegobfcy-MS-7E47/INFO/locust.runners: Ramping to 10 users at a rate of 10.00 per second
+[2026-11-10 16:39:18,752] diegobfcy-MS-7E47/INFO/locust.runners: All users spawned: {"UsuarioVisor": 10} (10 total users)
+ESCALON {"objetivo_rps": 10, "solicitudes": 559, "lograda_rps": 10.15, "p50_ms": 9.1, "p95_ms": 597.9, "p99_ms": 791.6, "p95_teselas_ms": 640.0, "errores": 0, "tasa_errores": 0.0, "cumple_umbral": true, "saturado": false}
+[2026-11-10 16:40:18,821] diegobfcy-MS-7E47/INFO/locust.runners: Shape test updating to 15 users at 15.00 spawn rate
+[2026-11-10 16:40:18,821] diegobfcy-MS-7E47/INFO/locust.runners: Ramping to 15 users at a rate of 15.00 per second
+[2026-11-10 16:40:18,821] diegobfcy-MS-7E47/INFO/locust.runners: All users spawned: {"UsuarioVisor": 15} (15 total users)
+ESCALON {"objetivo_rps": 15, "solicitudes": 810, "lograda_rps": 14.7, "p50_ms": 10.1, "p95_ms": 1000.1, "p99_ms": 1455.0, "p95_teselas_ms": 1045.4, "errores": 0, "tasa_errores": 0.0, "cumple_umbral": true, "saturado": false}
+[2026-11-10 16:41:18,907] diegobfcy-MS-7E47/INFO/locust.runners: Shape test updating to 20 users at 20.00 spawn rate
+[2026-11-10 16:41:18,908] diegobfcy-MS-7E47/INFO/locust.runners: Ramping to 20 users at a rate of 20.00 per second
+[2026-11-10 16:41:18,908] diegobfcy-MS-7E47/INFO/locust.runners: All users spawned: {"UsuarioVisor": 20} (20 total users)
+ESCALON {"objetivo_rps": 20, "solicitudes": 1000, "lograda_rps": 18.15, "p50_ms": 93.8, "p95_ms": 1710.8, "p99_ms": 2289.7, "p95_teselas_ms": 1878.9, "errores": 0, "tasa_errores": 0.0, "cumple_umbral": true, "saturado": false}
+[2026-11-10 16:42:19,011] diegobfcy-MS-7E47/INFO/locust.runners: Shape test updating to 25 users at 25.00 spawn rate
+[2026-11-10 16:42:19,011] diegobfcy-MS-7E47/INFO/locust.runners: Ramping to 25 users at a rate of 25.00 per second
+[2026-11-10 16:42:19,012] diegobfcy-MS-7E47/INFO/locust.runners: All users spawned: {"UsuarioVisor": 25} (25 total users)
+ESCALON {"objetivo_rps": 25, "solicitudes": 1161, "lograda_rps": 21.07, "p50_ms": 490.5, "p95_ms": 2211.6, "p99_ms": 2806.1, "p95_teselas_ms": 2324.9, "errores": 0, "tasa_errores": 0.0, "cumple_umbral": false, "saturado": true}
+[2026-11-10 16:43:19,118] diegobfcy-MS-7E47/INFO/locust.runners: Shape test updating to 30 users at 30.00 spawn rate
+[2026-11-10 16:43:19,119] diegobfcy-MS-7E47/INFO/locust.runners: Ramping to 30 users at a rate of 30.00 per second
+[2026-11-10 16:43:19,119] diegobfcy-MS-7E47/INFO/locust.runners: All users spawned: {"UsuarioVisor": 30} (30 total users)
+ESCALON {"objetivo_rps": 30, "solicitudes": 1020, "lograda_rps": 18.51, "p50_ms": 1210.4, "p95_ms": 3204.2, "p99_ms": 3909.4, "p95_teselas_ms": 3303.1, "errores": 0, "tasa_errores": 0.0, "cumple_umbral": false, "saturado": true}
+[2026-11-10 16:44:19,223] diegobfcy-MS-7E47/INFO/locust.runners: Shape test stopping
+[2026-11-10 16:44:19,257] diegobfcy-MS-7E47/INFO/locust.main: Shape test completed, shutting down
+[2026-11-10 16:44:19,293] diegobfcy-MS-7E47/INFO/locust.main: Shutting down (exit code 0)
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+GET      consulta-punto                                                                   917     0(0.00%) |    355       2    2905      8 |    2.55        0.00
+GET      tesela MVT                                                                      4358     0(0.00%) |    630       3    4606    220 |   12.10        0.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                      5275     0(0.00%) |    582       2    4606    150 |   14.64        0.00
+
+Response time percentiles (approximated)
+Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+GET      consulta-punto                                                                          8    200    590    780   1200   1600   2000   2400   2900   2900   2900    917
+GET      tesela MVT                                                                            220    680   1000   1300   1900   2400   3000   3400   4300   4600   4600   4358
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+         Aggregated                                                                            150    600    910   1200   1800   2200   2800   3300   4200   4600   4600   5275
+

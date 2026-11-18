@@ -14,6 +14,8 @@ from pfc_etl.verificacion.reglas import ReglaIntegridad, construir_reglas
 
 @dataclass
 class ResultadoVerificacion:
+    """Resultado de verificar una fuente: filas válidas, rechazos por regla y faltantes."""
+
     fuente: str
     filas: int
     validos: pd.DataFrame
@@ -22,6 +24,7 @@ class ResultadoVerificacion:
 
     @property
     def es_valido(self) -> bool:
+        """True si la serie no tiene faltantes: solo entonces sigue el procesamiento."""
         return not self.faltantes
 
 

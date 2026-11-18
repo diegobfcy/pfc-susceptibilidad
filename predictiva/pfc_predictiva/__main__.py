@@ -36,6 +36,10 @@ VARIABLES = [
 
 
 def resumen_particion(matriz: MatrizParquet, config: dict[str, Any]) -> list[dict[str, Any]]:
+    """Meses, filas y positivos de los conjuntos de entrenamiento, validación y prueba.
+
+    Solo lee el periodo y el objetivo: las variables de la partición de prueba no se leen.
+    """
     p = config["particion"]
     conjuntos = [
         ("Entrenamiento", range(2000, p["fin_entrenamiento"] + 1)),
@@ -59,11 +63,18 @@ def resumen_particion(matriz: MatrizParquet, config: dict[str, Any]) -> list[dic
 
 
 def importancia_relativa(ganancia: dict[str, float]) -> dict[str, float]:
+    """Importancia por ganancia de cada variable como fracción del total."""
     total = sum(ganancia.values())
     return {v: ganancia.get(v, 0.0) / total for v in VARIABLES}
 
 
 def main() -> None:
+    """M1: busca hiperparámetros, entrena la versión 1 de XGBoost y la línea base Random Forest y
+    las compara.
+
+    Usa los años hasta 2019; la partición de prueba 2020–2026 queda sellada. Escribe
+    entrenamiento_v1.json en D2.
+    """
     config = cargar_config()
     semilla = config["semilla"]
     d2 = ruta_d2()

@@ -12,6 +12,8 @@ URL_ERSST = "https://www.cpc.ncep.noaa.gov/data/indices/ersst5.nino.mth.91-20.as
 
 
 class ConectorErsst(ConectorFuente):
+    """Conector de los índices Niño de NOAA ERSST v5 (un archivo con toda la serie)."""
+
     nombre_fuente = "ersst_v5"
 
     def _construir_url(self, ventana: Ventana) -> str:

@@ -1,0 +1,32 @@
+{
+  "estado": "COMPLETADO",
+  "fase": null,
+  "fecha_desde": "2000-02-01",
+  "fecha_hasta": "2026-06-30",
+  "finalizado_en": "2026-11-06T17:24:50.445190-05:00",
+  "id_procesamiento": 34,
+  "iniciado_en": "2026-11-06T17:23:02.619647-05:00",
+  "memoria_max_gb": 0.94,
+  "resumen": {
+    "filas": 34382137,
+    "lotes": 27,
+    "memoria_gb": {
+      "analyze": 0.94,
+      "clasificar": 0.94,
+      "copy": 0.94,
+      "leer_matriz": 0.94,
+      "predecir": 0.94,
+      "verificar_artefacto": 0.37
+    }
+  },
+  "tiempos_s": {
+    "analyze": 10.9,
+    "clasificar": 0.0,
+    "copy": 89.8,
+    "leer_matriz": 2.6,
+    "predecir": 4.0,
+    "verificar_artefacto": 0.1
+  },
+  "tipo": "INFERENCIA",
+  "segundos_reloj": 110.1
+}

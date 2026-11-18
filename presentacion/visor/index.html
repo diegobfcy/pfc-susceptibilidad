@@ -3,78 +3,73 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Susceptibilidad dinámica a deslizamientos – Norte del Perú</title>
+<title>Susceptibilidad a deslizamientos – Norte del Perú</title>
 <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
 <link rel="stylesheet" href="css/visor.css">
 </head>
 <body>
 <header class="barra">
   <div class="titulo">
-    <strong>Susceptibilidad dinámica a deslizamientos</strong>
-    <span>El Niño · Norte del Perú · 2026</span>
+    <strong>Susceptibilidad a deslizamientos</strong>
+    <span>El Niño · Macrorregión norte del Perú</span>
   </div>
-  <nav class="pestanas" role="tablist">
-    <button role="tab" aria-selected="true" data-panel="panel-mapa">Mapa</button>
-    <button role="tab" aria-selected="false" data-panel="panel-auditoria">Auditoría</button>
+  <nav class="pestanas">
+    <a id="enlace-panel" class="boton" href="/panel/" hidden>Panel</a>
+    <button id="salir" type="button" hidden>Cerrar sesión</button>
   </nav>
 </header>
+<div id="acceso" class="acceso" hidden>
+  <form id="form-acceso" class="tarjeta formulario" method="post">
+    <h1>Iniciar sesión</h1>
+    <label class="campo">Correo <input type="email" name="correo" autocomplete="username" required maxlength="150"></label>
+    <label class="campo">Clave <input type="password" name="clave" autocomplete="current-password" required maxlength="128"></label>
+    <button type="submit" class="primario">Entrar</button>
+    <p id="acceso-mensaje" class="aviso" role="alert"></p>
+  </form>
+</div>
 <main>
   <section id="panel-mapa" class="panel activo">
     <aside class="lateral">
-      <label class="campo">Escenario
-        <select id="sel-escenario"></select>
+      <label class="campo">Periodo
+        <input type="month" id="sel-periodo" min="2000-02" max="2026-08" aria-describedby="aviso-periodo">
       </label>
-      <p id="desc-escenario" class="nota"></p>
-      <label class="campo">Nivel mínimo mostrado
-        <select id="sel-nivel">
-          <option value="1">Todos</option><option value="2">Media o más</option>
-          <option value="3">Alta o más</option><option value="4">Muy alta</option>
-        </select>
+      <p id="aviso-periodo" class="aviso" role="status" hidden></p>
+      <label class="campo">Departamento
+        <select id="sel-departamento"><option value="">Toda la macrorregión</option></select>
       </label>
-      <label class="campo">Ir a departamento
-        <select id="sel-dep"><option value="">— Dominio completo —</option></select>
+      <label class="campo">Provincia
+        <select id="sel-provincia"><option value="">Todas</option></select>
       </label>
       <fieldset class="campo">
-        <legend>Inventario (filtro temporal)</legend>
-        <div class="fila"><input type="date" id="inv-desde" aria-label="Fecha inicial del inventario" value="2000-01-01" min="2000-01-01" max="2026-08-31">
-        <input type="date" id="inv-hasta" aria-label="Fecha final del inventario" value="2026-08-31" min="2000-01-01" max="2026-08-31"></div>
-        <label class="check"><input type="checkbox" id="inv-precisos"> Solo ubicaciones puntuales (L1–L3)</label>
+        <legend>Capas</legend>
+        <label class="check"><input type="checkbox" id="capa-susceptibilidad" checked> Susceptibilidad</label>
+        <p id="error-susceptibilidad" class="aviso" role="status" hidden></p>
+        <label class="check"><input type="checkbox" id="capa-inventario"> Inventario de deslizamientos</label>
+        <p id="error-inventario" class="aviso" role="status" hidden></p>
+        <label class="check"><input type="checkbox" id="capa-precipitacion"> Precipitación mensual</label>
+        <p id="error-precipitacion" class="aviso" role="status" hidden></p>
+        <label class="check"><input type="checkbox" id="capa-tsm"> Anomalía de TSM (Niño 1+2)</label>
+        <p id="error-tsm" class="aviso" role="status" hidden></p>
+        <label class="check"><input type="checkbox" id="capa-pendiente"> Pendiente del terreno</label>
+        <p id="error-pendiente" class="aviso" role="status" hidden></p>
+        <label class="check"><input type="checkbox" id="capa-limites" checked> Límites provinciales</label>
+        <p id="error-limites" class="aviso" role="status" hidden></p>
       </fieldset>
-      <label class="campo">Ventana de lluvia (capa precipitación)
-        <select id="sel-ventana"><option value="p1">1 día</option><option value="p3">3 días</option>
-          <option value="p7">7 días</option><option value="p15">15 días</option>
-          <option value="p30" selected>30 días</option></select>
+      <label class="campo">Paleta
+        <select id="sel-paleta">
+          <option value="estandar">Estándar (verde a rojo)</option>
+          <option value="accesible">Accesible (YlOrBr)</option>
+        </select>
       </label>
       <div class="leyenda" id="leyenda"></div>
-      <div class="tarjeta">
-        <h3>TSM Niño 1+2 (últimos 12 meses)</h3>
-        <canvas id="graf-tsm" height="120" aria-label="Serie de anomalía de TSM Niño 1+2"></canvas>
-      </div>
-      <div class="tarjeta" id="resumen-niveles"></div>
+      <p class="nota">El puntaje ordena las celdas por susceptibilidad relativa: no es la probabilidad calibrada de que ocurra un evento.</p>
+      <p id="error-general" class="aviso" role="alert" hidden></p>
     </aside>
     <div id="mapa" aria-label="Mapa de susceptibilidad"></div>
-  </section>
-  <section id="panel-auditoria" class="panel">
-    <div class="contenido-auditoria">
-      <h2>Auditoría algorítmica</h2>
-      <p class="nota">Métricas de clasificación sobre el conjunto de prueba independiente (eventos 2017 y 2023)
-        y telemetría de las ejecuciones del motor.</p>
-      <div id="kpis" class="kpis"></div>
-      <h3>Métricas por modelo</h3>
-      <table class="tabla"><thead><tr><th>Modelo</th><th>AUC-ROC</th><th>AUC-PR</th><th>Precisión</th><th>Recall</th><th>F1</th><th>CV entre pliegues (%)</th></tr></thead>
-        <tbody id="tabla-metricas"></tbody></table>
-      <h3>Umbrales de clasificación</h3>
-      <table class="tabla"><thead><tr><th>Nivel</th><th>p mínima</th><th>p máxima</th></tr></thead>
-        <tbody id="tabla-umbrales"></tbody></table>
-      <h3>Ejecuciones del motor</h3>
-      <table class="tabla"><thead><tr><th>Escenario</th><th>Modo</th><th>Unidades</th><th>Duración (s)</th><th>Latencia media (ms)</th><th>Latencia p95 (ms)</th><th>CPU máx. (%)</th><th>RAM máx. (MB)</th></tr></thead>
-        <tbody id="tabla-ejecuciones"></tbody></table>
-    </div>
   </section>
 </main>
 <script src="vendor/leaflet/leaflet.js"></script>
 <script src="vendor/leaflet.vectorgrid.bundled.min.js"></script>
-<script src="vendor/chart.umd.min.js"></script>
-<script src="js/mapa.js"></script>
+<script type="module" src="js/mapa.js"></script>
 </body>
 </html>

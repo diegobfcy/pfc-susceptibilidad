@@ -14,23 +14,30 @@ BLOQUEO: Final = dt.timedelta(minutes=15)
 _hasher = PasswordHasher()  # Argon2id con los parámetros recomendados por RFC 9106
 
 
+class CuentaBloqueadaError(Exception):
+    """La cuenta superó los intentos permitidos y está bloqueada (423)."""
+
+
 def generar_hash(clave: str) -> str:
+    """Hash Argon2id de una clave, con sal aleatoria."""
     return _hasher.hash(clave)
 
 
 def autenticar(repo: RepositorioUsuarios, correo: str, clave: str) -> Usuario | None:
-    """Devuelve el usuario si la clave es correcta; aplica el bloqueo tras 5 fallos."""
+    """Usuario si la clave es correcta; None si no; CuentaBloqueadaError al quinto fallo."""
     usuario = repo.por_correo(correo)
     ahora = dt.datetime.now(dt.UTC)
     if usuario is None or not usuario.activo:
         return None
     if usuario.bloqueado_hasta and usuario.bloqueado_hasta > ahora:
-        return None
+        raise CuentaBloqueadaError
     try:
         _hasher.verify(usuario.hash_clave, clave)
     except (VerificationError, InvalidHashError):
         bloqueo = ahora + BLOQUEO if usuario.intentos_fallidos + 1 >= MAX_INTENTOS else None
         repo.registrar_intento(usuario.id_usuario, False, bloqueo)
+        if bloqueo is not None:
+            raise CuentaBloqueadaError from None
         return None
     repo.registrar_intento(usuario.id_usuario, True, None)
     return usuario

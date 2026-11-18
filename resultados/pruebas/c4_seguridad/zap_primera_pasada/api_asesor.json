@@ -1,0 +1,1613 @@
+{
+	"@programName": "ZAP",
+	"@version": "2.17.0",
+	"@generated": "Mon, 9 Nov 2026 15:46:04",
+	"created": "2026-11-09T15:46:04.214357396Z",
+	"insights":[
+		{
+			"level": "Medium",
+			"reason": "Exceeded High",
+			"site": "https://127.0.0.1:8444",
+			"key": "insight.code.4xx",
+			"description": "Percentage of responses with status code 4xx",
+			"statistic": "98"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "https://127.0.0.1:8444",
+			"key": "insight.code.2xx",
+			"description": "Percentage of responses with status code 2xx",
+			"statistic": "3"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "https://127.0.0.1:8444",
+			"key": "insight.code.3xx",
+			"description": "Percentage of responses with status code 3xx",
+			"statistic": "1"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "https://127.0.0.1:8444",
+			"key": "insight.endpoint.ctype.application/json",
+			"description": "Percentage of endpoints with content type application/json",
+			"statistic": "87"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "https://127.0.0.1:8444",
+			"key": "insight.endpoint.ctype.text/html",
+			"description": "Percentage of endpoints with content type text/html",
+			"statistic": "12"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "https://127.0.0.1:8444",
+			"key": "insight.endpoint.method.DELETE",
+			"description": "Percentage of endpoints with method DELETE",
+			"statistic": "2"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "https://127.0.0.1:8444",
+			"key": "insight.endpoint.method.GET",
+			"description": "Percentage of endpoints with method GET",
+			"statistic": "75"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "https://127.0.0.1:8444",
+			"key": "insight.endpoint.method.POST",
+			"description": "Percentage of endpoints with method POST",
+			"statistic": "22"
+		},
+		{
+			"level": "Info",
+			"reason": "Informational",
+			"site": "https://127.0.0.1:8444",
+			"key": "insight.endpoint.total",
+			"description": "Count of total endpoints",
+			"statistic": "88"
+		}
+	],
+	"site":[ 
+		{
+			"@name": "https://127.0.0.1:8444",
+			"@host": "127.0.0.1",
+			"@port": "8444",
+			"@ssl": "true",
+			"alerts": [ 
+				{
+					"pluginid": "90004",
+					"alertRef": "90004-1",
+					"alert": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+					"name": "Cross-Origin-Resource-Policy Header Missing or Invalid",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>Cross-Origin-Resource-Policy header is an opt-in header designed to counter side-channels attacks like Spectre. Resource should be specifically set as shareable amongst different origins.</p>",
+					"instances":[ 
+						{
+							"id": "1273",
+							"uri": "https://127.0.0.1:8444/api/indicadores",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/indicadores",
+							"method": "GET",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "1277",
+							"uri": "https://127.0.0.1:8444/api/salud",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/salud",
+							"method": "GET",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "42",
+							"uri": "https://127.0.0.1:8444/api/sesion",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/sesion",
+							"method": "GET",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "59",
+							"uri": "https://127.0.0.1:8444/api/sesion/csrf",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/sesion\/csrf",
+							"method": "GET",
+							"param": "Cross-Origin-Resource-Policy",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "4",
+					"systemic": false,
+					"solution": "<p>Ensure that the application/web server sets the Cross-Origin-Resource-Policy header appropriately, and that it sets the Cross-Origin-Resource-Policy header to 'same-origin' for all web pages.</p><p>'same-site' is considered as less secured and should be avoided.</p><p>If resources must be shared, set the header to 'cross-origin'.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that supports the Cross-Origin-Resource-Policy header (https://caniuse.com/mdn-http_headers_cross-origin-resource-policy).</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy</p>",
+					"cweid": "693",
+					"wascid": "14",
+					"sourceid": "32"
+				},
+				{
+					"pluginid": "100001",
+					"alertRef": "100001",
+					"alert": "Unexpected Content-Type was returned",
+					"name": "Unexpected Content-Type was returned",
+					"riskcode": "1",
+					"confidence": "3",
+					"riskdesc": "Low (High)",
+					"desc": "<p>A Content-Type of text/html was returned by the server.</p><p>This is not one of the types expected to be returned by an API.</p><p>Raised by the 'Alert on Unexpected Content Types' script</p>",
+					"instances":[ 
+						{
+							"id": "105",
+							"uri": "https://127.0.0.1:8444",
+							"nodeName": "https:\/\/127.0.0.1:8444",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "2797",
+							"uri": "https://127.0.0.1:8444/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "90",
+							"uri": "https://127.0.0.1:8444/2262091672436232687",
+							"nodeName": "https:\/\/127.0.0.1:8444\/2262091672436232687",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "106",
+							"uri": "https://127.0.0.1:8444/api",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "2796",
+							"uri": "https://127.0.0.1:8444/visor/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/visor\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "152",
+							"uri": "https://127.0.0.1:8444/api/auth/login",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/auth\/login ()({correo,clave})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "2096",
+							"uri": "https://127.0.0.1:8444/computeMetadata/v1/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/computeMetadata\/v1\/ ()({correo,clave})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "2086",
+							"uri": "https://127.0.0.1:8444/latest/meta-data/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/latest\/meta-data\/ ()({correo,clave})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "2149",
+							"uri": "https://127.0.0.1:8444/metadata/instance",
+							"nodeName": "https:\/\/127.0.0.1:8444\/metadata\/instance ()({correo,clave})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "2156",
+							"uri": "https://127.0.0.1:8444/metadata/v1",
+							"nodeName": "https:\/\/127.0.0.1:8444\/metadata\/v1 ()({correo,clave})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "2108",
+							"uri": "https://127.0.0.1:8444/opc/v1/instance/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/opc\/v1\/instance\/ ()({correo,clave})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "2121",
+							"uri": "https://127.0.0.1:8444/opc/v2/instance/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/opc\/v2\/instance\/ ()({correo,clave})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						},
+						{
+							"id": "2169",
+							"uri": "https://127.0.0.1:8444/openstack/latest/meta_data.json",
+							"nodeName": "https:\/\/127.0.0.1:8444\/openstack\/latest\/meta_data.json ()({correo,clave})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "text/html",
+							"otherinfo": ""
+						}
+					],
+					"count": "13",
+					"systemic": false,
+					"solution": "",
+					"otherinfo": "",
+					"reference": "",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "65"
+				},
+				{
+					"pluginid": "100000",
+					"alertRef": "100000-1",
+					"alert": "A Client Error response code was returned by the server",
+					"name": "A Client Error response code was returned by the server",
+					"riskcode": "0",
+					"confidence": "3",
+					"riskdesc": "Informational (High)",
+					"desc": "<p>A response code of 400 was returned by the server.</p><p>This may indicate that the application is failing to handle unexpected input correctly.</p><p>Raised by the 'Alert on HTTP Response Code Error' script</p>",
+					"instances":[ 
+						{
+							"id": "1",
+							"uri": "https://127.0.0.1:8444/api/sesion",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/sesion",
+							"method": "DELETE",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "2795",
+							"uri": "https://127.0.0.1:8444/api/sesion/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/sesion\/",
+							"method": "DELETE",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "89",
+							"uri": "https://127.0.0.1:8444/2262091672436232687",
+							"nodeName": "https:\/\/127.0.0.1:8444\/2262091672436232687",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2799",
+							"uri": "https://127.0.0.1:8444/api/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "91",
+							"uri": "https://127.0.0.1:8444/api/4504170157855892804",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/4504170157855892804",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "12",
+							"uri": "https://127.0.0.1:8444/api/ambitos",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/ambitos",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "2798",
+							"uri": "https://127.0.0.1:8444/api/ambitos/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/ambitos\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "111",
+							"uri": "https://127.0.0.1:8444/api/auth",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/auth",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2801",
+							"uri": "https://127.0.0.1:8444/api/auth/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/auth\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "92",
+							"uri": "https://127.0.0.1:8444/api/auth/7867856025347742425",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/auth\/7867856025347742425",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "3186",
+							"uri": "https://127.0.0.1:8444/api/auth/actuator/health",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/auth\/actuator\/health",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "88",
+							"uri": "https://127.0.0.1:8444/api/bitacora?desde=desde&hasta=hasta&tipo=INFORMATIVO",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/bitacora (desde,hasta,tipo)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "2803",
+							"uri": "https://127.0.0.1:8444/api/bitacora/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/bitacora\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "114",
+							"uri": "https://127.0.0.1:8444/api/capas",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/capas",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2806",
+							"uri": "https://127.0.0.1:8444/api/capas/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/capas\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "93",
+							"uri": "https://127.0.0.1:8444/api/capas/8209709477906153424",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/capas\/8209709477906153424",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "13",
+							"uri": "https://127.0.0.1:8444/api/capas/limites",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/capas\/limites",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "2804",
+							"uri": "https://127.0.0.1:8444/api/capas/limites/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/capas\/limites\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "10",
+							"uri": "https://127.0.0.1:8444/api/consulta-punto?periodo=periodo&lat=1.2&lon=1.2",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/consulta-punto (lat,lon,periodo)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "2805",
+							"uri": "https://127.0.0.1:8444/api/consulta-punto/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/consulta-punto\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2808",
+							"uri": "https://127.0.0.1:8444/api/indicadores/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/indicadores\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "121",
+							"uri": "https://127.0.0.1:8444/api/inferencias",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/inferencias",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "405",
+							"otherinfo": ""
+						},
+						{
+							"id": "2811",
+							"uri": "https://127.0.0.1:8444/api/inferencias/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/inferencias\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "7",
+							"uri": "https://127.0.0.1:8444/api/inferencias/10",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/inferencias\/10",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2810",
+							"uri": "https://127.0.0.1:8444/api/inferencias/10/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/inferencias\/10\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "94",
+							"uri": "https://127.0.0.1:8444/api/inferencias/6310305149553988551",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/inferencias\/6310305149553988551",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "130",
+							"uri": "https://127.0.0.1:8444/api/ingestas",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/ingestas",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "405",
+							"otherinfo": ""
+						},
+						{
+							"id": "2814",
+							"uri": "https://127.0.0.1:8444/api/ingestas/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/ingestas\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "3",
+							"uri": "https://127.0.0.1:8444/api/ingestas/10",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/ingestas\/10",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2813",
+							"uri": "https://127.0.0.1:8444/api/ingestas/10/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/ingestas\/10\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "96",
+							"uri": "https://127.0.0.1:8444/api/ingestas/10/3691160673876512463",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/ingestas\/10\/3691160673876512463",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "95",
+							"uri": "https://127.0.0.1:8444/api/ingestas/6869159140681850588",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/ingestas\/6869159140681850588",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "141",
+							"uri": "https://127.0.0.1:8444/api/mapas",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2816",
+							"uri": "https://127.0.0.1:8444/api/mapas/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "97",
+							"uri": "https://127.0.0.1:8444/api/mapas/224120628685435167",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas\/224120628685435167",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "149",
+							"uri": "https://127.0.0.1:8444/api/mapas/susceptibilidad",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas\/susceptibilidad",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2817",
+							"uri": "https://127.0.0.1:8444/api/mapas/susceptibilidad/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas\/susceptibilidad\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "98",
+							"uri": "https://127.0.0.1:8444/api/mapas/susceptibilidad/4042016128190043658",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas\/susceptibilidad\/4042016128190043658",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "157",
+							"uri": "https://127.0.0.1:8444/api/mapas/susceptibilidad/periodo",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas\/susceptibilidad\/periodo",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2820",
+							"uri": "https://127.0.0.1:8444/api/mapas/susceptibilidad/periodo/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas\/susceptibilidad\/periodo\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "176",
+							"uri": "https://127.0.0.1:8444/api/mapas/susceptibilidad/periodo/10",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas\/susceptibilidad\/periodo\/10",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2822",
+							"uri": "https://127.0.0.1:8444/api/mapas/susceptibilidad/periodo/10/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas\/susceptibilidad\/periodo\/10\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "183",
+							"uri": "https://127.0.0.1:8444/api/mapas/susceptibilidad/periodo/10/10",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas\/susceptibilidad\/periodo\/10\/10",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2824",
+							"uri": "https://127.0.0.1:8444/api/mapas/susceptibilidad/periodo/10/10/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas\/susceptibilidad\/periodo\/10\/10\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "9",
+							"uri": "https://127.0.0.1:8444/api/mapas/susceptibilidad/periodo/10/10/10.pbf?departamento=departamento&provincia=provincia",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas\/susceptibilidad\/periodo\/10\/10\/10.pbf (departamento,provincia)",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "2823",
+							"uri": "https://127.0.0.1:8444/api/mapas/susceptibilidad/periodo/10/10/10.pbf/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas\/susceptibilidad\/periodo\/10\/10\/10.pbf\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "101",
+							"uri": "https://127.0.0.1:8444/api/mapas/susceptibilidad/periodo/10/10/3750434102651091324",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas\/susceptibilidad\/periodo\/10\/10\/3750434102651091324",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "100",
+							"uri": "https://127.0.0.1:8444/api/mapas/susceptibilidad/periodo/10/3839818963594307517",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas\/susceptibilidad\/periodo\/10\/3839818963594307517",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "99",
+							"uri": "https://127.0.0.1:8444/api/mapas/susceptibilidad/periodo/5050989555604475159",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas\/susceptibilidad\/periodo\/5050989555604475159",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "11",
+							"uri": "https://127.0.0.1:8444/api/periodos",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/periodos",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "2827",
+							"uri": "https://127.0.0.1:8444/api/periodos/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/periodos\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "195",
+							"uri": "https://127.0.0.1:8444/api/procesamientos",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/procesamientos",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2830",
+							"uri": "https://127.0.0.1:8444/api/procesamientos/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/procesamientos\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "204",
+							"uri": "https://127.0.0.1:8444/api/procesamientos/10",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/procesamientos\/10",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2828",
+							"uri": "https://127.0.0.1:8444/api/procesamientos/10/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/procesamientos\/10\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "103",
+							"uri": "https://127.0.0.1:8444/api/procesamientos/10/7953568995340402237",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/procesamientos\/10\/7953568995340402237",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "102",
+							"uri": "https://127.0.0.1:8444/api/procesamientos/485199917995976168",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/procesamientos\/485199917995976168",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2832",
+							"uri": "https://127.0.0.1:8444/api/salud/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/salud\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2831",
+							"uri": "https://127.0.0.1:8444/api/sesion/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/sesion\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "104",
+							"uri": "https://127.0.0.1:8444/api/sesion/6513184366834926043",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/sesion\/6513184366834926043",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2829",
+							"uri": "https://127.0.0.1:8444/api/sesion/csrf/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/sesion\/csrf\/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "0",
+							"uri": "https://127.0.0.1:8444/api/auth/login",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/auth\/login ()({correo,clave})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "151",
+							"uri": "https://127.0.0.1:8444/api/auth/login",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/auth\/login ()({correo,clave})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "429",
+							"otherinfo": ""
+						},
+						{
+							"id": "2790",
+							"uri": "https://127.0.0.1:8444/api/auth/login/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/auth\/login\/ ()({correo,clave})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "5",
+							"uri": "https://127.0.0.1:8444/api/entrenamientos",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/entrenamientos ()({tipo,fecha_desde,fecha_hasta})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "2791",
+							"uri": "https://127.0.0.1:8444/api/entrenamientos/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/entrenamientos\/ ()({tipo,fecha_desde,fecha_hasta})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "6",
+							"uri": "https://127.0.0.1:8444/api/inferencias",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/inferencias ()({fecha_desde,fecha_hasta,id_modelo_version})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "2788",
+							"uri": "https://127.0.0.1:8444/api/inferencias/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/inferencias\/ ()({fecha_desde,fecha_hasta,id_modelo_version})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2",
+							"uri": "https://127.0.0.1:8444/api/ingestas",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/ingestas ()({tipo,fecha_desde,fecha_hasta})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "2794",
+							"uri": "https://127.0.0.1:8444/api/ingestas/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/ingestas\/ ()({tipo,fecha_desde,fecha_hasta})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "4",
+							"uri": "https://127.0.0.1:8444/api/ingestas/10/archivos",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/ingestas\/10\/archivos ()(multipart:archivo,fuente)",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "3264",
+							"uri": "https://127.0.0.1:8444/api/ingestas/10/archivos",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/ingestas\/10\/archivos ()(multipart:rtobject,fuente)",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "403",
+							"otherinfo": ""
+						},
+						{
+							"id": "2789",
+							"uri": "https://127.0.0.1:8444/api/ingestas/10/archivos/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/ingestas\/10\/archivos\/ ()(multipart:archivo,fuente)",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "8",
+							"uri": "https://127.0.0.1:8444/api/procesamientos/10/cancelar",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/procesamientos\/10\/cancelar",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "400",
+							"otherinfo": ""
+						},
+						{
+							"id": "2792",
+							"uri": "https://127.0.0.1:8444/api/procesamientos/10/cancelar/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/procesamientos\/10\/cancelar\/",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2094",
+							"uri": "https://127.0.0.1:8444/computeMetadata/v1/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/computeMetadata\/v1\/ ()({correo,clave})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2085",
+							"uri": "https://127.0.0.1:8444/latest/meta-data/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/latest\/meta-data\/ ()({correo,clave})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2148",
+							"uri": "https://127.0.0.1:8444/metadata/instance",
+							"nodeName": "https:\/\/127.0.0.1:8444\/metadata\/instance ()({correo,clave})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2155",
+							"uri": "https://127.0.0.1:8444/metadata/v1",
+							"nodeName": "https:\/\/127.0.0.1:8444\/metadata\/v1 ()({correo,clave})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2107",
+							"uri": "https://127.0.0.1:8444/opc/v1/instance/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/opc\/v1\/instance\/ ()({correo,clave})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2120",
+							"uri": "https://127.0.0.1:8444/opc/v2/instance/",
+							"nodeName": "https:\/\/127.0.0.1:8444\/opc\/v2\/instance\/ ()({correo,clave})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "2168",
+							"uri": "https://127.0.0.1:8444/openstack/latest/meta_data.json",
+							"nodeName": "https:\/\/127.0.0.1:8444\/openstack\/latest\/meta_data.json ()({correo,clave})",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						}
+					],
+					"count": "82",
+					"systemic": false,
+					"solution": "",
+					"otherinfo": "",
+					"reference": "",
+					"cweid": "388",
+					"wascid": "20",
+					"sourceid": "8"
+				},
+				{
+					"pluginid": "10094",
+					"alertRef": "10094-3",
+					"alert": "Base64 Disclosure",
+					"name": "Base64 Disclosure",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>Base64 encoded data was disclosed by the application/web server. Note: in the interests of performance not all base64 strings in the response were analyzed individually, the entire response should be looked at by the analyst/security team/developer(s).</p>",
+					"instances":[ 
+						{
+							"id": "65",
+							"uri": "https://127.0.0.1:8444/api/sesion/csrf",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/sesion\/csrf",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "eyJjb3JyZW8iOiJhc2VAcHJ1ZWJhcy5wZmMiLCJjc3JmX3Rva2VuIjoiZTQxYzE2NGU5MjE0ODZkMzMzYzI4YzBjZTdhZmY0Nzg4NTg3M2Y1YyIsImlkX3VzdWFyaW8iOjMsInJvbCI6IkFTRVNPUiJ9",
+							"otherinfo": "{\"correo\":\"ase@pruebas.pfc\",\"csrf_token\":\"e41c164e921486d333c28c0ce7aff47885873f5c\",\"id_usuario\":3,\"rol\":\"ASESOR\"}"
+						}
+					],
+					"count": "1",
+					"systemic": false,
+					"solution": "<p>Manually confirm that the Base64 data does not leak sensitive information, and that the data cannot be aggregated/used to exploit other vulnerabilities.</p>",
+					"otherinfo": "<p>{\"correo\":\"ase@pruebas.pfc\",\"csrf_token\":\"e41c164e921486d333c28c0ce7aff47885873f5c\",\"id_usuario\":3,\"rol\":\"ASESOR\"}</p>",
+					"reference": "<p>https://projects.webappsec.org/w/page/13246936/Information%20Leakage</p>",
+					"cweid": "319",
+					"wascid": "13",
+					"sourceid": "1"
+				},
+				{
+					"pluginid": "10049",
+					"alertRef": "10049-1",
+					"alert": "Non-Storable Content",
+					"name": "Non-Storable Content",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>The response contents are not storable by caching components such as proxy servers. If the response does not contain sensitive, personal or user-specific information, it may benefit from being stored and cached, to improve performance.</p>",
+					"instances":[ 
+						{
+							"id": "28",
+							"uri": "https://127.0.0.1:8444/api/sesion",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/sesion",
+							"method": "DELETE",
+							"param": "",
+							"attack": "",
+							"evidence": "DELETE ",
+							"otherinfo": ""
+						},
+						{
+							"id": "29",
+							"uri": "https://127.0.0.1:8444/api/ambitos",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/ambitos",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "no-store",
+							"otherinfo": ""
+						},
+						{
+							"id": "16",
+							"uri": "https://127.0.0.1:8444/api/capas/limites",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/capas\/limites",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "no-store",
+							"otherinfo": ""
+						},
+						{
+							"id": "17",
+							"uri": "https://127.0.0.1:8444/api/inferencias/10",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/inferencias\/10",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "no-store",
+							"otherinfo": ""
+						},
+						{
+							"id": "37",
+							"uri": "https://127.0.0.1:8444/api/sesion",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/sesion",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "no-store",
+							"otherinfo": ""
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>The content may be marked as storable by ensuring that the following conditions are satisfied:</p><p>The request method must be understood by the cache and defined as being cacheable (\"GET\", \"HEAD\", and \"POST\" are currently defined as cacheable)</p><p>The response status code must be understood by the cache (one of the 1XX, 2XX, 3XX, 4XX, or 5XX response classes are generally understood)</p><p>The \"no-store\" cache directive must not appear in the request or response header fields</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"private\" response directive must not appear in the response</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"Authorization\" header field must not appear in the request, unless the response explicitly allows it (using one of the \"must-revalidate\", \"public\", or \"s-maxage\" Cache-Control response directives)</p><p>In addition to the conditions above, at least one of the following conditions must also be satisfied by the response:</p><p>It must contain an \"Expires\" header field</p><p>It must contain a \"max-age\" response directive</p><p>For \"shared\" caches such as \"proxy\" caches, it must contain a \"s-maxage\" response directive</p><p>It must contain a \"Cache Control Extension\" that allows it to be cached</p><p>It must have a status code that is defined as cacheable by default (200, 203, 204, 206, 300, 301, 404, 405, 410, 414, 501).</p>",
+					"otherinfo": "",
+					"reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
+					"cweid": "524",
+					"wascid": "13",
+					"sourceid": "8"
+				},
+				{
+					"pluginid": "10015",
+					"alertRef": "10015",
+					"alert": "Re-examine Cache-control Directives",
+					"name": "Re-examine Cache-control Directives",
+					"riskcode": "0",
+					"confidence": "1",
+					"riskdesc": "Informational (Low)",
+					"desc": "<p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content. For static assets like css, js, or image files this might be intended, however, the resources should be reviewed to ensure that no sensitive content will be cached.</p>",
+					"instances":[ 
+						{
+							"id": "1269",
+							"uri": "https://127.0.0.1:8444/api/indicadores",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/indicadores",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "no-store",
+							"otherinfo": ""
+						},
+						{
+							"id": "1275",
+							"uri": "https://127.0.0.1:8444/api/salud",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/salud",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "no-store",
+							"otherinfo": ""
+						},
+						{
+							"id": "31",
+							"uri": "https://127.0.0.1:8444/api/sesion",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/sesion",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "no-store",
+							"otherinfo": ""
+						},
+						{
+							"id": "15",
+							"uri": "https://127.0.0.1:8444/api/sesion/csrf",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/sesion\/csrf",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "no-store",
+							"otherinfo": ""
+						}
+					],
+					"count": "4",
+					"systemic": false,
+					"solution": "<p>For secure content, ensure the cache-control HTTP header is set with \"no-cache, no-store, must-revalidate\". If an asset should be cached consider setting the directives \"public, max-age, immutable\".</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</p><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control</p><p>https://grayduck.mn/2021/09/13/cache-control-recommendations/</p>",
+					"cweid": "525",
+					"wascid": "13",
+					"sourceid": "32"
+				},
+				{
+					"pluginid": "90005",
+					"alertRef": "90005-3",
+					"alert": "Sec-Fetch-Dest Header is Missing",
+					"name": "Sec-Fetch-Dest Header is Missing",
+					"riskcode": "0",
+					"confidence": "3",
+					"riskdesc": "Informational (High)",
+					"desc": "<p>Specifies how and where the data would be used. For instance, if the value is audio, then the requested resource must be audio data and not any other type of resource.</p>",
+					"instances":[ 
+						{
+							"id": "62",
+							"uri": "https://127.0.0.1:8444/api/sesion",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/sesion",
+							"method": "DELETE",
+							"param": "Sec-Fetch-Dest",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "57",
+							"uri": "https://127.0.0.1:8444/api/ambitos",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/ambitos",
+							"method": "GET",
+							"param": "Sec-Fetch-Dest",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "52",
+							"uri": "https://127.0.0.1:8444/api/mapas/susceptibilidad/periodo/10/10/10.pbf?departamento=departamento&provincia=provincia",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas\/susceptibilidad\/periodo\/10\/10\/10.pbf (departamento,provincia)",
+							"method": "GET",
+							"param": "Sec-Fetch-Dest",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "44",
+							"uri": "https://127.0.0.1:8444/api/entrenamientos",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/entrenamientos ()({tipo,fecha_desde,fecha_hasta})",
+							"method": "POST",
+							"param": "Sec-Fetch-Dest",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "56",
+							"uri": "https://127.0.0.1:8444/api/procesamientos/10/cancelar",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/procesamientos\/10\/cancelar",
+							"method": "POST",
+							"param": "Sec-Fetch-Dest",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Ensure that Sec-Fetch-Dest header is included in request headers.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-Fetch-Dest</p>",
+					"cweid": "352",
+					"wascid": "9",
+					"sourceid": "8"
+				},
+				{
+					"pluginid": "90005",
+					"alertRef": "90005-2",
+					"alert": "Sec-Fetch-Mode Header is Missing",
+					"name": "Sec-Fetch-Mode Header is Missing",
+					"riskcode": "0",
+					"confidence": "3",
+					"riskdesc": "Informational (High)",
+					"desc": "<p>Allows to differentiate between requests for navigating between HTML pages and requests for loading resources like images, audio etc.</p>",
+					"instances":[ 
+						{
+							"id": "58",
+							"uri": "https://127.0.0.1:8444/api/sesion",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/sesion",
+							"method": "DELETE",
+							"param": "Sec-Fetch-Mode",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "35",
+							"uri": "https://127.0.0.1:8444/api/ambitos",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/ambitos",
+							"method": "GET",
+							"param": "Sec-Fetch-Mode",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "51",
+							"uri": "https://127.0.0.1:8444/api/mapas/susceptibilidad/periodo/10/10/10.pbf?departamento=departamento&provincia=provincia",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas\/susceptibilidad\/periodo\/10\/10\/10.pbf (departamento,provincia)",
+							"method": "GET",
+							"param": "Sec-Fetch-Mode",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "43",
+							"uri": "https://127.0.0.1:8444/api/entrenamientos",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/entrenamientos ()({tipo,fecha_desde,fecha_hasta})",
+							"method": "POST",
+							"param": "Sec-Fetch-Mode",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "54",
+							"uri": "https://127.0.0.1:8444/api/procesamientos/10/cancelar",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/procesamientos\/10\/cancelar",
+							"method": "POST",
+							"param": "Sec-Fetch-Mode",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Ensure that Sec-Fetch-Mode header is included in request headers.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-Fetch-Mode</p>",
+					"cweid": "352",
+					"wascid": "9",
+					"sourceid": "8"
+				},
+				{
+					"pluginid": "90005",
+					"alertRef": "90005-1",
+					"alert": "Sec-Fetch-Site Header is Missing",
+					"name": "Sec-Fetch-Site Header is Missing",
+					"riskcode": "0",
+					"confidence": "3",
+					"riskdesc": "Informational (High)",
+					"desc": "<p>Specifies the relationship between request initiator's origin and target's origin.</p>",
+					"instances":[ 
+						{
+							"id": "33",
+							"uri": "https://127.0.0.1:8444/api/ambitos",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/ambitos",
+							"method": "GET",
+							"param": "Sec-Fetch-Site",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "24",
+							"uri": "https://127.0.0.1:8444/api/capas/limites",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/capas\/limites",
+							"method": "GET",
+							"param": "Sec-Fetch-Site",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "38",
+							"uri": "https://127.0.0.1:8444/api/mapas/susceptibilidad/periodo/10/10/10.pbf?departamento=departamento&provincia=provincia",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas\/susceptibilidad\/periodo\/10\/10\/10.pbf (departamento,provincia)",
+							"method": "GET",
+							"param": "Sec-Fetch-Site",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "40",
+							"uri": "https://127.0.0.1:8444/api/entrenamientos",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/entrenamientos ()({tipo,fecha_desde,fecha_hasta})",
+							"method": "POST",
+							"param": "Sec-Fetch-Site",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "41",
+							"uri": "https://127.0.0.1:8444/api/inferencias",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/inferencias ()({fecha_desde,fecha_hasta,id_modelo_version})",
+							"method": "POST",
+							"param": "Sec-Fetch-Site",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Ensure that Sec-Fetch-Site header is included in request headers.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-Fetch-Site</p>",
+					"cweid": "352",
+					"wascid": "9",
+					"sourceid": "29"
+				},
+				{
+					"pluginid": "90005",
+					"alertRef": "90005-4",
+					"alert": "Sec-Fetch-User Header is Missing",
+					"name": "Sec-Fetch-User Header is Missing",
+					"riskcode": "0",
+					"confidence": "3",
+					"riskdesc": "Informational (High)",
+					"desc": "<p>Specifies if a navigation request was initiated by a user.</p>",
+					"instances":[ 
+						{
+							"id": "64",
+							"uri": "https://127.0.0.1:8444/api/sesion",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/sesion",
+							"method": "DELETE",
+							"param": "Sec-Fetch-User",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "66",
+							"uri": "https://127.0.0.1:8444/api/mapas/susceptibilidad/periodo/10/10/10.pbf?departamento=departamento&provincia=provincia",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/mapas\/susceptibilidad\/periodo\/10\/10\/10.pbf (departamento,provincia)",
+							"method": "GET",
+							"param": "Sec-Fetch-User",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "45",
+							"uri": "https://127.0.0.1:8444/api/entrenamientos",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/entrenamientos ()({tipo,fecha_desde,fecha_hasta})",
+							"method": "POST",
+							"param": "Sec-Fetch-User",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "71",
+							"uri": "https://127.0.0.1:8444/api/inferencias",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/inferencias ()({fecha_desde,fecha_hasta,id_modelo_version})",
+							"method": "POST",
+							"param": "Sec-Fetch-User",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"id": "63",
+							"uri": "https://127.0.0.1:8444/api/procesamientos/10/cancelar",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/procesamientos\/10\/cancelar",
+							"method": "POST",
+							"param": "Sec-Fetch-User",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "5",
+					"systemic": true,
+					"solution": "<p>Ensure that Sec-Fetch-User header is included in user initiated requests.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-Fetch-User</p>",
+					"cweid": "352",
+					"wascid": "9",
+					"sourceid": "8"
+				},
+				{
+					"pluginid": "10112",
+					"alertRef": "10112",
+					"alert": "Session Management Response Identified",
+					"name": "Session Management Response Identified",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>The given response has been identified as containing a session management token. The 'Other Info' field contains a set of header tokens that can be used in the Header Based Session Management Method. If the request is in a context which has a Session Management Method set to \"Auto-Detect\" then this rule will change the session management to use the tokens identified.</p>",
+					"instances":[ 
+						{
+							"id": "14",
+							"uri": "https://127.0.0.1:8444/api/sesion/csrf",
+							"nodeName": "https:\/\/127.0.0.1:8444\/api\/sesion\/csrf",
+							"method": "GET",
+							"param": "session",
+							"attack": "",
+							"evidence": "session",
+							"otherinfo": "cookie:session"
+						}
+					],
+					"count": "1",
+					"systemic": false,
+					"solution": "<p>This is an informational alert rather than a vulnerability and so there is nothing to fix.</p>",
+					"otherinfo": "<p>cookie:session</p>",
+					"reference": "<p>https://www.zaproxy.org/docs/desktop/addons/authentication-helper/session-mgmt-id/</p>",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "1"
+				}
+			]
+		}
+	],
+	"sequences":[
+	]
+
+}

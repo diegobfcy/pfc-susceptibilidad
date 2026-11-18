@@ -149,3 +149,18 @@ def test_metricas_y_psi() -> None:
     assert len(cortes) == 9
     assert metricas.psi(ref, pd.Series(rng.normal(0, 1, 5000)), cortes) < 0.1
     assert metricas.psi(ref, pd.Series(rng.normal(1.5, 1, 5000)), cortes) > 0.25
+
+
+def test_metricas_balanceadas_uno_a_uno_por_grupo() -> None:
+    rng = np.random.default_rng(1)
+    y = np.zeros(4000, dtype=int)
+    y[:40] = 1
+    grupos = np.repeat([2020, 2021], 2000)
+    y[2000:2010] = 1  # 40 positivos en 2020 y 10 en 2021
+    p = np.where(y == 1, 0.9, rng.uniform(0, 1, len(y)))
+    r = metricas.metricas_balanceadas(y, p, 0.5, grupos, repeticiones=200, semilla=42)
+    assert r["recall"]["media"] == 1.0  # todos los positivos se conservan
+    # Con la mitad de los negativos sobre el umbral, la precisión 1:1 ronda 1 / 1.5.
+    assert r["precision"]["media"] == pytest.approx(1 / 1.5, abs=0.05)
+    assert r["precision"]["ic95_inf"] <= r["precision"]["media"] <= r["precision"]["ic95_sup"]
+    assert r == metricas.metricas_balanceadas(y, p, 0.5, grupos, repeticiones=200, semilla=42)

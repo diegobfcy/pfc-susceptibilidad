@@ -9,7 +9,7 @@ from typing import Any
 from flask import Flask, Response, abort, session
 
 CSP = (
-    "default-src 'self'; img-src 'self' data: https://*.tile.openstreetmap.org; "
+    "default-src 'self'; img-src 'self' data: https://tile.openstreetmap.org; "
     "style-src 'self'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; "
     "base-uri 'self'; form-action 'self'"
 )
@@ -33,6 +33,12 @@ def requiere_rol(*roles: str) -> Callable[[Callable[..., Any]], Callable[..., An
 
 
 def registrar_cabeceras(app: Flask) -> None:
+    """Agrega a cada respuesta las cabeceras de seguridad (CSP, HSTS y otras).
+
+    Las respuestas de una sesión autenticada se marcan no-store si no traen su propia política de
+    caché.
+    """
+
     @app.after_request
     def cabeceras(respuesta: Response) -> Response:
         respuesta.headers["Content-Security-Policy"] = CSP
@@ -40,4 +46,6 @@ def registrar_cabeceras(app: Flask) -> None:
         respuesta.headers["X-Frame-Options"] = "DENY"
         respuesta.headers["Referrer-Policy"] = "same-origin"
         respuesta.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+        if session.get("id_usuario") and "Cache-Control" not in respuesta.headers:
+            respuesta.headers["Cache-Control"] = "no-store"  # JSON autenticado fuera de cachés
         return respuesta

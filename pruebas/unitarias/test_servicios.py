@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import io
 from typing import Any
 
 import pytest
@@ -43,7 +44,7 @@ def _csrf(cliente: Any) -> dict[str, str]:
 
 def _entrar(cliente: Any, correo: str, clave: str = CLAVE) -> Any:
     return cliente.post(
-        "/api/sesion", json={"correo": correo, "clave": clave}, headers=_csrf(cliente)
+        "/api/auth/login", json={"correo": correo, "clave": clave}, headers=_csrf(cliente)
     )
 
 
@@ -55,15 +56,18 @@ def test_salud_y_cabeceras(cliente: Any) -> None:
 
 
 def test_inicio_de_sesion(cliente: Any) -> None:
-    assert _entrar(cliente, "inv@ucsm.edu.pe").get_json() == {"rol": "INVESTIGADOR"}
+    assert _entrar(cliente, "inv@ucsm.edu.pe").status_code == 204
+    assert cliente.get("/api/sesion").get_json()["rol"] == "INVESTIGADOR"
     assert _entrar(cliente, "inv@ucsm.edu.pe", "incorrecta").status_code == 401
     assert _entrar(cliente, "nadie@ucsm.edu.pe").status_code == 401
 
 
 def test_bloqueo_tras_intentos_fallidos(cliente: Any) -> None:
-    for _ in range(MAX_INTENTOS):
-        _entrar(cliente, "esp@ucsm.edu.pe", "mala")
-    assert _entrar(cliente, "esp@ucsm.edu.pe").status_code == 401  # bloqueado aunque sea correcta
+    codigos = [
+        _entrar(cliente, "esp@ucsm.edu.pe", "mala").status_code for _ in range(MAX_INTENTOS)
+    ]
+    assert codigos == [401] * (MAX_INTENTOS - 1) + [423]  # el quinto fallo bloquea la cuenta
+    assert _entrar(cliente, "esp@ucsm.edu.pe").status_code == 423  # bloqueado aunque sea correcta
 
 
 def test_crear_y_consultar_ingesta(cliente: Any) -> None:
@@ -90,6 +94,14 @@ def test_post_sin_token_csrf_se_rechaza(cliente: Any) -> None:
     _entrar(cliente, "inv@ucsm.edu.pe")
     cuerpo = {"tipo": "INGESTA", "fecha_desde": "2017-01-01", "fecha_hasta": "2017-12-31"}
     r = cliente.post("/api/ingestas", json=cuerpo)
+    assert r.status_code == 400 and "CSRF" in r.get_json()["detalle"]
+
+
+def test_carga_manual_sin_token_csrf_se_rechaza(cliente: Any) -> None:
+    """La carga manual no está exenta de CSRF: sin cabecera se rechaza sin leer el archivo."""
+    _entrar(cliente, "inv@ucsm.edu.pe")
+    datos = {"fuente": "ersst_v5", "archivo": (io.BytesIO(b"x" * 64), "sst.nc")}
+    r = cliente.post("/api/ingestas/1/archivos", data=datos, content_type="multipart/form-data")
     assert r.status_code == 400 and "CSRF" in r.get_json()["detalle"]
 
 

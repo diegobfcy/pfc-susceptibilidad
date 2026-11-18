@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="8" skipped="1" tests="75" time="237.903" timestamp="2026-11-07T13:43:10.996471-05:00" hostname="diegobfcy-MS-7E47"><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-POST-/ingestas-permitidos0]" time="0.217" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/ingestas/999999-permitidos1]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-POST-/ingestas/999999/archivos-permitidos2]" time="0.004" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-POST-/entrenamientos-permitidos3]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-POST-/inferencias-permitidos4]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/inferencias/999999-permitidos5]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-POST-/procesamientos/999999/cancelar-permitidos6]" time="0.004" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/mapas/susceptibilidad/2023-03/7/36/66.pbf-permitidos7]" time="0.098" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/consulta-punto?periodo=2023-03&amp;lat=-7&amp;lon=-79-permitidos8]" time="0.006" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/indicadores-permitidos9]" time="4.772" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/bitacora-permitidos10]" time="0.013" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-POST-/ingestas-permitidos0]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/ingestas/999999-permitidos1]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-POST-/ingestas/999999/archivos-permitidos2]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-POST-/entrenamientos-permitidos3]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-POST-/inferencias-permitidos4]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/inferencias/999999-permitidos5]" time="0.001" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-POST-/procesamientos/999999/cancelar-permitidos6]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/mapas/susceptibilidad/2023-03/7/36/66.pbf-permitidos7]" time="0.393" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/consulta-punto?periodo=2023-03&amp;lat=-7&amp;lon=-79-permitidos8]" time="0.009" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/indicadores-permitidos9]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/bitacora-permitidos10]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-POST-/ingestas-permitidos0]" time="0.004" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/ingestas/999999-permitidos1]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-POST-/ingestas/999999/archivos-permitidos2]" time="0.004" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-POST-/entrenamientos-permitidos3]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-POST-/inferencias-permitidos4]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/inferencias/999999-permitidos5]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-POST-/procesamientos/999999/cancelar-permitidos6]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/mapas/susceptibilidad/2023-03/7/36/66.pbf-permitidos7]" time="0.001" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/consulta-punto?periodo=2023-03&amp;lat=-7&amp;lon=-79-permitidos8]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/indicadores-permitidos9]" time="4.586" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/bitacora-permitidos10]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[POST-/ingestas-_0]" time="0.010" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/ingestas/999999-_1]" time="0.006" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[POST-/ingestas/999999/archivos-_2]" time="0.006" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[POST-/entrenamientos-_3]" time="0.009" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[POST-/inferencias-_4]" time="0.008" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/inferencias/999999-_5]" time="0.006" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[POST-/procesamientos/999999/cancelar-_6]" time="0.008" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/mapas/susceptibilidad/2023-03/7/36/66.pbf-_7]" time="0.007" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/consulta-punto?periodo=2023-03&amp;lat=-7&amp;lon=-79-_8]" time="0.006" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/indicadores-_9]" time="0.007" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/bitacora-_10]" time="0.007" /><testcase classname="pruebas.sistema.test_api" name="test_cp15_veinte_envios_simultaneos" time="13.142" /><testcase classname="pruebas.sistema.test_api" name="test_cp11_artefacto_alterado_422_sin_escribir" time="0.109" /><testcase classname="pruebas.sistema.test_api" name="test_cp11_y_cp13_inferencia_integra_reemplaza_sin_duplicar" time="13.105" /><testcase classname="pruebas.sistema.test_api" name="test_cp13_cp12_toda_la_serie_coincide_con_sql" time="16.730" /><testcase classname="pruebas.sistema.test_api" name="test_cp04_carga_manual_real" time="1.677"><failure message="AssertionError: {&quot;detalle&quot;:&quot;The data value transmitted exceeds the capacity limit.&quot;,&quot;error&quot;:&quot;Request Entity Too Large&quot;}&#10;  &#10;assert 413 == 422&#10; +  where 413 = &lt;Response [413]&gt;.status_code">clientes = {'INVESTIGADOR': &lt;cliente_pruebas.Cliente object at 0x7eb3371f1250&gt;, 'ESPECIALISTA': &lt;cliente_pruebas.Cliente object at 0x7eb338f15650&gt;, 'ASESOR': &lt;cliente_pruebas.Cliente object at 0x7eb337389a50&gt;}
+motor_bd = Engine(postgresql+psycopg://postgres:***@127.0.0.1:55433/pfc)
+tmp_path = PosixPath('/tmp/pytest-of-diegobfcy/pytest-18/test_cp04_carga_manual_real0')
+
+    def test_cp04_carga_manual_real(clientes: dict, motor_bd: Any, tmp_path: Path) -&gt; None:
+        inv = clientes[INV]
+        identificador = _crear_en_espera(motor_bd)
+        ruta = f"{inv.base}/ingestas/{identificador}/archivos"
+    
+        def subir(nombre: str, contenido: Any, fuente: str = "dem_glo30") -&gt; Any:
+            return inv.s.post(
+                ruta,
+                headers=inv.csrf(),
+                data={"fuente": fuente},
+                files={"archivo": (nombre, contenido)},
+            )
+    
+        assert subir("malware.exe", b"MZ\x90").status_code == 415
+        assert subir("falso.nc", b"MZ\x90").status_code == 415
+        # Archivo real de más de 2 GB (disperso): atraviesa nginx y se rechaza por tamaño.
+        grande = tmp_path / "grande.nc"
+        with grande.open("wb") as f:
+            f.truncate(2 * 1024**3 + 1024)
+        with grande.open("rb") as f:
+            r = inv.s.post(
+                ruta,
+                headers={**inv.csrf(), "Content-Type": "application/octet-stream"},
+                data=f,
+            )
+&gt;       assert r.status_code == 422, r.text
+E       AssertionError: {"detalle":"The data value transmitted exceeds the capacity limit.","error":"Request Entity Too Large"}
+E         
+E       assert 413 == 422
+E        +  where 413 = &lt;Response [413]&gt;.status_code
+
+pruebas/sistema/test_api.py:203: AssertionError</failure></testcase><testcase classname="pruebas.sistema.test_api" name="test_cp17_cookie_y_hash" time="0.072" /><testcase classname="pruebas.sistema.test_api" name="test_cp17_bloqueo_y_limite_de_solicitudes" time="25.446" /><testcase classname="pruebas.sistema.test_api" name="test_cp18_indicadores_completos" time="4.725" /><testcase classname="pruebas.sistema.test_api" name="test_cp19_filtros_de_bitacora" time="0.011" /><testcase classname="pruebas.sistema.test_api" name="test_cp20_tesela_decodificada" time="0.425" /><testcase classname="pruebas.sistema.test_api" name="test_cp21_filtro_espacial_en_tesela[departamento=24-left(ubigeo_prov, 2)]" time="0.004"><failure message="AssertionError: 204&#10;assert 204 == 200&#10; +  where 204 = &lt;Response [204]&gt;.status_code">clientes = {'INVESTIGADOR': &lt;cliente_pruebas.Cliente object at 0x7eb3371f1250&gt;, 'ESPECIALISTA': &lt;cliente_pruebas.Cliente object at 0x7eb338f15650&gt;, 'ASESOR': &lt;cliente_pruebas.Cliente object at 0x7eb337389a50&gt;}
+motor_bd = Engine(postgresql+psycopg://postgres:***@127.0.0.1:55433/pfc)
+filtro = 'departamento=24', columna = 'left(ubigeo_prov, 2)'
+
+    @pytest.mark.parametrize(
+        ("filtro", "columna"),
+        [("departamento=24", "left(ubigeo_prov, 2)"), ("provincia=1301", "ubigeo_prov")],
+    )
+    def test_cp21_filtro_espacial_en_tesela(
+        clientes: dict, motor_bd: Any, filtro: str, columna: str
+    ) -&gt; None:
+        import mapbox_vector_tile
+    
+        valor = filtro.split("=")[1]
+        zona = {"24": (7, 35, 63), "1301": (7, 36, 66)}[valor]
+        z, x, y = zona
+        r = clientes[ESP].get(f"/mapas/susceptibilidad/2023-03/{z}/{x}/{y}.pbf?{filtro}")
+&gt;       assert r.status_code == 200, r.status_code
+E       AssertionError: 204
+E       assert 204 == 200
+E        +  where 204 = &lt;Response [204]&gt;.status_code
+
+pruebas/sistema/test_api.py:311: AssertionError</failure></testcase><testcase classname="pruebas.sistema.test_api" name="test_cp21_filtro_espacial_en_tesela[provincia=1301-ubigeo_prov]" time="0.013" /><testcase classname="pruebas.sistema.test_api" name="test_cabeceras_de_seguridad_en_estaticos_y_api" time="0.008"><failure message="AssertionError: assert ('DENY, DENY' == 'DENY'&#10;  &#10;  - DENY&#10;  + DENY, DENY)">def test_cabeceras_de_seguridad_en_estaticos_y_api() -&gt; None:
+        c = Cliente()
+        for ruta in (f"{c.base}/salud", c.base.removesuffix("/api") + "/visor/"):
+            h = c.s.get(ruta).headers
+            assert "frame-ancestors 'none'" in h["Content-Security-Policy"]
+&gt;           assert h["X-Frame-Options"] == "DENY" and h["X-Content-Type-Options"] == "nosniff"
+E           AssertionError: assert ('DENY, DENY' == 'DENY'
+E             
+E             - DENY
+E             + DENY, DENY)
+
+pruebas/sistema/test_api.py:330: AssertionError</failure></testcase><testcase classname="pruebas.sistema.test_api" name="test_inyeccion_en_parametros_se_rechaza" time="0.006" /><testcase classname="pruebas.sistema.test_api" name="test_cp25_contrato_de_capas" time="0.000"><skipped type="pytest.skip" message="se ejecuta con el ciclo C1">/home/diegobfcy/ProyectosIA/proyectos-dev/pfc-susceptibilidad/pruebas/sistema/test_api.py:354: se ejecuta con el ciclo C1</skipped></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp20_celdas_por_nivel_en_cada_zoom[chromium]" time="18.998"><failure message="AssertionError: sin celdas en zoom 6&#10;assert 0 &gt; 0&#10; +  where 0 = sum(dict_values([]))&#10; +    where dict_values([]) = &lt;built-in method values of dict object at 0x7eb31fbd81c0&gt;()&#10; +      where &lt;built-in method values of dict object at 0x7eb31fbd81c0&gt; = {}.values">visor = &lt;pruebas.sistema.conftest.Visor object at 0x7eb334135690&gt;
+
+    def test_cp20_celdas_por_nivel_en_cada_zoom(visor: Any) -&gt; None:
+        visor.abrir("2023-03")
+        for z in range(6, 13):
+            _ir(visor, -5.2, -80.0, z)
+            conteo = visor.pagina.evaluate(JS_MUESTRA_LIENZOS)
+&gt;           assert sum(conteo.values()) &gt; 0, f"sin celdas en zoom {z}"
+E           AssertionError: sin celdas en zoom 6
+E           assert 0 &gt; 0
+E            +  where 0 = sum(dict_values([]))
+E            +    where dict_values([]) = &lt;built-in method values of dict object at 0x7eb31fbd81c0&gt;()
+E            +      where &lt;built-in method values of dict object at 0x7eb31fbd81c0&gt; = {}.values
+
+pruebas/sistema/test_visor.py:49: AssertionError</failure></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp20_paleta_accesible_y_leyenda[chromium]" time="14.718" /><testcase classname="pruebas.sistema.test_visor" name="test_cp21_filtro_con_encuadre_y_aviso_sin_datos[chromium]" time="8.710" /><testcase classname="pruebas.sistema.test_visor" name="test_cp22_capas_y_error_de_una_capa[chromium]" time="10.270" /><testcase classname="pruebas.sistema.test_visor" name="test_cp23_consulta_igual_a_la_base_en_diez_celdas[chromium]" time="9.543"><failure message="AssertionError: assert ('Media' in 'Celda 7 · Barranca, Lima\nBaja\nPuntaje del modelo\t0.2020\nPrecipitación del mes\t108.2 mm\nMáximo en 3 días\t28.9 mm\nAntecedente de 90 días\t213.3 mm\nAnomalía de TSM Niño 1+2\t1.49 °C\nPendiente media / p90\t24.9° / 36.0°')">visor = &lt;pruebas.sistema.conftest.Visor object at 0x7eb2b6092b10&gt;
+motor_bd = Engine(postgresql+psycopg://postgres:***@127.0.0.1:55433/pfc)
+
+    def test_cp23_consulta_igual_a_la_base_en_diez_celdas(visor: Any, motor_bd: Any) -&gt; None:
+        with motor_bd.connect() as c:
+            control = c.execute(
+                text("""SELECT c.id_celda, ST_Y(ST_Transform(ST_Centroid(c.geom), 4326)) AS lat,
+                               ST_X(ST_Transform(ST_Centroid(c.geom), 4326)) AS lon,
+                               s.nivel, s.probabilidad::float8 AS p, s.precip_mes_mm::float8 AS m
+                        FROM ref.celda_analisis c JOIN resultado.susceptibilidad s USING (id_celda)
+                        WHERE s.periodo = '2023-03-01' AND c.id_celda % 10846 = 7
+                        ORDER BY c.id_celda LIMIT 10""")
+            ).all()
+        assert len(control) == 10
+        pagina = visor.abrir("2023-03")
+        niveles = {1: "Baja", 2: "Media", 3: "Alta", 4: "Muy alta"}
+        for fila in control:
+            _ir(visor, fila.lat, fila.lon, 12)
+            punto = pagina.evaluate(
+                "([a, o]) =&gt; { const p = window.mapaVisor.latLngToContainerPoint([a, o]);"
+                " const r = document.getElementById('mapa').getBoundingClientRect();"
+                " return [p.x + r.left, p.y + r.top]; }",
+                [fila.lat, fila.lon],
+            )
+            pagina.mouse.click(*punto)
+            pagina.wait_for_selector(f'#ventana-consulta[data-celda="{fila.id_celda}"]', timeout=15000)
+            texto = pagina.inner_text("#ventana-consulta")
+&gt;           assert (
+                niveles[fila.nivel] in texto and f"{fila.p:.4f}" in texto and f"{fila.m:.1f}" in texto
+            )
+E           AssertionError: assert ('Media' in 'Celda 7 · Barranca, Lima\nBaja\nPuntaje del modelo\t0.2020\nPrecipitación del mes\t108.2 mm\nMáximo en 3 días\t28.9 mm\nAntecedente de 90 días\t213.3 mm\nAnomalía de TSM Niño 1+2\t1.49 °C\nPendiente media / p90\t24.9° / 36.0°')
+
+pruebas/sistema/test_visor.py:148: AssertionError</failure></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp18_panel_resalta_el_indicador_en_alerta[chromium]" time="4.871" /><testcase classname="pruebas.sistema.test_visor" name="test_cp19_panel_filtra_y_avisa_sin_registros[chromium]" time="4.899"><failure message="assert 23 == 0&#10; +  where 23 = count()&#10; +    where count = &lt;Locator frame=&lt;Frame name= url='https://127.0.0.1:8444/panel/'&gt; selector='#tabla-historial tr:not([data-tipo=&quot;ERROR&quot;])'&gt;.count&#10; +      where &lt;Locator frame=&lt;Frame name= url='https://127.0.0.1:8444/panel/'&gt; selector='#tabla-historial tr:not([data-tipo=&quot;ERROR&quot;])'&gt; = locator('#tabla-historial tr:not([data-tipo=&quot;ERROR&quot;])')&#10; +        where locator = &lt;Page url='https://127.0.0.1:8444/panel/'&gt;.locator">panel = &lt;pruebas.sistema.conftest.Visor object at 0x7eb2f84b2510&gt;
+
+    def test_cp19_panel_filtra_y_avisa_sin_registros(panel: Any) -&gt; None:
+        pagina = panel.pagina
+        pagina.goto("https://127.0.0.1:8444/panel/")
+        pagina.wait_for_selector('body[data-listo="1"]')
+        pagina.select_option('#form-historial select[name="tipo"]', "ERROR")
+        pagina.click('#form-historial button[type="submit"]')
+        pagina.wait_for_selector('#tabla-historial tr[data-tipo="ERROR"]')
+&gt;       assert pagina.locator('#tabla-historial tr:not([data-tipo="ERROR"])').count() == 0
+E       assert 23 == 0
+E        +  where 23 = count()
+E        +    where count = &lt;Locator frame=&lt;Frame name= url='https://127.0.0.1:8444/panel/'&gt; selector='#tabla-historial tr:not([data-tipo="ERROR"])'&gt;.count
+E        +      where &lt;Locator frame=&lt;Frame name= url='https://127.0.0.1:8444/panel/'&gt; selector='#tabla-historial tr:not([data-tipo="ERROR"])'&gt; = locator('#tabla-historial tr:not([data-tipo="ERROR"])')
+E        +        where locator = &lt;Page url='https://127.0.0.1:8444/panel/'&gt;.locator
+
+pruebas/sistema/test_visor.py:173: AssertionError</failure></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cu02_especialista_no_ve_el_panel[chromium]" time="0.300" /><testcase classname="pruebas.sistema.test_visor" name="test_cp20_celdas_por_nivel_en_cada_zoom[firefox]" time="24.171"><failure message="AssertionError: sin celdas en zoom 6&#10;assert 0 &gt; 0&#10; +  where 0 = sum(dict_values([]))&#10; +    where dict_values([]) = &lt;built-in method values of dict object at 0x7eb2b5d85600&gt;()&#10; +      where &lt;built-in method values of dict object at 0x7eb2b5d85600&gt; = {}.values">visor = &lt;pruebas.sistema.conftest.Visor object at 0x7eb31e5ef550&gt;
+
+    def test_cp20_celdas_por_nivel_en_cada_zoom(visor: Any) -&gt; None:
+        visor.abrir("2023-03")
+        for z in range(6, 13):
+            _ir(visor, -5.2, -80.0, z)
+            conteo = visor.pagina.evaluate(JS_MUESTRA_LIENZOS)
+&gt;           assert sum(conteo.values()) &gt; 0, f"sin celdas en zoom {z}"
+E           AssertionError: sin celdas en zoom 6
+E           assert 0 &gt; 0
+E            +  where 0 = sum(dict_values([]))
+E            +    where dict_values([]) = &lt;built-in method values of dict object at 0x7eb2b5d85600&gt;()
+E            +      where &lt;built-in method values of dict object at 0x7eb2b5d85600&gt; = {}.values
+
+pruebas/sistema/test_visor.py:49: AssertionError</failure></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp20_paleta_accesible_y_leyenda[firefox]" time="14.550" /><testcase classname="pruebas.sistema.test_visor" name="test_cp21_filtro_con_encuadre_y_aviso_sin_datos[firefox]" time="9.130" /><testcase classname="pruebas.sistema.test_visor" name="test_cp22_capas_y_error_de_una_capa[firefox]" time="10.711" /><testcase classname="pruebas.sistema.test_visor" name="test_cp23_consulta_igual_a_la_base_en_diez_celdas[firefox]" time="9.977"><failure message="AssertionError: assert ('Media' in 'Celda 7 · Barranca, Lima\nBaja\nPuntaje del modelo\t0.2020\nPrecipitación del mes\t108.2 mm\nMáximo en 3 días\t28.9 mm\nAntecedente de 90 días\t213.3 mm\nAnomalía de TSM Niño 1+2\t1.49 °C\nPendiente media / p90\t24.9° / 36.0°')">visor = &lt;pruebas.sistema.conftest.Visor object at 0x7eb2f815f290&gt;
+motor_bd = Engine(postgresql+psycopg://postgres:***@127.0.0.1:55433/pfc)
+
+    def test_cp23_consulta_igual_a_la_base_en_diez_celdas(visor: Any, motor_bd: Any) -&gt; None:
+        with motor_bd.connect() as c:
+            control = c.execute(
+                text("""SELECT c.id_celda, ST_Y(ST_Transform(ST_Centroid(c.geom), 4326)) AS lat,
+                               ST_X(ST_Transform(ST_Centroid(c.geom), 4326)) AS lon,
+                               s.nivel, s.probabilidad::float8 AS p, s.precip_mes_mm::float8 AS m
+                        FROM ref.celda_analisis c JOIN resultado.susceptibilidad s USING (id_celda)
+                        WHERE s.periodo = '2023-03-01' AND c.id_celda % 10846 = 7
+                        ORDER BY c.id_celda LIMIT 10""")
+            ).all()
+        assert len(control) == 10
+        pagina = visor.abrir("2023-03")
+        niveles = {1: "Baja", 2: "Media", 3: "Alta", 4: "Muy alta"}
+        for fila in control:
+            _ir(visor, fila.lat, fila.lon, 12)
+            punto = pagina.evaluate(
+                "([a, o]) =&gt; { const p = window.mapaVisor.latLngToContainerPoint([a, o]);"
+                " const r = document.getElementById('mapa').getBoundingClientRect();"
+                " return [p.x + r.left, p.y + r.top]; }",
+                [fila.lat, fila.lon],
+            )
+            pagina.mouse.click(*punto)
+            pagina.wait_for_selector(f'#ventana-consulta[data-celda="{fila.id_celda}"]', timeout=15000)
+            texto = pagina.inner_text("#ventana-consulta")
+&gt;           assert (
+                niveles[fila.nivel] in texto and f"{fila.p:.4f}" in texto and f"{fila.m:.1f}" in texto
+            )
+E           AssertionError: assert ('Media' in 'Celda 7 · Barranca, Lima\nBaja\nPuntaje del modelo\t0.2020\nPrecipitación del mes\t108.2 mm\nMáximo en 3 días\t28.9 mm\nAntecedente de 90 días\t213.3 mm\nAnomalía de TSM Niño 1+2\t1.49 °C\nPendiente media / p90\t24.9° / 36.0°')
+
+pruebas/sistema/test_visor.py:148: AssertionError</failure></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp18_panel_resalta_el_indicador_en_alerta[firefox]" time="5.081" /><testcase classname="pruebas.sistema.test_visor" name="test_cp19_panel_filtra_y_avisa_sin_registros[firefox]" time="5.517" /><testcase classname="pruebas.sistema.test_visor" name="test_cu02_especialista_no_ve_el_panel[firefox]" time="0.641" /></testsuite></testsuites>

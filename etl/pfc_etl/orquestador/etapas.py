@@ -39,18 +39,29 @@ class EtapasLocales:
     def _archivos_fuente(self, trabajo: Trabajo) -> dict[str, list[Path]]:
         raw, proc = self._origen / "raw", self._origen / "processed"
         era5 = [
-            raw / "ERA5Land" / f"era5land_tp00_{a}.nc"
+            self._cargado("era5_land", f"era5land_tp00_{a}.nc")
+            or raw / "ERA5Land" / f"era5land_tp00_{a}.nc"
             for a in range(trabajo.anio_desde - 1, trabajo.anio_hasta + 1)
         ]
+        ersst = "ersst5.nino.mth.91-20.ascii"
         return {
-            "ersst_v5": [raw / "NOAA_CPC" / "ersst5.nino.mth.91-20.ascii"],
+            "ersst_v5": [self._cargado("ersst_v5", ersst) or raw / "NOAA_CPC" / ersst],
             "era5_land": [a for a in era5 if a.exists()],
             "dem_glo30": [self._origen / "interim" / "terreno" / "pendiente.tif"],
             "inventario": [proc / "eventos.gpkg"],
             "grilla": [proc / "celdas.gpkg", proc / "pixeles_clima.gpkg"],
         }
 
+    def _cargado(self, fuente: str, nombre: str) -> Path | None:
+        """Archivo de reemplazo de la carga manual (RF-02): tiene prioridad sobre la caché."""
+        ruta = self._d2 / "fuentes" / fuente / nombre
+        return ruta if ruta.exists() else None
+
     def obtener(self, trabajo: Trabajo) -> dict[str, int]:
+        """E2: registra en D2 los archivos de cada fuente con su huella.
+
+        Lanza FuenteNoDisponibleError si falta algún archivo de una fuente.
+        """
         registrados = {}
         for fuente, archivos in self._archivos_fuente(trabajo).items():
             if not archivos or not all(a.exists() for a in archivos):
@@ -63,6 +74,10 @@ class EtapasLocales:
         return registrados
 
     def verificar(self, trabajo: Trabajo) -> dict[str, dict[str, Any]]:
+        """E3: aplica las reglas de RF-06 a cada fuente y conserva las filas válidas.
+
+        Lanza DatosIncompletosError si una serie tiene faltantes.
+        """
         reglas = self._config["verificacion"]["fuentes"]
         r = self._rutas
         ersst = leer_ersst(r["ersst_v5"][0])
@@ -81,12 +96,20 @@ class EtapasLocales:
                 "faltantes": len(resultado.faltantes),
             }
             if not resultado.es_valido:
-                raise DatosIncompletosError(f"{fuente}: {resultado.faltantes[:5]}")
+                raise DatosIncompletosError(
+                    fuente,
+                    "continuidad temporal",
+                    f"{len(resultado.faltantes)} periodos faltantes: "
+                    + ", ".join(str(f) for f in resultado.faltantes[:5]),
+                )
             self._tablas[fuente] = resultado.validos
         informe["era5_land"]["pixeles_imputados"] = era5.attrs.get("pixeles_imputados", 0)
         return informe
 
     def transformar(self, trabajo: Trabajo) -> dict[int, tuple[int, int]]:
+        """E4: calcula las variables de terreno y precipitación por celda y escribe la matriz por
+        año.
+        """
         r = self._rutas
         celdas = lectores.leer_celdas(r["grilla"][0])
         celdas.to_parquet(self._d2 / "celdas.parquet", index=False)  # bloques espaciales de M1
@@ -103,7 +126,9 @@ class EtapasLocales:
             self._tolerancia,
         )
         if not verif.es_valido:
-            raise DatosIncompletosError(f"dem_glo30: {verif.faltantes}")
+            raise DatosIncompletosError(
+                "dem_glo30", "integridad de campos", f"celdas sin pendiente: {verif.faltantes}"
+            )
         precipitacion = variables_precipitacion(
             self._tablas["era5_land"].rename(columns={"p1": "precip_mm"})
         )

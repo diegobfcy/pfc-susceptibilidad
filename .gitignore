@@ -3,7 +3,7 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 .coverage
-coverage.xml
+/coverage.xml
 *.egg-info/
 .env
 data/
@@ -12,4 +12,5 @@ artefactos/
 resultados/logs/
 despliegue/nginx/tls/
 despliegue/staging/.version_actual
-pruebas.xml
+/pruebas.xml
+htmlcov/

@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="48" failures="7" skipped="1" tests="117" time="81.001" timestamp="2026-11-18T09:44:49.732223-05:00" hostname="diegobfcy-MS-7E47"><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-POST-/ingestas-permitidos0]" time="0.258" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/ingestas/999999-permitidos1]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-POST-/ingestas/999999/archivos-permitidos2]" time="0.004" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-POST-/entrenamientos-permitidos3]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-POST-/inferencias-permitidos4]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/inferencias/999999-permitidos5]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-POST-/procesamientos/999999/cancelar-permitidos6]" time="0.004" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/mapas/susceptibilidad/2023-03/7/36/66.pbf-permitidos7]" time="0.114" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/consulta-punto?periodo=2023-03&amp;lat=-7&amp;lon=-79-permitidos8]" time="0.064" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/indicadores-permitidos9]" time="2.199" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/bitacora-permitidos10]" time="0.010" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/procesamientos/activo-permitidos11]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-POST-/ingestas-permitidos0]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/ingestas/999999-permitidos1]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-POST-/ingestas/999999/archivos-permitidos2]" time="0.004" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-POST-/entrenamientos-permitidos3]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-POST-/inferencias-permitidos4]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/inferencias/999999-permitidos5]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-POST-/procesamientos/999999/cancelar-permitidos6]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/mapas/susceptibilidad/2023-03/7/36/66.pbf-permitidos7]" time="0.096" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/consulta-punto?periodo=2023-03&amp;lat=-7&amp;lon=-79-permitidos8]" time="0.060" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/indicadores-permitidos9]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/bitacora-permitidos10]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/procesamientos/activo-permitidos11]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-POST-/ingestas-permitidos0]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/ingestas/999999-permitidos1]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-POST-/ingestas/999999/archivos-permitidos2]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-POST-/entrenamientos-permitidos3]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-POST-/inferencias-permitidos4]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/inferencias/999999-permitidos5]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-POST-/procesamientos/999999/cancelar-permitidos6]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/mapas/susceptibilidad/2023-03/7/36/66.pbf-permitidos7]" time="0.001" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/consulta-punto?periodo=2023-03&amp;lat=-7&amp;lon=-79-permitidos8]" time="0.001" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/indicadores-permitidos9]" time="2.085" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/bitacora-permitidos10]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/procesamientos/activo-permitidos11]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[POST-/ingestas-_0]" time="0.009" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/ingestas/999999-_1]" time="0.009" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[POST-/ingestas/999999/archivos-_2]" time="0.006" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[POST-/entrenamientos-_3]" time="0.009" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[POST-/inferencias-_4]" time="0.010" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/inferencias/999999-_5]" time="0.008" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[POST-/procesamientos/999999/cancelar-_6]" time="0.009" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/mapas/susceptibilidad/2023-03/7/36/66.pbf-_7]" time="0.007" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/consulta-punto?periodo=2023-03&amp;lat=-7&amp;lon=-79-_8]" time="0.006" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/indicadores-_9]" time="0.007" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/bitacora-_10]" time="0.007" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/procesamientos/activo-_11]" time="0.006" /><testcase classname="pruebas.sistema.test_api" name="test_cp15_veinte_envios_simultaneos" time="15.107" /><testcase classname="pruebas.sistema.test_api" name="test_cp11_artefacto_alterado_422_sin_escribir" time="0.025" /><testcase classname="pruebas.sistema.test_api" name="test_cp11_y_cp13_inferencia_integra_reemplaza_sin_duplicar" time="8.062" /><testcase classname="pruebas.sistema.test_api" name="test_cp13_cp12_toda_la_serie_coincide_con_sql" time="7.668" /><testcase classname="pruebas.sistema.test_api" name="test_cp04_carga_manual_real" time="10.566" /><testcase classname="pruebas.sistema.test_api" name="test_cp17_cookie_y_hash" time="0.066"><failure message="AssertionError: assert (['x', '$argon2id$v=19$m=65536,t=3,p=4$Xt6h2DOE3pTOhdrLnSasdw$WIpR1SU4xo1+u+jS0bYTyOf/XAJG1BFee1BWwyKa2ro', '$argon2id$...Gn9jmsiQx3Bh0lAw', '$argon2id$v=19$m=65536,t=3,p=4$NNVyAesoDVAi6wCSmvo0Gw$MRkZkUY0VXJjcE2//euRmr+zRvJGn9jmsiQx3Bh0lAw'] and False)&#10; +  where False = all(&lt;generator object test_cp17_cookie_y_hash.&lt;locals&gt;.&lt;genexpr&gt; at 0x709c1fe45540&gt;)">motor_bd = Engine(postgresql+psycopg://postgres:***@127.0.0.1:55433/pfc)
+
+    def test_cp17_cookie_y_hash(motor_bd: Any) -&gt; None:
+        c = Cliente()
+        r = c.entrar("ASESOR")
+        assert r.status_code == 204
+        cookie = r.headers["Set-Cookie"]
+        assert all(a in cookie for a in ("HttpOnly", "Secure", "SameSite=Strict"))
+        with motor_bd.connect() as bd:
+            hashes = bd.execute(text("SELECT hash_clave FROM sistema.usuario")).scalars().all()
+&gt;       assert hashes and all(h.startswith("$argon2id$") for h in hashes)
+E       AssertionError: assert (['x', '$argon2id$v=19$m=65536,t=3,p=4$Xt6h2DOE3pTOhdrLnSasdw$WIpR1SU4xo1+u+jS0bYTyOf/XAJG1BFee1BWwyKa2ro', '$argon2id$...Gn9jmsiQx3Bh0lAw', '$argon2id$v=19$m=65536,t=3,p=4$NNVyAesoDVAi6wCSmvo0Gw$MRkZkUY0VXJjcE2//euRmr+zRvJGn9jmsiQx3Bh0lAw'] and False)
+E        +  where False = all(&lt;generator object test_cp17_cookie_y_hash.&lt;locals&gt;.&lt;genexpr&gt; at 0x709c1fe45540&gt;)
+
+pruebas/sistema/test_api.py:244: AssertionError</failure></testcase><testcase classname="pruebas.sistema.test_api" name="test_cp17_bloqueo_y_limite_de_solicitudes" time="25.474" /><testcase classname="pruebas.sistema.test_api" name="test_cp18_indicadores_completos" time="2.191" /><testcase classname="pruebas.sistema.test_api" name="test_cp19_filtros_de_bitacora" time="0.014" /><testcase classname="pruebas.sistema.test_api" name="test_cp20_tesela_decodificada" time="0.000"><failure message="ModuleNotFoundError: No module named 'mapbox_vector_tile'">clientes = {'INVESTIGADOR': &lt;cliente_pruebas.Cliente object at 0x709c1fda4150&gt;, 'ESPECIALISTA': &lt;cliente_pruebas.Cliente object at 0x709c207ee810&gt;, 'ASESOR': &lt;cliente_pruebas.Cliente object at 0x709c1ff3a790&gt;}
+
+    def test_cp20_tesela_decodificada(clientes: dict) -&gt; None:
+&gt;       import mapbox_vector_tile
+E       ModuleNotFoundError: No module named 'mapbox_vector_tile'
+
+pruebas/sistema/test_api.py:297: ModuleNotFoundError</failure></testcase><testcase classname="pruebas.sistema.test_api" name="test_cp21_filtro_espacial_en_tesela[departamento=24-left(ubigeo_prov, 2)]" time="0.001"><failure message="ModuleNotFoundError: No module named 'mapbox_vector_tile'">clientes = {'INVESTIGADOR': &lt;cliente_pruebas.Cliente object at 0x709c1fda4150&gt;, 'ESPECIALISTA': &lt;cliente_pruebas.Cliente object at 0x709c207ee810&gt;, 'ASESOR': &lt;cliente_pruebas.Cliente object at 0x709c1ff3a790&gt;}
+motor_bd = Engine(postgresql+psycopg://postgres:***@127.0.0.1:55433/pfc)
+filtro = 'departamento=24', columna = 'left(ubigeo_prov, 2)'
+
+    @pytest.mark.parametrize(
+        ("filtro", "columna"),
+        [("departamento=24", "left(ubigeo_prov, 2)"), ("provincia=1301", "ubigeo_prov")],
+    )
+    def test_cp21_filtro_espacial_en_tesela(
+        clientes: dict, motor_bd: Any, filtro: str, columna: str
+    ) -&gt; None:
+&gt;       import mapbox_vector_tile
+E       ModuleNotFoundError: No module named 'mapbox_vector_tile'
+
+pruebas/sistema/test_api.py:320: ModuleNotFoundError</failure></testcase><testcase classname="pruebas.sistema.test_api" name="test_cp21_filtro_espacial_en_tesela[provincia=1301-ubigeo_prov]" time="0.001"><failure message="ModuleNotFoundError: No module named 'mapbox_vector_tile'">clientes = {'INVESTIGADOR': &lt;cliente_pruebas.Cliente object at 0x709c1fda4150&gt;, 'ESPECIALISTA': &lt;cliente_pruebas.Cliente object at 0x709c207ee810&gt;, 'ASESOR': &lt;cliente_pruebas.Cliente object at 0x709c1ff3a790&gt;}
+motor_bd = Engine(postgresql+psycopg://postgres:***@127.0.0.1:55433/pfc)
+filtro = 'provincia=1301', columna = 'ubigeo_prov'
+
+    @pytest.mark.parametrize(
+        ("filtro", "columna"),
+        [("departamento=24", "left(ubigeo_prov, 2)"), ("provincia=1301", "ubigeo_prov")],
+    )
+    def test_cp21_filtro_espacial_en_tesela(
+        clientes: dict, motor_bd: Any, filtro: str, columna: str
+    ) -&gt; None:
+&gt;       import mapbox_vector_tile
+E       ModuleNotFoundError: No module named 'mapbox_vector_tile'
+
+pruebas/sistema/test_api.py:320: ModuleNotFoundError</failure></testcase><testcase classname="pruebas.sistema.test_api" name="test_cabeceras_de_seguridad_en_estaticos_y_api" time="0.008" /><testcase classname="pruebas.sistema.test_api" name="test_inyeccion_en_parametros_se_rechaza" time="0.008" /><testcase classname="pruebas.sistema.test_api" name="test_cp25_contrato_de_capas" time="0.000"><skipped type="pytest.skip" message="se ejecuta con el ciclo C1">/home/diegobfcy/ProyectosIA/proyectos-dev/pfc-susceptibilidad/pruebas/sistema/test_api.py:369: se ejecuta con el ciclo C1</skipped></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp27_rf01_inferencia_limitada_a_un_departamento" time="6.494" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp28_iu06_procesamiento_activo" time="0.016" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp29_cu01_flujo_normal_en_el_panel[chromium]" time="0.001"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[chromium]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp30_cu01_aviso_si_ya_hay_un_procesamiento[chromium]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[chromium]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp31_cu01_4a_aviso_de_fuente_y_carga_manual[chromium]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[chromium]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp32_cu01_6a_regla_incumplida_y_cancelacion[chromium]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[chromium]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp33_cu03_exporta_los_indicadores_mostrados[chromium]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[chromium]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp35_cu04_activar_capas_nuevas_y_error_de_una[chromium]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[chromium]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp20_celdas_por_nivel_en_cada_zoom[chromium]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[chromium]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp20_paleta_accesible_y_leyenda[chromium]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[chromium]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp21_cu02_filtrar_por_fecha_y_departamento[chromium]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[chromium]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp21_cu02_3a_fecha_sin_mapas[chromium]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[chromium]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp22_cu04_activar_susceptibilidad_y_desactivar_precipitacion[chromium]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[chromium]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp22_cu04_4a_error_al_mostrar_una_capa[chromium]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[chromium]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp23_cu02_clic_en_una_zona[chromium]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[chromium]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp18_cu03_panel_muestra_y_resalta_indicadores[chromium]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[chromium]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp19_cu05_filtrar_errores_y_criterio_sin_registros[chromium]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[chromium]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cu02_especialista_no_ve_el_panel[chromium]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[chromium]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp29_cu01_flujo_normal_en_el_panel[firefox]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[firefox]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp30_cu01_aviso_si_ya_hay_un_procesamiento[firefox]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[firefox]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp31_cu01_4a_aviso_de_fuente_y_carga_manual[firefox]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[firefox]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp32_cu01_6a_regla_incumplida_y_cancelacion[firefox]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[firefox]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp33_cu03_exporta_los_indicadores_mostrados[firefox]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[firefox]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp35_cu04_activar_capas_nuevas_y_error_de_una[firefox]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[firefox]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp20_celdas_por_nivel_en_cada_zoom[firefox]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[firefox]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp20_paleta_accesible_y_leyenda[firefox]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[firefox]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp21_cu02_filtrar_por_fecha_y_departamento[firefox]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[firefox]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp21_cu02_3a_fecha_sin_mapas[firefox]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[firefox]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp22_cu04_activar_susceptibilidad_y_desactivar_precipitacion[firefox]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[firefox]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp22_cu04_4a_error_al_mostrar_una_capa[firefox]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[firefox]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp23_cu02_clic_en_una_zona[firefox]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[firefox]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp18_cu03_panel_muestra_y_resalta_indicadores[firefox]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[firefox]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp19_cu05_filtrar_errores_y_criterio_sin_registros[firefox]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[firefox]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cu02_especialista_no_ve_el_panel[firefox]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[firefox]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp29_cu01_flujo_normal_en_el_panel[msedge]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[msedge]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp30_cu01_aviso_si_ya_hay_un_procesamiento[msedge]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[msedge]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp31_cu01_4a_aviso_de_fuente_y_carga_manual[msedge]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[msedge]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp32_cu01_6a_regla_incumplida_y_cancelacion[msedge]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[msedge]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp33_cu03_exporta_los_indicadores_mostrados[msedge]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[msedge]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp35_cu04_activar_capas_nuevas_y_error_de_una[msedge]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[msedge]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp20_celdas_por_nivel_en_cada_zoom[msedge]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[msedge]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp20_paleta_accesible_y_leyenda[msedge]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[msedge]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp21_cu02_filtrar_por_fecha_y_departamento[msedge]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[msedge]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp21_cu02_3a_fecha_sin_mapas[msedge]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[msedge]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp22_cu04_activar_susceptibilidad_y_desactivar_precipitacion[msedge]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[msedge]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp22_cu04_4a_error_al_mostrar_una_capa[msedge]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[msedge]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp23_cu02_clic_en_una_zona[msedge]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[msedge]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp18_cu03_panel_muestra_y_resalta_indicadores[msedge]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[msedge]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp19_cu05_filtrar_errores_y_criterio_sin_registros[msedge]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[msedge]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cu02_especialista_no_ve_el_panel[msedge]" time="0.000"><error message="failed on setup with &quot;ModuleNotFoundError: No module named 'playwright'&quot;">request = &lt;SubRequest 'navegador' for &lt;Function test_cp29_cu01_flujo_normal_en_el_panel[msedge]&gt;&gt;
+
+    @pytest.fixture(scope="session", params=["chromium", "firefox", "msedge"])
+    def navegador(request: Any) -&gt; Iterator[Any]:
+&gt;       from playwright.sync_api import sync_playwright
+E       ModuleNotFoundError: No module named 'playwright'
+
+pruebas/sistema/conftest.py:48: ModuleNotFoundError</error></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp34_cu04_capas_nuevas_en_mvt[pendiente-atributos0]" time="0.000"><failure message="ModuleNotFoundError: No module named 'mapbox_vector_tile'">clientes = {'INVESTIGADOR': &lt;cliente_pruebas.Cliente object at 0x709c1fda4150&gt;, 'ESPECIALISTA': &lt;cliente_pruebas.Cliente object at 0x709c207ee810&gt;, 'ASESOR': &lt;cliente_pruebas.Cliente object at 0x709c1ff3a790&gt;}
+motor_bd = Engine(postgresql+psycopg://postgres:***@127.0.0.1:55433/pfc)
+capa = 'pendiente', atributos = {'id_celda', 'pend_media_g'}
+
+    @pytest.mark.parametrize(
+        ("capa", "atributos"),
+        [
+            ("pendiente", {"id_celda", "pend_media_g"}),
+            ("tsm", {"ubigeo_dep", "anom_tsm", "tsm_c"}),
+            ("inventario", {"codigo_origen", "id_celda", "fecha", "del_periodo"}),
+        ],
+    )
+    def test_cp34_cu04_capas_nuevas_en_mvt(
+        clientes: dict, motor_bd: Any, capa: str, atributos: set[str]
+    ) -&gt; None:
+&gt;       import mapbox_vector_tile
+E       ModuleNotFoundError: No module named 'mapbox_vector_tile'
+
+pruebas/sistema/test_flujos_cu.py:296: ModuleNotFoundError</failure></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp34_cu04_capas_nuevas_en_mvt[tsm-atributos1]" time="0.000"><failure message="ModuleNotFoundError: No module named 'mapbox_vector_tile'">clientes = {'INVESTIGADOR': &lt;cliente_pruebas.Cliente object at 0x709c1fda4150&gt;, 'ESPECIALISTA': &lt;cliente_pruebas.Cliente object at 0x709c207ee810&gt;, 'ASESOR': &lt;cliente_pruebas.Cliente object at 0x709c1ff3a790&gt;}
+motor_bd = Engine(postgresql+psycopg://postgres:***@127.0.0.1:55433/pfc)
+capa = 'tsm', atributos = {'anom_tsm', 'tsm_c', 'ubigeo_dep'}
+
+    @pytest.mark.parametrize(
+        ("capa", "atributos"),
+        [
+            ("pendiente", {"id_celda", "pend_media_g"}),
+            ("tsm", {"ubigeo_dep", "anom_tsm", "tsm_c"}),
+            ("inventario", {"codigo_origen", "id_celda", "fecha", "del_periodo"}),
+        ],
+    )
+    def test_cp34_cu04_capas_nuevas_en_mvt(
+        clientes: dict, motor_bd: Any, capa: str, atributos: set[str]
+    ) -&gt; None:
+&gt;       import mapbox_vector_tile
+E       ModuleNotFoundError: No module named 'mapbox_vector_tile'
+
+pruebas/sistema/test_flujos_cu.py:296: ModuleNotFoundError</failure></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp34_cu04_capas_nuevas_en_mvt[inventario-atributos2]" time="0.000"><failure message="ModuleNotFoundError: No module named 'mapbox_vector_tile'">clientes = {'INVESTIGADOR': &lt;cliente_pruebas.Cliente object at 0x709c1fda4150&gt;, 'ESPECIALISTA': &lt;cliente_pruebas.Cliente object at 0x709c207ee810&gt;, 'ASESOR': &lt;cliente_pruebas.Cliente object at 0x709c1ff3a790&gt;}
+motor_bd = Engine(postgresql+psycopg://postgres:***@127.0.0.1:55433/pfc)
+capa = 'inventario'
+atributos = {'codigo_origen', 'del_periodo', 'fecha', 'id_celda'}
+
+    @pytest.mark.parametrize(
+        ("capa", "atributos"),
+        [
+            ("pendiente", {"id_celda", "pend_media_g"}),
+            ("tsm", {"ubigeo_dep", "anom_tsm", "tsm_c"}),
+            ("inventario", {"codigo_origen", "id_celda", "fecha", "del_periodo"}),
+        ],
+    )
+    def test_cp34_cu04_capas_nuevas_en_mvt(
+        clientes: dict, motor_bd: Any, capa: str, atributos: set[str]
+    ) -&gt; None:
+&gt;       import mapbox_vector_tile
+E       ModuleNotFoundError: No module named 'mapbox_vector_tile'
+
+pruebas/sistema/test_flujos_cu.py:296: ModuleNotFoundError</failure></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp36_rf13_cada_operacion_queda_en_el_historial" time="0.015" /></testsuite></testsuites>

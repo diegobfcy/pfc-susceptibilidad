@@ -1,0 +1,522 @@
+{
+  "regresion": "c5_regresion_5",
+  "fecha": "18/11/2026",
+  "pruebas": 245,
+  "aprobadas": 243,
+  "fallidas": 1,
+  "omitidas": 1,
+  "casos": [
+    {
+      "cp": "CP-27",
+      "rf": "RF-01",
+      "flujo": "Fuera del flujo · API",
+      "titulo": "Rango de fechas y zona geográfica de la inferencia",
+      "aprobada": 12,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-09",
+      "rf": "RF-01",
+      "flujo": "CU-01 · FN paso 7",
+      "titulo": "Grilla de 1 km y pendiente por celda",
+      "aprobada": 3,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-10",
+      "rf": "RF-01",
+      "flujo": "CU-01 · FN pasos 5 y 7",
+      "titulo": "Matriz de variables con anomalía TSM alineada",
+      "aprobada": 8,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-04",
+      "rf": "RF-02",
+      "flujo": "Fuera del flujo · API",
+      "titulo": "Carga manual: particiones de tipo y tamaño (API)",
+      "aprobada": 15,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-31",
+      "rf": "RF-02",
+      "flujo": "CU-01 · flujo 4a",
+      "titulo": "Aviso de fuente no disponible y carga manual en el panel",
+      "aprobada": 3,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [
+        "chromium",
+        "firefox",
+        "msedge"
+      ],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-13",
+      "rf": "RF-03",
+      "flujo": "CU-01 · FN paso 9",
+      "titulo": "Persistencia en PostGIS sin huérfanas ni duplicados",
+      "aprobada": 8,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-29",
+      "rf": "RF-04",
+      "flujo": "CU-01 · FN pasos 1–3 y 10",
+      "titulo": "Rango, zona, confirmación y aviso de fin",
+      "aprobada": 3,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [
+        "chromium",
+        "firefox",
+        "msedge"
+      ],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-30",
+      "rf": "RF-04",
+      "flujo": "Fuera del flujo · IU-05 con un activo",
+      "titulo": "Aviso cuando ya hay un procesamiento activo",
+      "aprobada": 3,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [
+        "chromium",
+        "firefox",
+        "msedge"
+      ],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-15",
+      "rf": "RF-04",
+      "flujo": "Fuera del flujo · concurrencia",
+      "titulo": "Un solo procesamiento activo ante envíos simultáneos",
+      "aprobada": 4,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-28",
+      "rf": "RF-04",
+      "flujo": "Fuera del flujo · IU-06",
+      "titulo": "Seguimiento del procesamiento activo (IU-06)",
+      "aprobada": 2,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-01",
+      "rf": "RF-05",
+      "flujo": "CU-01 · FN pasos 4–5",
+      "titulo": "Obtención real de la TSM de NOAA ERSST v5",
+      "aprobada": 4,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-02",
+      "rf": "RF-05",
+      "flujo": "CU-01 · FN paso 4",
+      "titulo": "Obtención real de ERA5-Land por el conector E2",
+      "aprobada": 1,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "descarga real de la 4.ª regresión (10/11): 2 469 741 bytes en 85.8 s",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-37",
+      "rf": "RF-05",
+      "flujo": "CU-01 · FN paso 4",
+      "titulo": "Obtención real de una tesela Copernicus DEM GLO-30",
+      "aprobada": 1,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-38",
+      "rf": "RF-05",
+      "flujo": "CU-01 · FN paso 4",
+      "titulo": "Inventario completo de GEOCATMIN con TLS verificado",
+      "aprobada": 4,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-03",
+      "rf": "RF-05",
+      "flujo": "Fuera del flujo · seguridad A10",
+      "titulo": "Lista blanca de dominios, TLS y redirecciones",
+      "aprobada": 8,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-05",
+      "rf": "RF-06",
+      "flujo": "CU-01 · FN paso 6",
+      "titulo": "Integridad de campos y ausencia de nulos",
+      "aprobada": 6,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-06",
+      "rf": "RF-06",
+      "flujo": "CU-01 · FN paso 6",
+      "titulo": "Rangos en sus valores límite",
+      "aprobada": 4,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-07",
+      "rf": "RF-06",
+      "flujo": "CU-01 · flujo 6a",
+      "titulo": "Continuidad temporal: detención y días indicados",
+      "aprobada": 4,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-32",
+      "rf": "RF-06",
+      "flujo": "CU-01 · flujo 6a",
+      "titulo": "Regla incumplida (IU-10) y cancelación confirmada (IU-11)",
+      "aprobada": 3,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [
+        "chromium",
+        "firefox",
+        "msedge"
+      ],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-11",
+      "rf": "RF-07",
+      "flujo": "Fuera del flujo · integridad",
+      "titulo": "SHA-256 del artefacto antes de la inferencia",
+      "aprobada": 5,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-12",
+      "rf": "RF-07",
+      "flujo": "CU-01 · FN paso 7",
+      "titulo": "Clasificación en cuatro niveles con los umbrales",
+      "aprobada": 13,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-08",
+      "rf": "RF-13",
+      "flujo": "CU-01 · flujo 4a, escenario 2",
+      "titulo": "Error de fuente registrado en el historial",
+      "aprobada": 5,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-20",
+      "rf": "RF-08",
+      "flujo": "CU-01 · FN paso 8",
+      "titulo": "Mapa por colores y paleta accesible",
+      "aprobada": 8,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [
+        "chromium",
+        "firefox",
+        "msedge"
+      ],
+      "externa": "1 prueba(s) repetida(s) tras un tiempo agotado de carga del visor",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-21",
+      "rf": "RF-09",
+      "flujo": "CU-02 · FN pasos 1–3, flujo 3a",
+      "titulo": "Filtro por fecha y departamento; fecha sin mapas",
+      "aprobada": 8,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [
+        "chromium",
+        "firefox",
+        "msedge"
+      ],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-23",
+      "rf": "RF-11",
+      "flujo": "CU-02 · FN pasos 1–5, escenario 1",
+      "titulo": "Un clic: valor, TSM, precipitación y pendiente",
+      "aprobada": 4,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [
+        "chromium",
+        "firefox",
+        "msedge"
+      ],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-18",
+      "rf": "RF-12",
+      "flujo": "CU-03 · FN pasos 1–3 y flujo 3a",
+      "titulo": "Indicadores y aviso de rendimiento",
+      "aprobada": 5,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [
+        "chromium",
+        "firefox",
+        "msedge"
+      ],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-33",
+      "rf": "RF-12",
+      "flujo": "CU-03 · FN paso 4",
+      "titulo": "Exportación de los indicadores (CSV)",
+      "aprobada": 3,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [
+        "chromium",
+        "firefox",
+        "msedge"
+      ],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-22",
+      "rf": "RF-10",
+      "flujo": "CU-04 · FN, escenario y flujo 4a",
+      "titulo": "Activar susceptibilidad y desactivar precipitación; error",
+      "aprobada": 6,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [
+        "chromium",
+        "firefox",
+        "msedge"
+      ],
+      "externa": "1 prueba(s) repetida(s) tras un tiempo agotado de carga del visor",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-34",
+      "rf": "RF-10",
+      "flujo": "Fuera del flujo · API MVT",
+      "titulo": "Capas de pendiente, TSM e inventario (MVT)",
+      "aprobada": 3,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-35",
+      "rf": "RF-10",
+      "flujo": "CU-04 · FN y flujo 4a",
+      "titulo": "Capas nuevas en el visor y error de una capa",
+      "aprobada": 3,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [
+        "chromium",
+        "firefox",
+        "msedge"
+      ],
+      "externa": "1 prueba(s) repetida(s) tras un tiempo agotado de carga del visor",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-36",
+      "rf": "RF-13",
+      "flujo": "CU-05 · precondición",
+      "titulo": "Cada operación queda registrada en el historial",
+      "aprobada": 1,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-19",
+      "rf": "RF-14",
+      "flujo": "CU-05 · FN y flujo 3a",
+      "titulo": "Filtrado del historial y aviso sin registros",
+      "aprobada": 5,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [
+        "chromium",
+        "firefox",
+        "msedge"
+      ],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-16",
+      "rf": "Seguridad",
+      "flujo": "CU-01 a CU-05 · actores",
+      "titulo": "Autorización por rol (matriz RBAC)",
+      "aprobada": 54,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [
+        "chromium",
+        "firefox",
+        "msedge"
+      ],
+      "externa": "",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-17",
+      "rf": "Seguridad",
+      "flujo": "Acceso (IU-01)",
+      "titulo": "Argon2id, bloqueo, límite y cabeceras",
+      "aprobada": 7,
+      "fallida": 1,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "",
+      "estado": "Fallido"
+    },
+    {
+      "cp": "CP-26",
+      "rf": "RNF-01",
+      "flujo": "CU-01 · escenario 1",
+      "titulo": "Procesamiento completo dentro del límite",
+      "aprobada": 11,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "160.1 s de extremo a extremo (ejecución previa, no repetida)",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-14",
+      "rf": "RNF-02",
+      "flujo": "Validación del modelo",
+      "titulo": "AUC-ROC y precisión 1:1 en la partición sellada",
+      "aprobada": 7,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [],
+      "externa": "AUC-ROC 0.902; precisión 1:1 0.834 (IC 95 %: 0.816–0.852) en la partición sellada",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-24",
+      "rf": "RNF-03",
+      "flujo": "CU-02 a CU-05 · navegadores",
+      "titulo": "Flujos del visor y del panel en tres navegadores",
+      "aprobada": 48,
+      "fallida": 0,
+      "omitida": 0,
+      "navegadores": [
+        "chromium",
+        "firefox",
+        "msedge"
+      ],
+      "externa": "3 prueba(s) repetida(s) tras un tiempo agotado de carga del visor",
+      "estado": "Aprobado"
+    },
+    {
+      "cp": "CP-25",
+      "rf": "RNF-04",
+      "flujo": "Mantenibilidad",
+      "titulo": "Contrato de capas y puerta de calidad",
+      "aprobada": 0,
+      "fallida": 0,
+      "omitida": 1,
+      "navegadores": [],
+      "externa": "contrato verificado por lint-imports en el pipeline; SonarQube aprobado en la 2.ª regresión",
+      "estado": "Aprobado"
+    }
+  ]
+}

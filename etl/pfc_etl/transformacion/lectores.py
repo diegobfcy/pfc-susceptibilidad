@@ -51,6 +51,7 @@ def leer_era5_diario(archivos: list[Path], pixeles: pd.DataFrame) -> pd.DataFram
 
 
 def leer_celdas(ruta: Path) -> pd.DataFrame:
+    """Celdas de la grilla de 1 km con su píxel de clima, su provincia y su centro (EPSG:32717)."""
     import geopandas as gpd
 
     celdas = gpd.read_file(ruta, ignore_geometry=True)
@@ -59,12 +60,14 @@ def leer_celdas(ruta: Path) -> pd.DataFrame:
 
 
 def leer_pixeles(ruta: Path) -> pd.DataFrame:
+    """Píxeles de la grilla de clima con su longitud y latitud."""
     import geopandas as gpd
 
     return pd.DataFrame(gpd.read_file(ruta, ignore_geometry=True)[["id_pixel", "lon", "lat"]])
 
 
 def leer_eventos(ruta: Path) -> pd.DataFrame:
+    """Eventos del inventario con su fecha, la precisión de esa fecha y su celda."""
     import geopandas as gpd
 
     eventos = gpd.read_file(ruta, ignore_geometry=True)
@@ -80,4 +83,5 @@ def leer_eventos(ruta: Path) -> pd.DataFrame:
 
 
 def a_int(serie: pd.Series) -> np.ndarray:
+    """Convierte una serie de pandas a un arreglo de enteros de 64 bits."""
     return serie.astype("int64").to_numpy()

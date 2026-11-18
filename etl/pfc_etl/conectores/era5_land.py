@@ -14,6 +14,7 @@ PRODUCTO = "reanalysis-era5-land"
 
 
 def solicitud_anual(anio: int, area: list[float]) -> dict[str, Any]:
+    """Solicitud al CDS de la precipitación de ERA5-Land de un año completo sobre el área dada."""
     return {
         "variable": ["total_precipitation"],
         "year": str(anio),
@@ -27,6 +28,10 @@ def solicitud_anual(anio: int, area: list[float]) -> dict[str, Any]:
 
 
 class ConectorEra5Land(ConectorFuente):
+    """Conector de ERA5-Land: pide el año al CDS y descarga el resultado si su host está en la
+    lista blanca.
+    """
+
     nombre_fuente = "era5_land"
 
     def __init__(self, *args: Any, area: list[float], cliente: Any = None, **kwargs: Any) -> None:

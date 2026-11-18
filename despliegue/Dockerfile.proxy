@@ -1,0 +1,5 @@
+# Imagen proxy (DEF-29): nginx 1.30.6 sobre Alpine con los parches del sistema aplicados al construir.
+# La imagen oficial sin actualizar trae libxslt 1.1.43-r3 (CVE-2026-87636 y CVE-2026-9947, altas);
+# apk upgrade instala la versión corregida, como en pfc-db.
+FROM nginx:1.30.6-alpine
+RUN apk upgrade --no-cache

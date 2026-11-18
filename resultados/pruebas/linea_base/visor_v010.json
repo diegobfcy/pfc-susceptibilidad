@@ -1,0 +1,19 @@
+{
+ "consola": [
+  [
+   "error",
+   "Failed to load resource: the server responded with a status of 404 ()"
+  ],
+  [
+   "error",
+   "visor: Error: /api/escenarios: 404\n    at api (https://127.0.0.1:8443/visor/js/mapa.js:13:22)\n    at async iniciar (https://127.0.0.1:8443/visor/js/mapa.js:171:20)"
+  ]
+ ],
+ "red": [
+  [
+   404,
+   "https://127.0.0.1:8443/api/escenarios"
+  ]
+ ],
+ "error": "Error: /api/escenarios: 404"
+}

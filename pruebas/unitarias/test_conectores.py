@@ -57,7 +57,7 @@ def _conectores(almacen: Any, bitacora: Any) -> list[ConectorFuente]:
     ]
 
 
-@pytest.mark.parametrize("indice", range(4))
+@pytest.mark.parametrize("indice", range(3))  # el inventario se descarga por bloques (abajo)
 def test_contrato_comun_de_descarga(indice: int, almacen: Any, bitacora: Any) -> None:
     conector = _conectores(almacen, bitacora)[indice]
     with mock.patch("pfc_etl.conectores.base.requests.get", return_value=_Respuesta()) as get:
@@ -108,3 +108,78 @@ def test_teselas_del_dominio() -> None:
         {"lat_min": -10.9, "lat_max": -3.35, "lon_min": -81.5, "lon_max": -76.6}
     )
     assert "Copernicus_DSM_COG_10_S08_00_W079_00_DEM" in teselas and len(teselas) == 8 * 6
+
+
+class _RespuestaJson:
+    def __init__(self, datos: Any) -> None:
+        self.is_redirect = False
+        self.headers: dict[str, str] = {}
+        self._datos = datos
+
+    def raise_for_status(self) -> None:
+        return None
+
+    def json(self) -> Any:
+        return self._datos
+
+
+def _servicio_inventario(total: int, recorte: int | None = None) -> Any:
+    """Simula GEOCATMIN: primero los OBJECTID y luego los registros pedidos por bloque."""
+    from urllib.parse import parse_qs, urlsplit
+
+    def get(url: str, **_: Any) -> _RespuestaJson:
+        consulta = parse_qs(urlsplit(url).query)
+        if "returnIdsOnly" in consulta:
+            return _RespuestaJson({"objectIds": list(range(total, 0, -1))})
+        ids = [int(x) for x in consulta["objectIds"][0].split(",")][:recorte]
+        return _RespuestaJson(
+            {
+                "type": "FeatureCollection",
+                "features": [
+                    {"type": "Feature", "properties": {"OBJECTID": i}, "geometry": None}
+                    for i in ids
+                ],
+            }
+        )
+
+    return get
+
+
+def test_inventario_completo_por_bloques(almacen: Any, bitacora: Any) -> None:
+    """DEF-27: el servicio corta en 2000 registros; se descargan los 2500 sin faltantes."""
+    import json
+
+    with mock.patch(
+        "pfc_etl.conectores.base.requests.get", side_effect=_servicio_inventario(2500)
+    ) as get:
+        registro = ConectorInventario(HOSTS, almacen, bitacora).descargar_periodo(
+            Ventana(2000, 2026)
+        )
+    ids = [f["properties"]["OBJECTID"] for f in json.loads(registro.ruta.read_text())["features"]]
+    assert sorted(ids) == list(range(1, 2501)) and get.call_count == 1 + 3
+    assert registro.sha256 == hashlib.sha256(registro.ruta.read_bytes()).hexdigest()
+    assert bitacora.eventos[-1][3]["registros"] == 2500
+    for llamada in get.call_args_list:
+        assert llamada.kwargs["allow_redirects"] is False and llamada.kwargs["verify"] is not False
+
+
+def test_inventario_rechaza_un_bloque_incompleto(almacen: Any, bitacora: Any) -> None:
+    servicio = _servicio_inventario(1500, recorte=999)
+    with (
+        mock.patch("pfc_etl.conectores.base.requests.get", side_effect=servicio),
+        pytest.raises(ValueError, match="incompleto"),
+    ):
+        ConectorInventario(HOSTS, almacen, bitacora).descargar_periodo(Ventana(2000, 2026))
+
+
+def test_inventario_verifica_tls_con_el_intermedio_de_sectigo(almacen: Any, bitacora: Any) -> None:
+    """DEF-26: la verificación TLS sigue activa; el paquete suma certifi y el intermedio."""
+    from pathlib import Path
+
+    import certifi
+
+    paquete = ConectorInventario(HOSTS, almacen, bitacora)._verificacion()
+    contenido = Path(paquete).read_text()
+    assert contenido.startswith(Path(certifi.where()).read_text())
+    assert ConectorInventario.CA_INTERMEDIO.strip() in contenido
+    assert ConectorErsst(HOSTS, almacen, bitacora)._verificacion() is True

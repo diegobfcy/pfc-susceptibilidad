@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="1" tests="117" time="472.217" timestamp="2026-11-18T09:53:15.006319-05:00" hostname="diegobfcy-MS-7E47"><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-POST-/ingestas-permitidos0]" time="0.217" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/ingestas/999999-permitidos1]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-POST-/ingestas/999999/archivos-permitidos2]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-POST-/entrenamientos-permitidos3]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-POST-/inferencias-permitidos4]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/inferencias/999999-permitidos5]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-POST-/procesamientos/999999/cancelar-permitidos6]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/mapas/susceptibilidad/2023-03/7/36/66.pbf-permitidos7]" time="0.095" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/consulta-punto?periodo=2023-03&amp;lat=-7&amp;lon=-79-permitidos8]" time="0.008" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/indicadores-permitidos9]" time="1.668" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/bitacora-permitidos10]" time="0.044" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[INVESTIGADOR-GET-/procesamientos/activo-permitidos11]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-POST-/ingestas-permitidos0]" time="0.003" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/ingestas/999999-permitidos1]" time="0.001" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-POST-/ingestas/999999/archivos-permitidos2]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-POST-/entrenamientos-permitidos3]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-POST-/inferencias-permitidos4]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/inferencias/999999-permitidos5]" time="0.001" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-POST-/procesamientos/999999/cancelar-permitidos6]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/mapas/susceptibilidad/2023-03/7/36/66.pbf-permitidos7]" time="0.071" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/consulta-punto?periodo=2023-03&amp;lat=-7&amp;lon=-79-permitidos8]" time="0.004" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/indicadores-permitidos9]" time="0.001" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/bitacora-permitidos10]" time="0.001" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ESPECIALISTA-GET-/procesamientos/activo-permitidos11]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-POST-/ingestas-permitidos0]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/ingestas/999999-permitidos1]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-POST-/ingestas/999999/archivos-permitidos2]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-POST-/entrenamientos-permitidos3]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-POST-/inferencias-permitidos4]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/inferencias/999999-permitidos5]" time="0.001" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-POST-/procesamientos/999999/cancelar-permitidos6]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/mapas/susceptibilidad/2023-03/7/36/66.pbf-permitidos7]" time="0.001" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/consulta-punto?periodo=2023-03&amp;lat=-7&amp;lon=-79-permitidos8]" time="0.001" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/indicadores-permitidos9]" time="1.600" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/bitacora-permitidos10]" time="0.011" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_rbac[ASESOR-GET-/procesamientos/activo-permitidos11]" time="0.002" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[POST-/ingestas-_0]" time="0.007" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/ingestas/999999-_1]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[POST-/ingestas/999999/archivos-_2]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[POST-/entrenamientos-_3]" time="0.007" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[POST-/inferencias-_4]" time="0.006" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/inferencias/999999-_5]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[POST-/procesamientos/999999/cancelar-_6]" time="0.006" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/mapas/susceptibilidad/2023-03/7/36/66.pbf-_7]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/consulta-punto?periodo=2023-03&amp;lat=-7&amp;lon=-79-_8]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/indicadores-_9]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/bitacora-_10]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp16_sin_sesion_401[GET-/procesamientos/activo-_11]" time="0.005" /><testcase classname="pruebas.sistema.test_api" name="test_cp15_veinte_envios_simultaneos" time="3.052" /><testcase classname="pruebas.sistema.test_api" name="test_cp11_artefacto_alterado_422_sin_escribir" time="0.017" /><testcase classname="pruebas.sistema.test_api" name="test_cp11_y_cp13_inferencia_integra_reemplaza_sin_duplicar" time="8.058" /><testcase classname="pruebas.sistema.test_api" name="test_cp13_cp12_toda_la_serie_coincide_con_sql" time="6.324" /><testcase classname="pruebas.sistema.test_api" name="test_cp04_carga_manual_real" time="11.464" /><testcase classname="pruebas.sistema.test_api" name="test_cp17_cookie_y_hash" time="0.046"><failure message="AssertionError: assert (['$argon2id$v=19$m=65536,t=3,p=4$Xt6h2DOE3pTOhdrLnSasdw$WIpR1SU4xo1+u+jS0bYTyOf/XAJG1BFee1BWwyKa2ro', 'x', '$argon2id$...Gn9jmsiQx3Bh0lAw', '$argon2id$v=19$m=65536,t=3,p=4$NNVyAesoDVAi6wCSmvo0Gw$MRkZkUY0VXJjcE2//euRmr+zRvJGn9jmsiQx3Bh0lAw'] and False)&#10; +  where False = all(&lt;generator object test_cp17_cookie_y_hash.&lt;locals&gt;.&lt;genexpr&gt; at 0x79a89e1e7d80&gt;)">motor_bd = Engine(postgresql+psycopg://postgres:***@127.0.0.1:55433/pfc)
+
+    def test_cp17_cookie_y_hash(motor_bd: Any) -&gt; None:
+        c = Cliente()
+        r = c.entrar("ASESOR")
+        assert r.status_code == 204
+        cookie = r.headers["Set-Cookie"]
+        assert all(a in cookie for a in ("HttpOnly", "Secure", "SameSite=Strict"))
+        with motor_bd.connect() as bd:
+            hashes = bd.execute(text("SELECT hash_clave FROM sistema.usuario")).scalars().all()
+&gt;       assert hashes and all(h.startswith("$argon2id$") for h in hashes)
+E       AssertionError: assert (['$argon2id$v=19$m=65536,t=3,p=4$Xt6h2DOE3pTOhdrLnSasdw$WIpR1SU4xo1+u+jS0bYTyOf/XAJG1BFee1BWwyKa2ro', 'x', '$argon2id$...Gn9jmsiQx3Bh0lAw', '$argon2id$v=19$m=65536,t=3,p=4$NNVyAesoDVAi6wCSmvo0Gw$MRkZkUY0VXJjcE2//euRmr+zRvJGn9jmsiQx3Bh0lAw'] and False)
+E        +  where False = all(&lt;generator object test_cp17_cookie_y_hash.&lt;locals&gt;.&lt;genexpr&gt; at 0x79a89e1e7d80&gt;)
+
+pruebas/sistema/test_api.py:244: AssertionError</failure></testcase><testcase classname="pruebas.sistema.test_api" name="test_cp17_bloqueo_y_limite_de_solicitudes" time="25.354" /><testcase classname="pruebas.sistema.test_api" name="test_cp18_indicadores_completos" time="1.813" /><testcase classname="pruebas.sistema.test_api" name="test_cp19_filtros_de_bitacora" time="0.009" /><testcase classname="pruebas.sistema.test_api" name="test_cp20_tesela_decodificada" time="0.276" /><testcase classname="pruebas.sistema.test_api" name="test_cp21_filtro_espacial_en_tesela[departamento=24-left(ubigeo_prov, 2)]" time="0.098" /><testcase classname="pruebas.sistema.test_api" name="test_cp21_filtro_espacial_en_tesela[provincia=1301-ubigeo_prov]" time="0.009" /><testcase classname="pruebas.sistema.test_api" name="test_cabeceras_de_seguridad_en_estaticos_y_api" time="0.006" /><testcase classname="pruebas.sistema.test_api" name="test_inyeccion_en_parametros_se_rechaza" time="0.004" /><testcase classname="pruebas.sistema.test_api" name="test_cp25_contrato_de_capas" time="0.000"><skipped type="pytest.skip" message="se ejecuta con el ciclo C1">/home/diegobfcy/ProyectosIA/proyectos-dev/pfc-susceptibilidad/pruebas/sistema/test_api.py:369: se ejecuta con el ciclo C1</skipped></testcase><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp27_rf01_inferencia_limitada_a_un_departamento" time="6.332" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp28_iu06_procesamiento_activo" time="0.010" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp29_cu01_flujo_normal_en_el_panel[chromium]" time="20.084" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp30_cu01_aviso_si_ya_hay_un_procesamiento[chromium]" time="3.973" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp31_cu01_4a_aviso_de_fuente_y_carga_manual[chromium]" time="13.498" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp32_cu01_6a_regla_incumplida_y_cancelacion[chromium]" time="2.467" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp33_cu03_exporta_los_indicadores_mostrados[chromium]" time="5.055" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp35_cu04_activar_capas_nuevas_y_error_de_una[chromium]" time="45.174"><failure message="playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 45000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;body[data-listo=\&quot;1\&quot;]&quot;) to be visible">visor = &lt;pruebas.sistema.conftest.Visor object at 0x79a898760d50&gt;
+
+    def test_cp35_cu04_activar_capas_nuevas_y_error_de_una(visor: Any) -&gt; None:
+&gt;       pagina = visor.abrir("2017-03")
+                 ^^^^^^^^^^^^^^^^^^^^^^
+
+pruebas/sistema/test_flujos_cu.py:332: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pruebas/sistema/conftest.py:98: in abrir
+    self.pagina.wait_for_selector('body[data-listo="1"]', timeout=45000)
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/sync_api/_generated.py:21370: in wait_for_selector
+    self._sync(
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_page.py:431: in wait_for_selector
+    return await self._main_frame.wait_for_selector(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_frame.py:395: in wait_for_selector
+    await self._channel.send(
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_connection.py:78: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright._impl._connection.Connection object at 0x79a89934ced0&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x79a8999a13a0&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 45000ms exceeded.
+E           Call log:
+E             - waiting for locator("body[data-listo=\"1\"]") to be visible
+
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_connection.py:636: TimeoutError</failure></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp20_celdas_por_nivel_en_cada_zoom[chromium]" time="11.891" /><testcase classname="pruebas.sistema.test_visor" name="test_cp20_paleta_accesible_y_leyenda[chromium]" time="8.601" /><testcase classname="pruebas.sistema.test_visor" name="test_cp21_cu02_filtrar_por_fecha_y_departamento[chromium]" time="4.552" /><testcase classname="pruebas.sistema.test_visor" name="test_cp21_cu02_3a_fecha_sin_mapas[chromium]" time="3.730" /><testcase classname="pruebas.sistema.test_visor" name="test_cp22_cu04_activar_susceptibilidad_y_desactivar_precipitacion[chromium]" time="5.751" /><testcase classname="pruebas.sistema.test_visor" name="test_cp22_cu04_4a_error_al_mostrar_una_capa[chromium]" time="3.823" /><testcase classname="pruebas.sistema.test_visor" name="test_cp23_cu02_clic_en_una_zona[chromium]" time="4.789" /><testcase classname="pruebas.sistema.test_visor" name="test_cp18_cu03_panel_muestra_y_resalta_indicadores[chromium]" time="1.857" /><testcase classname="pruebas.sistema.test_visor" name="test_cp19_cu05_filtrar_errores_y_criterio_sin_registros[chromium]" time="2.297" /><testcase classname="pruebas.sistema.test_visor" name="test_cu02_especialista_no_ve_el_panel[chromium]" time="0.196" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp29_cu01_flujo_normal_en_el_panel[firefox]" time="16.351" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp30_cu01_aviso_si_ya_hay_un_procesamiento[firefox]" time="4.161" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp31_cu01_4a_aviso_de_fuente_y_carga_manual[firefox]" time="10.113" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp32_cu01_6a_regla_incumplida_y_cancelacion[firefox]" time="2.132" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp33_cu03_exporta_los_indicadores_mostrados[firefox]" time="5.238" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp35_cu04_activar_capas_nuevas_y_error_de_una[firefox]" time="7.520" /><testcase classname="pruebas.sistema.test_visor" name="test_cp20_celdas_por_nivel_en_cada_zoom[firefox]" time="13.078" /><testcase classname="pruebas.sistema.test_visor" name="test_cp20_paleta_accesible_y_leyenda[firefox]" time="8.200" /><testcase classname="pruebas.sistema.test_visor" name="test_cp21_cu02_filtrar_por_fecha_y_departamento[firefox]" time="4.646" /><testcase classname="pruebas.sistema.test_visor" name="test_cp21_cu02_3a_fecha_sin_mapas[firefox]" time="3.886" /><testcase classname="pruebas.sistema.test_visor" name="test_cp22_cu04_activar_susceptibilidad_y_desactivar_precipitacion[firefox]" time="6.090" /><testcase classname="pruebas.sistema.test_visor" name="test_cp22_cu04_4a_error_al_mostrar_una_capa[firefox]" time="3.835" /><testcase classname="pruebas.sistema.test_visor" name="test_cp23_cu02_clic_en_una_zona[firefox]" time="4.728" /><testcase classname="pruebas.sistema.test_visor" name="test_cp18_cu03_panel_muestra_y_resalta_indicadores[firefox]" time="2.018" /><testcase classname="pruebas.sistema.test_visor" name="test_cp19_cu05_filtrar_errores_y_criterio_sin_registros[firefox]" time="2.509" /><testcase classname="pruebas.sistema.test_visor" name="test_cu02_especialista_no_ve_el_panel[firefox]" time="0.287" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp29_cu01_flujo_normal_en_el_panel[msedge]" time="15.925" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp30_cu01_aviso_si_ya_hay_un_procesamiento[msedge]" time="3.555" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp31_cu01_4a_aviso_de_fuente_y_carga_manual[msedge]" time="7.522" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp32_cu01_6a_regla_incumplida_y_cancelacion[msedge]" time="4.016" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp33_cu03_exporta_los_indicadores_mostrados[msedge]" time="5.169" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp35_cu04_activar_capas_nuevas_y_error_de_una[msedge]" time="7.469" /><testcase classname="pruebas.sistema.test_visor" name="test_cp20_celdas_por_nivel_en_cada_zoom[msedge]" time="12.216" /><testcase classname="pruebas.sistema.test_visor" name="test_cp20_paleta_accesible_y_leyenda[msedge]" time="45.215"><failure message="playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 45000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;body[data-listo=\&quot;1\&quot;]&quot;) to be visible">visor = &lt;pruebas.sistema.conftest.Visor object at 0x79a854129ad0&gt;
+
+    def test_cp20_paleta_accesible_y_leyenda(visor: Any) -&gt; None:
+&gt;       pagina = visor.abrir("2023-03")
+                 ^^^^^^^^^^^^^^^^^^^^^^
+
+pruebas/sistema/test_visor.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pruebas/sistema/conftest.py:98: in abrir
+    self.pagina.wait_for_selector('body[data-listo="1"]', timeout=45000)
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/sync_api/_generated.py:21370: in wait_for_selector
+    self._sync(
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_page.py:431: in wait_for_selector
+    return await self._main_frame.wait_for_selector(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_frame.py:395: in wait_for_selector
+    await self._channel.send(
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_connection.py:78: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright._impl._connection.Connection object at 0x79a81ec85050&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x79a81e7093a0&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 45000ms exceeded.
+E           Call log:
+E             - waiting for locator("body[data-listo=\"1\"]") to be visible
+
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_connection.py:636: TimeoutError</failure></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp21_cu02_filtrar_por_fecha_y_departamento[msedge]" time="4.887" /><testcase classname="pruebas.sistema.test_visor" name="test_cp21_cu02_3a_fecha_sin_mapas[msedge]" time="4.134" /><testcase classname="pruebas.sistema.test_visor" name="test_cp22_cu04_activar_susceptibilidad_y_desactivar_precipitacion[msedge]" time="5.968" /><testcase classname="pruebas.sistema.test_visor" name="test_cp22_cu04_4a_error_al_mostrar_una_capa[msedge]" time="45.198"><failure message="playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 45000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;body[data-listo=\&quot;1\&quot;]&quot;) to be visible">visor = &lt;pruebas.sistema.conftest.Visor object at 0x79a81e7353d0&gt;
+
+    def test_cp22_cu04_4a_error_al_mostrar_una_capa(visor: Any) -&gt; None:
+        """CU-04, flujo 4a: si falla una capa, aviso junto a su nombre y las demás visibles."""
+&gt;       pagina = visor.abrir("2023-03")
+                 ^^^^^^^^^^^^^^^^^^^^^^
+
+pruebas/sistema/test_visor.py:138: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pruebas/sistema/conftest.py:98: in abrir
+    self.pagina.wait_for_selector('body[data-listo="1"]', timeout=45000)
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/sync_api/_generated.py:21370: in wait_for_selector
+    self._sync(
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_page.py:431: in wait_for_selector
+    return await self._main_frame.wait_for_selector(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_frame.py:395: in wait_for_selector
+    await self._channel.send(
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_connection.py:78: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright._impl._connection.Connection object at 0x79a81ec85050&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x79a81e830fe0&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 45000ms exceeded.
+E           Call log:
+E             - waiting for locator("body[data-listo=\"1\"]") to be visible
+
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_connection.py:636: TimeoutError</failure></testcase><testcase classname="pruebas.sistema.test_visor" name="test_cp23_cu02_clic_en_una_zona[msedge]" time="5.029" /><testcase classname="pruebas.sistema.test_visor" name="test_cp18_cu03_panel_muestra_y_resalta_indicadores[msedge]" time="2.419" /><testcase classname="pruebas.sistema.test_visor" name="test_cp19_cu05_filtrar_errores_y_criterio_sin_registros[msedge]" time="2.854" /><testcase classname="pruebas.sistema.test_visor" name="test_cu02_especialista_no_ve_el_panel[msedge]" time="0.226" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp34_cu04_capas_nuevas_en_mvt[pendiente-atributos0]" time="0.537" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp34_cu04_capas_nuevas_en_mvt[tsm-atributos1]" time="0.030" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp34_cu04_capas_nuevas_en_mvt[inventario-atributos2]" time="0.069" /><testcase classname="pruebas.sistema.test_flujos_cu" name="test_cp36_rf13_cada_operacion_queda_en_el_historial" time="0.143" /></testsuite></testsuites>

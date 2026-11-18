@@ -41,14 +41,16 @@ def test_procesamiento_y_cola(motor: Any) -> None:
     repo = ProcesamientosBD(motor)
     nuevo = repo.crear(usuario.id_usuario, "INGESTA", dt.date(2017, 1, 1), dt.date(2017, 12, 31))
     assert repo.obtener(nuevo)["estado"] == "PENDIENTE"
+    assert repo.cancelar(nuevo)
 
 
 def test_bitacora_es_de_solo_insercion(motor: Any) -> None:
     from pfc_datos.bitacora import BitacoraBD
 
     BitacoraBD(motor).registrar("INFORMATIVO", "E1", "prueba", n=1)
-    with pytest.raises(Exception, match="solo inserción"), motor.begin() as c:
-        c.execute(text("DELETE FROM sistema.bitacora"))
+    for sql in ("UPDATE sistema.bitacora SET tipo = 'ERROR'", "DELETE FROM sistema.bitacora"):
+        with pytest.raises(Exception, match="solo inserción"), motor.begin() as c:
+            c.execute(text(sql))
 
 
 def test_restriccion_de_rango_tsm(motor: Any) -> None:

@@ -13,10 +13,14 @@ EXTENSIONES = frozenset({".nc", ".tif", ".csv", ".ascii", ".gpkg", ".parquet"})
 
 
 class ExtensionNoPermitidaError(Exception):
+    """La extensión del archivo no está entre los formatos aceptados para la carga manual."""
+
     pass
 
 
 class CargaManual:
+    """Registra en D2 un archivo que el Equipo Investigador sube a mano (RF-02)."""
+
     def __init__(
         self, fuente: str, almacen: AlmacenArtefactos, bitacora: RegistroBitacora
     ) -> None:
@@ -25,6 +29,10 @@ class CargaManual:
         self._bitacora = bitacora
 
     def cargar(self, origen: Path) -> ArchivoRegistrado:
+        """Copia el archivo a D2 calculando su huella al escribir y lo registra en la bitácora.
+
+        Lanza ExtensionNoPermitidaError antes de copiar si la extensión no está en EXTENSIONES.
+        """
         if origen.suffix.lower() not in EXTENSIONES:
             raise ExtensionNoPermitidaError(origen.suffix)
         destino = self._almacen.ruta_temporal(self.nombre_fuente, origen.name)

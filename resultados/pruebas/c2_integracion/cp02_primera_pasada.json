@@ -1,0 +1,9 @@
+{
+  "anio": 2026,
+  "inicio": "2026-11-06T17:09:55-0500",
+  "estado": "FALLA",
+  "tipo": "HostNoPermitidoError",
+  "detalle": "object-store.os-api.cci2.ecmwf.int",
+  "segundos": 85.1,
+  "fin": "2026-11-06T17:11:20-0500"
+}

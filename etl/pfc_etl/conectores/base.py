@@ -3,11 +3,14 @@
 from __future__ import annotations
 
 import hashlib
+import tempfile
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Final
+from pathlib import Path
+from typing import Any, Final
 from urllib.parse import urlsplit
 
+import certifi
 import requests
 from pfc_datos.protocolos import AlmacenArtefactos, ArchivoRegistrado, RegistroBitacora
 
@@ -33,6 +36,9 @@ class ConectorFuente(ABC):
 
     TIEMPO_ESPERA_S: Final = (10, 300)  # conexión y lectura, en segundos
     TAMANO_BLOQUE: Final = 1024 * 1024  # 1 MiB por bloque
+    # Certificado intermedio que el servidor de la fuente no envía (cadena incompleta). Se agrega a
+    # las CA de certifi: la verificación TLS sigue activa y la raíz debe ser de confianza.
+    CA_INTERMEDIO: str | None = None
 
     def __init__(
         self,
@@ -51,7 +57,11 @@ class ConectorFuente(ABC):
         sha256 = hashlib.sha256()
         destino = self._almacen.ruta_temporal(self.nombre_fuente, self._nombre_archivo(ventana))
         with requests.get(
-            url, stream=True, verify=True, allow_redirects=False, timeout=self.TIEMPO_ESPERA_S
+            url,
+            stream=True,
+            verify=self._verificacion(),
+            allow_redirects=False,
+            timeout=self.TIEMPO_ESPERA_S,
         ) as respuesta:
             if respuesta.is_redirect:  # no se siguen saltos sin validar
                 raise HostNoPermitidoError(respuesta.headers.get("Location"))
@@ -66,6 +76,28 @@ class ConectorFuente(ABC):
         )
         return registro
 
+    def _leer_json(self, url: str) -> Any:
+        """GET de una respuesta JSON pequeña con las mismas garantías de descargar_periodo."""
+        self._validar_host(url)
+        respuesta = requests.get(
+            url, verify=self._verificacion(), allow_redirects=False, timeout=self.TIEMPO_ESPERA_S
+        )
+        if respuesta.is_redirect:
+            raise HostNoPermitidoError(respuesta.headers.get("Location"))
+        respuesta.raise_for_status()
+        return respuesta.json()
+
+    def _verificacion(self) -> bool | str:
+        """True (CA de certifi) o la ruta de un paquete con certifi más CA_INTERMEDIO."""
+        if not self.CA_INTERMEDIO:
+            return True
+        huella = hashlib.sha256(self.CA_INTERMEDIO.encode()).hexdigest()[:16]
+        paquete = Path(tempfile.gettempdir()) / f"pfc_ca_{self.nombre_fuente}_{huella}.pem"
+        if not paquete.exists():
+            base = Path(certifi.where()).read_text()
+            paquete.write_text(f"{base}\n{self.CA_INTERMEDIO}\n")
+        return str(paquete)
+
     def _validar_host(self, url: str) -> None:
         partes = urlsplit(url)
         if partes.scheme != "https" or partes.hostname not in self._hosts_permitidos:
@@ -76,7 +108,8 @@ class ConectorFuente(ABC):
 
     @property
     @abstractmethod
-    def nombre_fuente(self) -> str: ...
+    def nombre_fuente(self) -> str:
+        """Código de la fuente en sistema.fuente_dato y nombre de su carpeta en D2."""
 
     @abstractmethod
     def _construir_url(self, ventana: Ventana) -> str: ...

@@ -14,6 +14,7 @@ semilla: 42
 hosts_permitidos:                 # lista blanca de dominios oficiales (OWASP A10)
   - www.cpc.ncep.noaa.gov
   - cds.climate.copernicus.eu
+  - object-store.os-api.cci2.ecmwf.int   # el CDS entrega los resultados desde este almacén de ECMWF
   - copernicus-dem-30m.s3.amazonaws.com
   - geocatmin.ingemmet.gob.pe
 http:

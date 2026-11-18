@@ -1,0 +1,66 @@
+{
+  "periodo": "2017-03",
+  "escalon_s": 60,
+  "escalones": [
+    {
+      "objetivo_rps": 5,
+      "solicitudes": 278,
+      "lograda_rps": 5.04,
+      "p50_ms": 7.7,
+      "p95_ms": 360.3,
+      "p99_ms": 503.4,
+      "p95_teselas_ms": 373.8,
+      "errores": 0,
+      "tasa_errores": 0.0,
+      "cumple_umbral": true
+    },
+    {
+      "objetivo_rps": 10,
+      "solicitudes": 555,
+      "lograda_rps": 10.08,
+      "p50_ms": 6.1,
+      "p95_ms": 481.4,
+      "p99_ms": 660.6,
+      "p95_teselas_ms": 512.4,
+      "errores": 0,
+      "tasa_errores": 0.0,
+      "cumple_umbral": true
+    },
+    {
+      "objetivo_rps": 20,
+      "solicitudes": 1111,
+      "lograda_rps": 20.17,
+      "p50_ms": 9.6,
+      "p95_ms": 577.8,
+      "p99_ms": 743.7,
+      "p95_teselas_ms": 591.8,
+      "errores": 0,
+      "tasa_errores": 0.0,
+      "cumple_umbral": true
+    },
+    {
+      "objetivo_rps": 30,
+      "solicitudes": 1589,
+      "lograda_rps": 28.84,
+      "p50_ms": 28.3,
+      "p95_ms": 1200.2,
+      "p99_ms": 1889.5,
+      "p95_teselas_ms": 1281.7,
+      "errores": 0,
+      "tasa_errores": 0.0,
+      "cumple_umbral": true
+    },
+    {
+      "objetivo_rps": 40,
+      "solicitudes": 1926,
+      "lograda_rps": 34.96,
+      "p50_ms": 606.1,
+      "p95_ms": 1818.1,
+      "p99_ms": 2418.8,
+      "p95_teselas_ms": 1895.4,
+      "errores": 0,
+      "tasa_errores": 0.0,
+      "cumple_umbral": false
+    }
+  ]
+}

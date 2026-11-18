@@ -15,6 +15,7 @@ jobs:
       - run: black --check . && ruff check .
       - run: lint-imports        # contrato de capas (import-linter)
       - run: openapi-spec-validator api/openapi.yaml
+      - run: python scripts/medir_docstrings.py   # docstrings en todo el código público
       - run: pip-audit --skip-editable   # dependencias vulnerables (OWASP A06)
 
   pruebas:
@@ -22,7 +23,7 @@ jobs:
     runs-on: ubuntu-22.04
     services:
       db:
-        image: postgis/postgis:15-3.4
+        image: postgis/postgis:18-3.7  # misma versión que el entorno de pruebas y pfc-db
         env: {POSTGRES_PASSWORD: "${{ secrets.PG_PRUEBAS }}", POSTGRES_DB: pfc}
         ports: ["55432:5432"]
         options: >-
@@ -36,7 +37,7 @@ jobs:
       - run: pip install --upgrade "pip>=25.3" "setuptools>=84.1"
       - run: pip install -e ".[dev]"
       - run: sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
-      - run: psql "postgresql://postgres:${{ secrets.PG_PRUEBAS }}@localhost:55432/pfc" -v ON_ERROR_STOP=1 -f datos/sql/01_esquema.sql
+      - run: psql "postgresql://postgres:${{ secrets.PG_PRUEBAS }}@localhost:55432/pfc" -v ON_ERROR_STOP=1 -f datos/sql/01_esquema.sql -f datos/sql/02_operacion.sql
       - run: pytest --cov --cov-report=xml --junitxml=pruebas.xml
       - uses: actions/upload-artifact@v4
         with: {name: cobertura, path: coverage.xml}

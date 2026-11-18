@@ -1,0 +1,60 @@
+procesamiento 337
+15 EN_CURSO lote 2000
+25 EN_CURSO lote 2001
+30 EN_CURSO lote 2002
+35 EN_CURSO lote 2003
+45 EN_CURSO lote 2004
+56 EN_CURSO lote 2005
+61 EN_CURSO lote 2006
+76 EN_CURSO lote 2007
+86 EN_CURSO lote 2008
+109 EN_CURSO lote 2009
+119 EN_CURSO lote 2010
+136 EN_CURSO lote 2011
+158 EN_CURSO lote 2012
+174 EN_CURSO lote 2013
+197 EN_CURSO lote 2014
+220 EN_CURSO lote 2015
+243 EN_CURSO lote 2016
+248 EN_CURSO lote 2017
+253 EN_CURSO lote 2018
+258 EN_CURSO lote 2020
+263 EN_CURSO lote 2021
+268 EN_CURSO lote 2022
+273 EN_CURSO lote 2023
+278 EN_CURSO lote 2024
+283 EN_CURSO lote 2025
+288 EN_CURSO lote 2026
+323 COMPLETADO None
+{
+  "estado": "COMPLETADO",
+  "fase": null,
+  "fecha_desde": "2000-02-01",
+  "fecha_hasta": "2026-06-30",
+  "finalizado_en": "2026-11-10T16:45:42.699098-05:00",
+  "id_procesamiento": 337,
+  "iniciado_en": "2026-11-10T16:40:27.927299-05:00",
+  "memoria_max_gb": 1.0,
+  "resumen": {
+    "filas": 34382137,
+    "lotes": 27,
+    "memoria_gb": {
+      "analyze": 1.0,
+      "clasificar": 1.0,
+      "copy": 1.0,
+      "leer_matriz": 1.0,
+      "predecir": 1.0,
+      "verificar_artefacto": 0.8
+    }
+  },
+  "tiempos_s": {
+    "analyze": 34.7,
+    "clasificar": 0.5,
+    "copy": 263.8,
+    "leer_matriz": 4.1,
+    "predecir": 11.4,
+    "verificar_artefacto": 0.0
+  },
+  "tipo": "INFERENCIA",
+  "segundos_reloj": 322.8
+}

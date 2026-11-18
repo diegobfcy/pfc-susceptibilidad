@@ -1,4 +1,4 @@
-"""D1: conexión a PostgreSQL 15 + PostGIS 3 con consultas parametrizadas."""
+"""D1: conexión a PostgreSQL 18 + PostGIS 3.7 con consultas parametrizadas."""
 
 from __future__ import annotations
 
@@ -16,10 +16,14 @@ def crear_motor(url: str | None = None) -> Engine:
 
 
 def consultar(motor: Engine, sql: str, **parametros: Any) -> list[dict[str, Any]]:
+    """Ejecuta una consulta de lectura con parámetros enlazados y devuelve las filas como
+    diccionarios.
+    """
     with motor.connect() as conexion:
         return [dict(f) for f in conexion.execute(text(sql), parametros).mappings()]
 
 
 def ejecutar(motor: Engine, sql: str, **parametros: Any) -> Any:
+    """Ejecuta una sentencia de escritura con parámetros enlazados dentro de una transacción."""
     with motor.begin() as conexion:
         return conexion.execute(text(sql), parametros)

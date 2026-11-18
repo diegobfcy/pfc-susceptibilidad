@@ -1,0 +1,25 @@
+# Verificación de la pila Docker (docker-compose.yml) con las imágenes finales — 2026-11-09T11:00:15-05:00
+ Container pfc-verif-proxy-1  Starting
+ Container pfc-verif-proxy-1  Started
+app localhost:5000/pfc-app:verif Up 40 seconds
+db localhost:5000/pfc-db:verif Up 45 seconds (healthy)
+proxy nginx:1.30.6-alpine Up 40 seconds
+worker localhost:5000/pfc-worker:verif Up 40 seconds
+worker-m2 localhost:5000/pfc-worker:verif Up 40 seconds
+GET /visor/ 200 text/html
+GET /panel/ 200 text/html
+GET /api/salud 200 application/json
+GET /api/periodos 401 application/json
+GET /api 301 text/html
+server: nginx
+content-security-policy: default-src 'self'; img-src 'self' data: https://tile.openstreetmap.org; style-src 'self'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: same-origin
+strict-transport-security: max-age=31536000; includeSubDomains
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+errores en registros: 0
+PostgreSQL 18.6 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+3.7.0

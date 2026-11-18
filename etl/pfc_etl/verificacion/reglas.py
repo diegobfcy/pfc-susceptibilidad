@@ -16,7 +16,8 @@ class ReglaCalidad(ABC):
     """Interfaz común: devuelve los incumplimientos y registra los faltantes de la serie."""
 
     @abstractmethod
-    def evaluar(self, tabla: pd.DataFrame, faltantes: list[str]) -> Iterator[Incumplimiento]: ...
+    def evaluar(self, tabla: pd.DataFrame, faltantes: list[str]) -> Iterator[Incumplimiento]:
+        """Genera pares (código, máscara de incumplimiento) y agrega los faltantes."""
 
 
 class ReglaIntegridad(ReglaCalidad):
@@ -26,6 +27,7 @@ class ReglaIntegridad(ReglaCalidad):
         self._columnas = columnas
 
     def evaluar(self, tabla: pd.DataFrame, faltantes: list[str]) -> Iterator[Incumplimiento]:
+        """Rechaza todas las filas si falta alguna de las columnas declaradas."""
         ausentes = [c for c in self._columnas if c not in tabla.columns]
         if ausentes:
             faltantes.extend(f"columna {c}" for c in ausentes)
@@ -33,10 +35,13 @@ class ReglaIntegridad(ReglaCalidad):
 
 
 class ReglaNulos(ReglaCalidad):
+    """Ninguna de las columnas declaradas puede tener valores nulos."""
+
     def __init__(self, columnas: list[str]) -> None:
         self._columnas = columnas
 
     def evaluar(self, tabla: pd.DataFrame, faltantes: list[str]) -> Iterator[Incumplimiento]:
+        """Marca las filas con algún nulo en las columnas declaradas."""
         yield "VALOR_NULO", tabla[self._columnas].isna().any(axis=1)
 
 
@@ -48,6 +53,7 @@ class ReglaRango(ReglaCalidad):
         self._tolerancia = tolerancia
 
     def evaluar(self, tabla: pd.DataFrame, faltantes: list[str]) -> Iterator[Incumplimiento]:
+        """Marca, por columna, las filas fuera de su rango físico más la tolerancia."""
         for columna, (minimo, maximo) in self._rangos.items():
             valores = tabla[columna]
             fuera = (valores < minimo - self._tolerancia) | (valores > maximo + self._tolerancia)
@@ -61,6 +67,7 @@ class ReglaContinuidad(ReglaCalidad):
         self._frecuencia = frecuencia
 
     def evaluar(self, tabla: pd.DataFrame, faltantes: list[str]) -> Iterator[Incumplimiento]:
+        """Agrega a faltantes cada fecha ausente de la serie; no marca filas."""
         fechas = self._fechas(tabla)
         esperadas = pd.date_range(fechas.min(), fechas.max(), freq=self._frecuencia)
         faltantes.extend(f"{f:%Y-%m-%d}" for f in esperadas.difference(fechas))

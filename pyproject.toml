@@ -4,9 +4,15 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pfc-susceptibilidad"
-version = "0.1.0"
+version = "1.0.0"
 description = "Sistema de estimación de la susceptibilidad a deslizamientos por El Niño en el norte del Perú"
 requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+  {name = "Maxi Salas, Andrea Sofía"},
+  {name = "Treviño Ticlavilca, Juan Diego"},
+]
 dependencies = [
   "pandas==2.3.3", "numpy==2.3.5", "pyarrow==25.0.0", "pyyaml==6.0.3", "requests==2.34.2",
   "xgboost==3.2.0", "scikit-learn==1.9.1", "joblib==1.6.0", "flask==3.1.3", "flask-wtf==1.3.0",
@@ -39,9 +45,11 @@ testpaths = ["pruebas"]
 pythonpath = ["servicios", "etl", "predictiva", "datos"]
 addopts = "-q"
 markers = ["integracion: requiere PostgreSQL/PostGIS (variable PFC_BD_URL)"]
+norecursedirs = ["carga"]
 
 [tool.coverage.run]
 source = ["pfc_servicios", "pfc_etl", "pfc_predictiva", "pfc_datos"]
+branch = true
 
 [tool.importlinter]
 root_packages = ["pfc_servicios", "pfc_etl", "pfc_predictiva", "pfc_datos"]

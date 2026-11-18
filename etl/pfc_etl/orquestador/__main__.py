@@ -13,6 +13,7 @@ from pfc_etl.orquestador.orquestador import Trabajo, ejecutar_trabajo
 
 
 def main() -> None:
+    """Ejecuta un trabajo local con bitácora en archivo o, con --cola, atiende la cola de D1."""
     argumentos = argparse.ArgumentParser(description=__doc__)
     argumentos.add_argument("--desde", type=int, default=2000)
     argumentos.add_argument("--hasta", type=int, default=2026)

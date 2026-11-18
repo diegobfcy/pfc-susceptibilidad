@@ -13,6 +13,8 @@ from pfc_datos.almacen import sha256_archivo
 
 
 class EstadoVersion(StrEnum):
+    """Estados del ciclo de vida de una versión del modelo en el repositorio."""
+
     CANDIDATA = "CANDIDATA"
     APROBADA = "APROBADA"
     RECHAZADA = "RECHAZADA"
@@ -21,6 +23,10 @@ class EstadoVersion(StrEnum):
 
 @dataclass
 class VersionModelo:
+    """Tarjeta de una versión del modelo: artefacto, huella SHA-256, métricas, importancias,
+    referencia del PSI e hiperparámetros.
+    """
+
     algoritmo: str
     version: str
     estado: EstadoVersion
@@ -39,6 +45,8 @@ class IntegridadArtefactoError(Exception):
 
 
 class RepositorioModelos:
+    """Repositorio de versiones del modelo en D2 (carpeta modelos/): artefacto y tarjeta JSON."""
+
     def __init__(self, raiz: Path) -> None:
         self._raiz = raiz / "modelos"
         self._raiz.mkdir(parents=True, exist_ok=True)
@@ -46,6 +54,9 @@ class RepositorioModelos:
     def guardar(
         self, clasificador: Any, algoritmo: str, version: str, estado: EstadoVersion, **datos: Any
     ) -> VersionModelo:
+        """Serializa el clasificador, calcula su huella y escribe la tarjeta JSON junto al
+        artefacto.
+        """
         ruta = self._raiz / f"{algoritmo.lower()}_v{version}{self._extension(algoritmo)}"
         self._serializar(clasificador, algoritmo, ruta)
         registro = VersionModelo(
@@ -63,6 +74,11 @@ class RepositorioModelos:
         return registro
 
     def cargar(self, algoritmo: str, version: str) -> tuple[Any, VersionModelo]:
+        """Carga una versión después de verificar su huella SHA-256.
+
+        Lanza IntegridadArtefactoError sin deserializar el artefacto si la huella no coincide con
+        la de la tarjeta (OWASP A08).
+        """
         ruta = self._raiz / f"{algoritmo.lower()}_v{version}{self._extension(algoritmo)}"
         tarjeta = json.loads(ruta.with_suffix(".json").read_text(encoding="utf-8"))
         registro = VersionModelo(**tarjeta)

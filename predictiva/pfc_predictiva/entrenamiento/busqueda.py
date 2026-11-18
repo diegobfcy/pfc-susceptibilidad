@@ -19,6 +19,7 @@ PARADA_TEMPRANA = 50
 
 
 def combinaciones(grilla: dict[str, list[Any]]) -> Iterator[dict[str, Any]]:
+    """Recorre todas las combinaciones de la grilla de hiperparámetros."""
     claves = list(grilla)
     for valores in itertools.product(*(grilla[c] for c in claves)):
         yield dict(zip(claves, valores, strict=True))
@@ -105,6 +106,7 @@ def validacion_cruzada_rf(
     fraccion: float,
     semilla: int,
 ) -> list[float]:
+    """AUC-ROC de Random Forest en cada pliegue espacial, con el mismo submuestreo que XGBoost."""
     aucs = []
     for i_tr, i_va in pliegues:
         parte, valid = _pliegue(entreno, i_tr, i_va, fraccion, semilla)

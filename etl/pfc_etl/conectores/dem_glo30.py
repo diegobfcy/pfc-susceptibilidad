@@ -11,11 +11,13 @@ BASE_DEM = "https://copernicus-dem-30m.s3.amazonaws.com"
 
 
 def nombre_tesela(lat_inf: int, lon_izq: int) -> str:
+    """Nombre de la tesela de 1° del DEM GLO-30 cuya esquina inferior izquierda es (lat, lon)."""
     ns = f"S{-lat_inf:02d}" if lat_inf < 0 else f"N{lat_inf:02d}"
     return f"Copernicus_DSM_COG_10_{ns}_00_W{-lon_izq:03d}_00_DEM"
 
 
 def teselas_dominio(dominio: dict[str, float]) -> list[str]:
+    """Teselas del DEM GLO-30 que cubren la caja del dominio de config.yaml."""
     return [
         nombre_tesela(lat, lon)
         for lat in range(math.floor(dominio["lat_min"]), math.ceil(dominio["lat_max"]))

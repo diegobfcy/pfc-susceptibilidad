@@ -1,0 +1,115 @@
+..............................................................s......... [ 64%]
+FF.....................................                                  [100%]
+=================================== FAILURES ===================================
+________________ test_cp20_paleta_accesible_y_leyenda[chromium] ________________
+
+visor = <pruebas.sistema.conftest.Visor object at 0x775fbba29710>
+
+    def test_cp20_paleta_accesible_y_leyenda(visor: Any) -> None:
+        pagina = visor.abrir("2023-03")
+        pagina.select_option("#sel-paleta", "accesible")
+        visor.esperar_teselas()
+        _ir(visor, -5.2, -80.0, 8)
+        conteo = pagina.evaluate(JS_MUESTRA_LIENZOS)
+        # El nivel Muy alta lleva trama: se tolera la mezcla con las líneas diagonales.
+        assert _fraccion_en_paleta(conteo, PALETA_ACCESIBLE) > 0.8
+        leyenda = pagina.inner_text("#leyenda")
+        for rotulo in (
+            "Baja (0 a 25 %)",
+            "Media (25 a 50 %)",
+            "Alta (50 a 75 %)",
+            "Muy alta (75 a 100 %)",
+        ):
+            assert rotulo in leyenda
+        pagina.reload()
+>       pagina.wait_for_selector('body[data-listo="1"]')
+
+pruebas/sistema/test_visor.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/sync_api/_generated.py:21370: in wait_for_selector
+    self._sync(
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_page.py:431: in wait_for_selector
+    return await self._main_frame.wait_for_selector(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_frame.py:395: in wait_for_selector
+    await self._channel.send(
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_connection.py:78: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7760361fe710>
+cb = <function Channel.send.<locals>.<lambda> at 0x7760341eb1a0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 30000ms exceeded.
+E           Call log:
+E             - waiting for locator("body[data-listo=\"1\"]") to be visible
+
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_connection.py:636: TimeoutError
+__________ test_cp21_filtro_con_encuadre_y_aviso_sin_datos[chromium] ___________
+
+visor = <pruebas.sistema.conftest.Visor object at 0x775fbbd0e250>
+
+    def test_cp21_filtro_con_encuadre_y_aviso_sin_datos(visor: Any) -> None:
+>       pagina = visor.abrir("2023-03")
+                 ^^^^^^^^^^^^^^^^^^^^^^
+
+pruebas/sistema/test_visor.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pruebas/sistema/conftest.py:98: in abrir
+    self.pagina.wait_for_selector('body[data-listo="1"]', timeout=45000)
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/sync_api/_generated.py:21370: in wait_for_selector
+    self._sync(
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_page.py:431: in wait_for_selector
+    return await self._main_frame.wait_for_selector(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_frame.py:395: in wait_for_selector
+    await self._channel.send(
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_connection.py:78: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7760361fe710>
+cb = <function Channel.send.<locals>.<lambda> at 0x7760341ebc40>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Page.wait_for_selector: Timeout 45000ms exceeded.
+E           Call log:
+E             - waiting for locator("body[data-listo=\"1\"]") to be visible
+
+../../../anaconda3/envs/pfc-pruebas/lib/python3.11/site-packages/playwright/_impl/_connection.py:636: TimeoutError
+=========================== short test summary info ============================
+SKIPPED [1] pruebas/sistema/test_api.py:369: se ejecuta con el ciclo C1
+2 failed, 108 passed, 1 skipped in 597.60s (0:09:57)

@@ -61,3 +61,49 @@ main { flex: 1; min-height: 0; }
   #mapa { min-height: 60vh; }
   .barra { padding: 8px 16px; flex-wrap: wrap; }
 }
+
+.boton { color: var(--tinta); border: 1px solid var(--borde); border-radius: 6px; padding: 6px 14px; text-decoration: none; }
+.pestanas { display: flex; gap: 8px; }
+.acceso { position: fixed; inset: 0; z-index: 2000; display: flex; align-items: center; justify-content: center;
+  background: rgba(0, 0, 0, .55); padding: 16px; }
+.acceso[hidden] { display: none; }
+.formulario { width: 100%; max-width: 360px; background: var(--superficie); padding: 20px; }
+.formulario h1 { font-size: 18px; margin: 0 0 12px; }
+.campo input[type=email], .campo input[type=password], .campo input[type=month] { display: block; width: 100%; margin-top: 4px;
+  padding: 6px; font: inherit; font-weight: 400; color: var(--tinta); background: var(--plano);
+  border: 1px solid #6b7280; border-radius: 6px; }
+.campo select { border-color: #6b7280; }
+.primario { background: #1e3a8a; color: #fff; border: 0; border-radius: 6px; padding: 8px 16px; font: inherit; cursor: pointer; }
+.aviso { color: #92400e; background: #fef3c7; border-radius: 6px; padding: 6px 8px; font-size: 12px; margin: 6px 0; }
+.aviso:empty { display: none; }
+.aviso[hidden] { display: none; }
+fieldset.campo legend { padding: 0; margin-bottom: 4px; }
+.leyenda b { display: block; font-size: 12px; margin-top: 8px; }
+.leyenda i.con-trama { background-image: repeating-linear-gradient(135deg, transparent 0 3px, #3b1802 3px 4.5px); }
+.insignia { display: inline-block; padding: 1px 8px; border-radius: 10px; font-weight: 600; margin: 4px 0; }
+.insignia.n1 { background: #0ca30c; color: #000; } .insignia.n2 { background: #fab219; color: #000; }
+.insignia.n3 { background: #ec835a; color: #000; } .insignia.n4 { background: #d03b3b; color: #fff; }
+.pagina { padding: 16px 24px; max-width: 1100px; margin: 0 auto; overflow-y: auto; width: 100%; }
+.pagina h1 { font-size: 20px; } .pagina h2 { font-size: 16px; margin-top: 24px; }
+.fila-form { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+.fila-form .campo { margin: 0; }
+.fila-form input[type=date], .fila-form select { display: block; margin-top: 4px; padding: 6px; font: inherit; }
+.kpi.alerta { border: 2px solid #b91c1c; background: #fee2e2; color: #000; }
+.kpi.alerta span { color: #7f1d1d; }
+.tabla td.txt, .tabla th.txt { text-align: left; }
+body.desplazable { display: block; overflow: auto; }
+.leyenda i.punto { border-radius: 50%; border: 1px solid #111; width: 10px; height: 10px; }
+/* Panel CU-01: confirmación (IU-05), fin (IU-07), espera por fuente o datos rechazados (IU-08 a IU-10). */
+dialog { border: 1px solid var(--borde); border-radius: 10px; padding: 16px 20px; max-width: 520px; }
+dialog::backdrop { background: rgb(0 0 0 / 0.35); }
+dialog h2 { margin: 0 0 10px; font-size: 16px; }
+.resumen { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 13px; margin: 0 0 10px; }
+.resumen dt { color: var(--tinta-2); }
+.resumen dd { margin: 0; }
+.acciones { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+.tarjeta.exito { border: 2px solid #15803d; background: #dcfce7; color: #000; }
+.tarjeta.alerta-espera { border: 2px solid #b91c1c; background: #fef2f2; color: #000; }
+.tarjeta[hidden] { display: none; }
+.alerta-espera h2 { margin: 0 0 6px; font-size: 15px; color: #991b1b; }
+#exportar { display: block; margin: 0 0 12px; }
+#nota-zona { clear: both; margin: 12px 0 8px; }

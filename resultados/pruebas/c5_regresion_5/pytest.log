@@ -1,0 +1,90 @@
+........................................................................ [ 56%]
+........................................................                 [100%]
+=============================== warnings summary ===============================
+pruebas/integracion/test_fuentes_reales.py::test_cp07_dias_faltantes_detienen_y_se_indican
+  <frozen importlib._bootstrap>:241: RuntimeWarning: numpy.ndarray size changed, may indicate binary incompatibility. Expected 16 from C header, got 96 from PyObject
+
+pruebas/integracion/test_fuentes_reales.py::test_cp07_dias_faltantes_detienen_y_se_indican
+  /home/diegobfcy/anaconda3/envs/pfc/lib/python3.11/site-packages/pyogrio/__init__.py:7: DeprecationWarning: The 'shapely.geos' module is deprecated, and will be removed in a future version. All attributes of 'shapely.geos' are available directly from the top-level 'shapely' namespace (since shapely 2.0.0).
+    import shapely.geos  # noqa: F401
+
+pruebas/integracion/test_fuentes_reales.py: 10 warnings
+  /home/diegobfcy/anaconda3/envs/pfc/lib/python3.11/site-packages/rasterio/windows.py:360: PendingDeprecationWarning: Use `@` matmul instead of `*` mul operator for matrix multiplication
+    x, y = transform * (window.col_off or 0.0, window.row_off or 0.0)
+
+pruebas/integracion/test_fuentes_reales.py: 10 warnings
+  /home/diegobfcy/anaconda3/envs/pfc/lib/python3.11/site-packages/rasterio/windows.py:361: PendingDeprecationWarning: Use `@` matmul instead of `*` mul operator for matrix multiplication
+    return Affine.translation(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.11.18-final-0 _______________
+
+Name                                                        Stmts   Miss Branch BrPart  Cover
+---------------------------------------------------------------------------------------------
+datos/pfc_datos/__init__.py                                     0      0      0      0   100%
+datos/pfc_datos/almacen.py                                     54      0      6      0   100%
+datos/pfc_datos/bd.py                                          14      4      0      0    71%
+datos/pfc_datos/bitacora.py                                    28      1      4      1    94%
+datos/pfc_datos/config.py                                      17      0      0      0   100%
+datos/pfc_datos/memoria.py                                     19      5      4      1    74%
+datos/pfc_datos/modelos.py                                     63      0      6      0   100%
+datos/pfc_datos/protocolos.py                                  20      0      0      0   100%
+datos/pfc_datos/repositorios.py                                62      6      2      1    89%
+datos/pfc_datos/resultados.py                                  42     42      0      0     0%
+etl/pfc_etl/__init__.py                                         0      0      0      0   100%
+etl/pfc_etl/conectores/__init__.py                              0      0      0      0   100%
+etl/pfc_etl/conectores/base.py                                 65      3     12      2    94%
+etl/pfc_etl/conectores/carga_manual.py                         29      3      4      0    91%
+etl/pfc_etl/conectores/dem_glo30.py                            19      0      0      0   100%
+etl/pfc_etl/conectores/era5_land.py                            20      2      2      1    86%
+etl/pfc_etl/conectores/ersst.py                                13      0      0      0   100%
+etl/pfc_etl/conectores/inventario.py                           32      0      4      0   100%
+etl/pfc_etl/orquestador/__init__.py                             0      0      0      0   100%
+etl/pfc_etl/orquestador/__main__.py                            31     31      4      0     0%
+etl/pfc_etl/orquestador/cola.py                                39      1      4      1    95%
+etl/pfc_etl/orquestador/etapas.py                              75     16     14      2    75%
+etl/pfc_etl/orquestador/orquestador.py                         60      0      6      0   100%
+etl/pfc_etl/transformacion/__init__.py                          0      0      0      0   100%
+etl/pfc_etl/transformacion/lectores.py                         39      5      4      1    86%
+etl/pfc_etl/transformacion/matriz.py                           27      8      4      0    61%
+etl/pfc_etl/transformacion/objetivo.py                          7      0      0      0   100%
+etl/pfc_etl/transformacion/oceanicas.py                         9      0      2      0   100%
+etl/pfc_etl/transformacion/precipitacion.py                     9      0      0      0   100%
+etl/pfc_etl/transformacion/terreno.py                          46     26      2      0    42%
+etl/pfc_etl/verificacion/__init__.py                            0      0      0      0   100%
+etl/pfc_etl/verificacion/reglas.py                             52      0     10      0   100%
+etl/pfc_etl/verificacion/verificador.py                        28      0      8      0   100%
+predictiva/pfc_predictiva/__init__.py                           0      0      0      0   100%
+predictiva/pfc_predictiva/__main__.py                          63     63      4      0     0%
+predictiva/pfc_predictiva/entrenamiento/__init__.py             0      0      0      0   100%
+predictiva/pfc_predictiva/entrenamiento/busqueda.py            47      0      8      0   100%
+predictiva/pfc_predictiva/entrenamiento/clasificadores.py      13      0      0      0   100%
+predictiva/pfc_predictiva/entrenamiento/entrenador.py          23      0      0      0   100%
+predictiva/pfc_predictiva/entrenamiento/particion.py           17      0      0      0   100%
+predictiva/pfc_predictiva/evaluacion/__init__.py                0      0      0      0   100%
+predictiva/pfc_predictiva/evaluacion/metricas.py               36      0      4      0   100%
+predictiva/pfc_predictiva/inferencia/__init__.py                0      0      0      0   100%
+predictiva/pfc_predictiva/inferencia/inferencia.py             18      0      4      0   100%
+predictiva/pfc_predictiva/inferencia/trabajador.py            130      5     14      4    94%
+servicios/pfc_servicios/__init__.py                            55     26      8      0    56%
+servicios/pfc_servicios/admin.py                               20     20      2      0     0%
+servicios/pfc_servicios/api/__init__.py                         0      0      0      0   100%
+servicios/pfc_servicios/api/autenticacion.py                   40      1      6      1    96%
+servicios/pfc_servicios/api/indicadores.py                     23      0      2      0   100%
+servicios/pfc_servicios/api/inferencias.py                     40      2     12      2    92%
+servicios/pfc_servicios/api/ingestas.py                        95      2     22      2    97%
+servicios/pfc_servicios/api/mapas.py                           52      0      8      0   100%
+servicios/pfc_servicios/api/salud.py                            9      0      0      0   100%
+servicios/pfc_servicios/api/validacion.py                      60      4     18      2    92%
+servicios/pfc_servicios/seguridad/__init__.py                   0      0      0      0   100%
+servicios/pfc_servicios/seguridad/acceso.py                    28      0      6      0   100%
+servicios/pfc_servicios/seguridad/archivos.py                  16      0      4      0   100%
+servicios/pfc_servicios/seguridad/claves.py                    29      0      6      0   100%
+servicios/pfc_servicios/teselas/__init__.py                     0      0      0      0   100%
+servicios/pfc_servicios/teselas/mvt.py                         20      4      0      0    80%
+---------------------------------------------------------------------------------------------
+TOTAL                                                        1753    280    230     21    84%
+Coverage HTML written to dir /home/diegobfcy/ProyectosIA/proyectos-dev/pfc-susceptibilidad/resultados/pruebas/c5_regresion_5/htmlcov
+Coverage XML written to file /home/diegobfcy/ProyectosIA/proyectos-dev/pfc-susceptibilidad/resultados/pruebas/c5_regresion_5/coverage.xml
+128 passed, 22 warnings in 47.80s
