@@ -21,9 +21,13 @@ pytest && ruff check . && black --check . && lint-imports
 
 ## Documentación
 
-- [Manual de usuario](docs/manual_usuario.md): uso del panel y del visor por rol.
-- [Manual técnico](docs/manual_tecnico.md): instalación, despliegue, configuración, API, modelo,
-  respaldos, pruebas y operación.
+- Manual de usuario, organizado por caso de uso y con capturas: [Markdown](docs/manual_usuario.md) ·
+  [PDF](docs/manual_usuario.pdf).
+- Manual técnico (instalación, despliegue, configuración, recorrido de cada caso de uso por la
+  arquitectura, API, modelo, respaldos, pruebas y operación): [Markdown](docs/manual_tecnico.md) ·
+  [PDF](docs/manual_tecnico.pdf).
+- Los PDF se regeneran con `python scripts/manuales_pdf.py` y las capturas con
+  `python scripts/capturas_manual.py`.
 - Contrato de la API: [`api/openapi.yaml`](api/openapi.yaml).
 
 ## Resultados del modelo (versión 1)

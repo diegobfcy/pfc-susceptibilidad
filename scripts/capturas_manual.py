@@ -132,7 +132,9 @@ def cu01(nav: Any, motor: Any) -> None:
     s.marcar("#confirmar")
     s.foto("cu01_paso3_confirmar", "#dlg-confirmar")
     p.click("#confirmar")
-    p.wait_for_selector("#estado:has-text('EN_CURSO'), #fin-ok:not([hidden])", timeout=60000)
+    p.wait_for_selector(
+        "#estado:has-text('PENDIENTE'), #estado:has-text('EN_CURSO')", timeout=60000
+    )
     s.foto("cu01_pasos4a9_estado", "#seccion-procesos")
     p.wait_for_selector("#fin-ok:not([hidden])", timeout=300000)
     s.marcar("#fin-ok")
