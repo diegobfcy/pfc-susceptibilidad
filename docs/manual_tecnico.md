@@ -9,6 +9,7 @@ navegador se describe en el [manual de usuario](manual_usuario.md).
 ## Contenido
 
 1. [Arquitectura](#1-arquitectura)
+   - [Casos de uso en la arquitectura](#casos-de-uso-en-la-arquitectura)
 2. [Estructura del repositorio](#2-estructura-del-repositorio)
 3. [Requisitos](#3-requisitos)
 4. [Configuración](#4-configuración)
@@ -39,6 +40,8 @@ Monolito modular en cinco capas. Cada capa solo depende de las inferiores; el co
 | Predictiva | `predictiva/pfc_predictiva` | M1 entrenamiento, M2 inferencia, M3 evaluación y deriva |
 | Datos | `datos/` | D1 PostgreSQL 18 + PostGIS 3.7, D2 archivos y artefactos, D3 bitácora |
 
+![Arquitectura lógica en capas](img/diagramas/fig08_arquitectura_capas.png)
+
 **Procesos en ejecución.**
 
 | Proceso | Comando | Función |
@@ -52,6 +55,88 @@ Monolito modular en cinco capas. Cada capa solo depende de las inferiores; el co
 La cola de trabajos vive en la tabla `sistema.procesamiento`: la API encola con estado `PENDIENTE` y
 los workers toman los trabajos con `SELECT … FOR UPDATE SKIP LOCKED`. El índice único parcial
 `ux_procesamiento_activo` (`datos/sql/02_operacion.sql`) garantiza **un solo procesamiento activo** (`PENDIENTE`, `EN_CURSO` o `EN_ESPERA`).
+
+### Casos de uso en la arquitectura
+
+Cada caso de uso recorre las capas de la misma forma que en su especificación. Las tablas indican, para
+cada paso del flujo, la pantalla, el endpoint y los componentes que intervienen. Los diagramas numeran
+los mismos pasos.
+
+![Casos de uso del sistema](img/diagramas/fig03_casos_de_uso.png)
+
+#### CU-01: Ejecutar el procesamiento (Equipo Investigador)
+
+| Paso del CU | Pantalla | Endpoint | Componentes |
+|---|---|---|---|
+| 1. Acceder al panel | IU-04 | `GET /sesion`, `GET /procesamientos/activo` | P2, S1, S2 |
+| 2. Ingresar fechas y zona | IU-04 | `GET /ambitos` | P2, S3 |
+| 3. Confirmar el inicio | IU-05 | `POST /ingestas`, `POST /entrenamientos` o `POST /inferencias` (409 si hay otro activo) | P2, S1, S2, D1 (cola) |
+| 4. Obtener TSM, precipitación, DEM e inventario | IU-06 | — (worker) | E1, E2, D2, D3 |
+| 5. Calcular y alinear la anomalía de TSM | IU-06 | — | E4 |
+| 6. Verificar los datos | IU-06 | — | E3, D3 |
+| 7. Calcular la susceptibilidad | IU-06 | `GET /inferencias/{id}` | M2 (verifica SHA-256), D2 |
+| 8. Generar los mapas | — | `GET /mapas/susceptibilidad/...` | S3 (`ST_AsMVT`) |
+| 9. Guardar los resultados | IU-06 | — | M2, D1 (`resultado.susceptibilidad`, `COPY`) |
+| 10. Notificar el fin | IU-07 | `GET /procesamientos/activo`, `GET /ingestas/{id}` | P2, S1 |
+| 4a. Fuente no disponible y carga manual | IU-08, IU-09 | `POST /ingestas/{id}/archivos` | E1 (motivo `FUENTE_NO_DISPONIBLE`), S1, S2 (firma y tamaño), D2, D3 |
+| 6a. Datos rechazados y cancelación | IU-10, IU-11 | `POST /procesamientos/{id}/cancelar` | E3 (motivo `DATOS_RECHAZADOS`), S1, D3 |
+
+![CU-01, parte 1: obtención y verificación](img/diagramas/fig09_cu01_ingesta.png)
+
+![CU-01, parte 2: estimación y almacenamiento](img/diagramas/fig10_cu01_estimacion.png)
+
+#### CU-02: Consultar y filtrar mapas (Especialista)
+
+| Paso del CU | Pantalla | Endpoint | Componentes |
+|---|---|---|---|
+| 1. Acceder al visor | IU-12 | `GET /periodos`, `GET /ambitos`, `GET /capas/limites` | P1, S1, S2 |
+| 2. Seleccionar un mes y un departamento o provincia | IU-12 | — | P1 |
+| 3. Mostrar solo las zonas del filtro | IU-12 | `GET /mapas/susceptibilidad/{periodo}/{z}/{x}/{y}.pbf?departamento=&provincia=` | S3, D1 |
+| 4. Clic sobre una zona coloreada | IU-12 | — | P1 |
+| 5. Ventana con valor, TSM, precipitación y pendiente | IU-14 | `GET /consulta-punto?periodo&lat&lon` | S3 (`ST_Contains`), D1 |
+| 3a. Mes sin mapas | IU-15 | `GET /periodos` (el mes no figura) | P1 |
+
+![CU-02 en la arquitectura](img/diagramas/fig11_cu02_mapas.png)
+
+#### CU-03: Visualizar indicadores (Asesor y Equipo Investigador)
+
+| Paso del CU | Pantalla | Endpoint | Componentes |
+|---|---|---|---|
+| 1. Acceder al panel de indicadores | IU-16 | `GET /sesion` | P2, S2 |
+| 2. Consultar los indicadores almacenados | IU-16 | `GET /indicadores` | S1, M3, D1 (`modelo.metrica`, referencias de PSI) |
+| 3. Mostrarlos en gráficos | IU-16 | — | P2 |
+| 4. Revisar o exportar | IU-16 | — (CSV generado en el navegador) | P2 |
+| 3a. Resaltar el indicador fuera de umbral | IU-16 | `GET /indicadores` (umbral y estado) | M3, P2 |
+
+![CU-03 en la arquitectura](img/diagramas/fig12_cu03_indicadores.png)
+
+#### CU-04: Gestionar capas (Especialista)
+
+| Paso del CU | Pantalla | Endpoint | Componentes |
+|---|---|---|---|
+| 1. Acceder al visor | IU-12 | Como en CU-02 | P1, S2 |
+| 2. Abrir el panel de capas | IU-13 | — | P1 |
+| 3. Activar o desactivar capas | IU-13 | — | P1 |
+| 4. Actualizar el mapa sin recargar | IU-12 | `GET /mapas/{capa}/...` con `capa` en `susceptibilidad`, `inventario`, `precipitacion`, `tsm` o `pendiente`; `GET /capas/limites` | S3, D1 |
+| 4a. Error de una capa | IU-13 | Respuesta de error de la capa | P1 (aviso por capa) |
+
+![CU-04 en la arquitectura](img/diagramas/fig13_cu04_capas.png)
+
+#### CU-05: Consultar el historial (Asesor y Equipo Investigador)
+
+| Paso del CU | Pantalla | Endpoint | Componentes |
+|---|---|---|---|
+| 1. Acceder al historial | IU-17 | `GET /bitacora` | P2, S2 |
+| 2. Filtrar por fecha o tipo | IU-17 | `GET /bitacora?desde&hasta&tipo` | S1 |
+| 3. Mostrar las operaciones | IU-17 | — | D3 (`sistema.bitacora`, solo inserción) |
+| 4. Revisar los detalles | IU-17 | — | P2 |
+| 3a. Filtro sin registros | IU-17 | Lista vacía | P2 |
+
+![CU-05 en la arquitectura](img/diagramas/fig14_cu05_historial.png)
+
+El recorrido completo de pantallas por rol está en el mapa de navegación:
+
+![Mapa de navegación](img/diagramas/fig43_mapa_navegacion.png)
 
 ## 2. Estructura del repositorio
 
@@ -128,6 +213,9 @@ cualquier dominio no listado antes de abrir la conexión.
 ## 5. Instalación y despliegue
 
 ### 5.1 Pila Docker (VPS)
+
+![Arquitectura física de despliegue](img/diagramas/fig15_despliegue.png)
+
 
 ```bash
 git clone https://github.com/diegobfcy/pfc-susceptibilidad.git && cd pfc-susceptibilidad
