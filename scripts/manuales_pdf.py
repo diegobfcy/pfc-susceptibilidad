@@ -1,4 +1,4 @@
-"""Genera docs/manual_usuario.pdf y docs/manual_tecnico.pdf a partir de los manuales en Markdown.
+"""Genera los PDF de los tres manuales y del plan de soporte a partir de Markdown.
 
 pandoc convierte cada manual en HTML autocontenido (imágenes incrustadas, tabla de contenido) y
 Chromium (Playwright) lo imprime en A4 con encabezado y numeración de páginas.
@@ -20,8 +20,11 @@ RAIZ = Path(__file__).resolve().parents[1]
 DOCS = RAIZ / "docs"
 MANUALES = {
     "manual_usuario": "Manual de usuario",
-    "manual_tecnico": "Manual técnico",
+    "manual_tecnico": "Manual técnico de instalación",
+    "manual_mantenimiento": "Manual de mantenimiento",
+    "plan_soporte": "Plan de mantenimiento y soporte",
 }
+DOCS_GITHUB = "https://github.com/diegobfcy/pfc-susceptibilidad/blob/main/docs/"
 SUBTITULO = (
     "Sistema de estimación de la susceptibilidad a deslizamientos por El Niño en el norte del Perú"
 )
@@ -95,7 +98,7 @@ def a_html(nombre: str, titulo: str, carpeta: Path) -> Path:
             "--metadata",
             f"subtitle={SUBTITULO}",
             "--metadata",
-            "date=Versión 1.0.0 · noviembre de 2026",
+            "date=Versión 1.0.2 · noviembre de 2026",
             "--metadata",
             "author=Maxi Salas, Andrea Sofía · Treviño Ticlavilca, Juan Diego",
             "--metadata",
@@ -121,6 +124,12 @@ def main() -> None:
             pagina = navegador.new_page()
             pagina.goto(html.as_uri())
             pagina.wait_for_load_state("networkidle")
+            pagina.locator('a[href]:not([href^="#"])').evaluate_all(
+                "(enlaces, base) => enlaces.forEach(enlace => {"
+                " enlace.href = new URL(enlace.getAttribute('href'), base).href;"
+                " })",
+                DOCS_GITHUB,
+            )
             pie = (
                 '<div style="width:100%;font-size:8px;color:#6b7280;padding:0 16mm;'
                 'display:flex;justify-content:space-between;font-family:sans-serif">'

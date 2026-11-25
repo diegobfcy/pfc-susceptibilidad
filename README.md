@@ -21,14 +21,16 @@ pytest && ruff check . && black --check . && lint-imports
 
 ## Documentación
 
-- Manual de usuario, organizado por caso de uso y con capturas: [Markdown](docs/manual_usuario.md) ·
-  [PDF](docs/manual_usuario.pdf).
-- Manual técnico (instalación, despliegue, configuración, recorrido de cada caso de uso por la
-  arquitectura, API, modelo, respaldos, pruebas y operación): [Markdown](docs/manual_tecnico.md) ·
-  [PDF](docs/manual_tecnico.pdf).
-- Los PDF se regeneran con `python scripts/manuales_pdf.py` y las capturas con
-  `python scripts/capturas_manual.py`.
-- Contrato de la API: [`api/openapi.yaml`](api/openapi.yaml).
+| Documento | Markdown | PDF |
+| --- | --- | --- |
+| Manual de usuario: tareas por rol con capturas | [Leer](docs/manual_usuario.md) | [PDF](docs/manual_usuario.pdf) |
+| Manual técnico de instalación: despliegue, verificación y recuperación | [Leer](docs/manual_tecnico.md) | [PDF](docs/manual_tecnico.pdf) |
+| Manual de mantenimiento: arquitectura, datos, API y extensiones | [Leer](docs/manual_mantenimiento.md) | [PDF](docs/manual_mantenimiento.pdf) |
+| Plan de mantenimiento y soporte: atención, prevención y transferencia | [Leer](docs/plan_soporte.md) | [PDF](docs/plan_soporte.pdf) |
+
+Los PDF se regeneran con `python scripts/manuales_pdf.py` (Pandoc y Playwright con Chromium) y las
+capturas con `python scripts/capturas_manual.py`. El [contrato OpenAPI](api/openapi.yaml) documenta
+la API.
 
 ## Resultados del modelo (versión 1)
 

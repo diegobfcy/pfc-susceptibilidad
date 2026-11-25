@@ -1,468 +1,182 @@
-# Manual técnico
+# Manual técnico de instalación
 
-**Sistema de estimación de la susceptibilidad a deslizamientos por El Niño en el norte del Perú**
-Versión 1.0.0 · noviembre de 2026 · Licencia MIT
+Sistema de estimación de susceptibilidad a deslizamientos por El Niño · versión 1.0.2
 
-Este manual sirve para instalar, desplegar, operar, mantener y extender el sistema. El uso desde el
-navegador se describe en el [manual de usuario](manual_usuario.md).
+## 2.1 Introducción
 
-## Contenido
+Guía para personal técnico con conocimientos de Linux, Docker Compose, TLS y PostgreSQL. Instala la pila de staging de la versión publicada `v1.0.2`, verifica el acceso y explica la recuperación. No incluye los datos oficiales ni sustituye el procedimiento de entrenamiento. Para cambios de código consulte el [manual de mantenimiento](manual_mantenimiento.md).
 
-1. [Arquitectura](#1-arquitectura)
-   - [Casos de uso en la arquitectura](#casos-de-uso-en-la-arquitectura)
-2. [Estructura del repositorio](#2-estructura-del-repositorio)
-3. [Requisitos](#3-requisitos)
-4. [Configuración](#4-configuración)
-5. [Instalación y despliegue](#5-instalación-y-despliegue)
-6. [Administración de cuentas](#6-administración-de-cuentas)
-7. [Carga de datos de referencia](#7-carga-de-datos-de-referencia)
-8. [Pipeline de datos (ETL)](#8-pipeline-de-datos-etl)
-9. [Modelo predictivo](#9-modelo-predictivo)
-10. [API REST](#10-api-rest)
-11. [Base de datos](#11-base-de-datos)
-12. [Seguridad](#12-seguridad)
-13. [Respaldo y restauración](#13-respaldo-y-restauración)
-14. [Pruebas y calidad](#14-pruebas-y-calidad)
-15. [Integración y despliegue continuos](#15-integración-y-despliegue-continuos)
-16. [Operación y solución de problemas](#16-operación-y-solución-de-problemas)
-17. [Extender el sistema](#17-extender-el-sistema)
+## 2.2 Arquitectura de despliegue
 
-## 1. Arquitectura
+En un mismo host, el navegador accede por HTTPS a Nginx. Nginx sirve el visor y el panel y reenvía `/api/` a `app`. La API, `worker` (ETL y entrenamiento) y `worker-m2` (inferencia) acceden a PostgreSQL/PostGIS por la red interna. Comparten D2 para matrices, cargas y artefactos. Los datos de origen se montan de solo lectura para `worker`. Staging publica el proxy en `127.0.0.1:8443` y la base en `127.0.0.1:5434`; el acceso remoto debe configurarlo el operador mediante una entrada HTTPS autorizada.
 
-Monolito modular en cinco capas. Cada capa solo depende de las inferiores; el contrato lo verifica
-`import-linter` (sección `[tool.importlinter]` de `pyproject.toml`).
+![Figura 1. Arquitectura física de despliegue.](img/diagramas/fig15_despliegue.png)
 
-| Capa | Carpeta | Componentes |
-|---|---|---|
-| Presentación | `presentacion/` | P1 visor de mapas (Leaflet + VectorGrid), P2 panel de control |
-| Servicios | `servicios/pfc_servicios` | S1 API REST (Flask), S2 seguridad (Argon2id, RBAC, CSRF), S3 teselas MVT |
-| Ingesta y ETL | `etl/pfc_etl` | E1 orquestador y cola, E2 conectores, E3 verificación, E4 transformación |
-| Predictiva | `predictiva/pfc_predictiva` | M1 entrenamiento, M2 inferencia, M3 evaluación y deriva |
-| Datos | `datos/` | D1 PostgreSQL 18 + PostGIS 3.7, D2 archivos y artefactos, D3 bitácora |
+## 2.3 Requisitos
 
-![Arquitectura lógica en capas](img/diagramas/fig08_arquitectura_capas.png)
+| Elemento | Requisito o versión de referencia |
+| --- | --- |
+| Host mínimo previsto | 2 vCPU, 4 GB de RAM y 40 GB libres; dimensione aparte los datos de origen y respaldos. |
+| Entorno de referencia | Ubuntu 24.04.3 LTS; Docker Engine 29.1.3 y Compose 2.40.3. |
+| Aplicación y workers | Python 3.11.18, incluido en las imágenes. |
+| Base | Imagen `postgis/postgis:18-3.7-alpine`; referencia del proyecto: PostgreSQL 18.6, PostGIS 3.7.0. |
+| Proxy | Nginx 1.30.6, incluido en la imagen. |
+| Herramientas | Git, curl, OpenSSL y acceso a un registro OCI. Para respaldo, cliente PostgreSQL 18 y GnuPG. |
+| Fuentes | Datos crudos por separado; para descargas de ERA5-Land se necesita una cuenta del Climate Data Store. |
 
-**Procesos en ejecución.**
+## 2.4 Instalación de la base de datos
 
-| Proceso | Comando | Función |
-|---|---|---|
-| app | `gunicorn 'pfc_servicios:crear_app()'` | API y sesiones |
-| worker (ETL) | `python -m pfc_etl.orquestador --cola` | Atiende ingestas y entrenamientos de la cola de D1 |
-| worker-m2 | `python -m pfc_predictiva.inferencia.trabajador` | Atiende inferencias |
-| proxy | nginx 1.30.6 | TLS, cabeceras de seguridad, archivos estáticos de `presentacion/` y proxy a la API |
-| db | PostgreSQL 18.6 + PostGIS 3.7.0 | D1 |
+### 2.4.1 Requisitos previos
 
-La cola de trabajos vive en la tabla `sistema.procesamiento`: la API encola con estado `PENDIENTE` y
-los workers toman los trabajos con `SELECT … FOR UPDATE SKIP LOCKED`. El índice único parcial
-`ux_procesamiento_activo` (`datos/sql/02_operacion.sql`) garantiza **un solo procesamiento activo** (`PENDIENTE`, `EN_CURSO` o `EN_ESPERA`).
+Docker operativo, registro accesible y un volumen nuevo para la primera instalación. El comando de Compose requiere que `.env` exista y defina los tres valores obligatorios de 2.6; complete esa configuración mínima antes de ejecutar `up`. No use un volumen con datos de otra instalación.
 
-### Casos de uso en la arquitectura
+### 2.4.2 Pasos y comandos
 
-Cada caso de uso recorre las capas de la misma forma que en su especificación. Las tablas indican, para
-cada paso del flujo, la pantalla, el endpoint y los componentes que intervienen. Los diagramas numeran
-los mismos pasos.
+1. Obtenga el código. `git describe --tags --exact-match` debe mostrar `v1.0.2`.
 
-![Casos de uso del sistema](img/diagramas/fig03_casos_de_uso.png)
+   ```bash
+   git clone --branch v1.0.2 https://github.com/diegobfcy/pfc-susceptibilidad.git
+   cd pfc-susceptibilidad
+   git describe --tags --exact-match
+   ```
 
-#### CU-01: Ejecutar el procesamiento (Equipo Investigador)
+2. Defina `PFC_REGISTRO` con el registro autorizado y `PFC_VERSION` con `v1.0.2`. Si la imagen de base aún no está publicada, constrúyala y súbala. Ambos comandos deben terminar sin errores.
 
-| Paso del CU | Pantalla | Endpoint | Componentes |
-|---|---|---|---|
-| 1. Acceder al panel | IU-04 | `GET /sesion`, `GET /procesamientos/activo` | P2, S1, S2 |
-| 2. Ingresar fechas y zona | IU-04 | `GET /ambitos` | P2, S3 |
-| 3. Confirmar el inicio | IU-05 | `POST /ingestas`, `POST /entrenamientos` o `POST /inferencias` (409 si hay otro activo) | P2, S1, S2, D1 (cola) |
-| 4. Obtener TSM, precipitación, DEM e inventario | IU-06 | — (worker) | E1, E2, D2, D3 |
-| 5. Calcular y alinear la anomalía de TSM | IU-06 | — | E4 |
-| 6. Verificar los datos | IU-06 | — | E3, D3 |
-| 7. Calcular la susceptibilidad | IU-06 | `GET /inferencias/{id}` | M2 (verifica SHA-256), D2 |
-| 8. Generar los mapas | — | `GET /mapas/susceptibilidad/...` | S3 (`ST_AsMVT`) |
-| 9. Guardar los resultados | IU-06 | — | M2, D1 (`resultado.susceptibilidad`, `COPY`) |
-| 10. Notificar el fin | IU-07 | `GET /procesamientos/activo`, `GET /ingestas/{id}` | P2, S1 |
-| 4a. Fuente no disponible y carga manual | IU-08, IU-09 | `POST /ingestas/{id}/archivos` | E1 (motivo `FUENTE_NO_DISPONIBLE`), S1, S2 (firma y tamaño), D2, D3 |
-| 6a. Datos rechazados y cancelación | IU-10, IU-11 | `POST /procesamientos/{id}/cancelar` | E3 (motivo `DATOS_RECHAZADOS`), S1, D3 |
+   ```bash
+   export PFC_REGISTRO=localhost:5000 PFC_VERSION=v1.0.2
+   docker build -f despliegue/Dockerfile.db -t "$PFC_REGISTRO/pfc-db:$PFC_VERSION" .
+   docker push "$PFC_REGISTRO/pfc-db:$PFC_VERSION"
+   ```
 
-![CU-01, parte 1: obtención y verificación](img/diagramas/fig09_cu01_ingesta.png)
+3. Inicie la base. El primer arranque crea `pfc` y el usuario inicial `postgres`, y aplica `01_esquema.sql` y `02_operacion.sql` en ese orden. Compose debe marcar `db` como saludable.
 
-![CU-01, parte 2: estimación y almacenamiento](img/diagramas/fig10_cu01_estimacion.png)
+   ```bash
+   docker compose up -d --wait db
+   ```
 
-#### CU-02: Consultar y filtrar mapas (Especialista)
-
-| Paso del CU | Pantalla | Endpoint | Componentes |
-|---|---|---|---|
-| 1. Acceder al visor | IU-12 | `GET /periodos`, `GET /ambitos`, `GET /capas/limites` | P1, S1, S2 |
-| 2. Seleccionar un mes y un departamento o provincia | IU-12 | — | P1 |
-| 3. Mostrar solo las zonas del filtro | IU-12 | `GET /mapas/susceptibilidad/{periodo}/{z}/{x}/{y}.pbf?departamento=&provincia=` | S3, D1 |
-| 4. Clic sobre una zona coloreada | IU-12 | — | P1 |
-| 5. Ventana con valor, TSM, precipitación y pendiente | IU-14 | `GET /consulta-punto?periodo&lat&lon` | S3 (`ST_Contains`), D1 |
-| 3a. Mes sin mapas | IU-15 | `GET /periodos` (el mes no figura) | P1 |
-
-![CU-02 en la arquitectura](img/diagramas/fig11_cu02_mapas.png)
-
-#### CU-03: Visualizar indicadores (Asesor y Equipo Investigador)
-
-| Paso del CU | Pantalla | Endpoint | Componentes |
-|---|---|---|---|
-| 1. Acceder al panel de indicadores | IU-16 | `GET /sesion` | P2, S2 |
-| 2. Consultar los indicadores almacenados | IU-16 | `GET /indicadores` | S1, M3, D1 (`modelo.metrica`, referencias de PSI) |
-| 3. Mostrarlos en gráficos | IU-16 | — | P2 |
-| 4. Revisar o exportar | IU-16 | — (CSV generado en el navegador) | P2 |
-| 3a. Resaltar el indicador fuera de umbral | IU-16 | `GET /indicadores` (umbral y estado) | M3, P2 |
-
-![CU-03 en la arquitectura](img/diagramas/fig12_cu03_indicadores.png)
-
-#### CU-04: Gestionar capas (Especialista)
-
-| Paso del CU | Pantalla | Endpoint | Componentes |
-|---|---|---|---|
-| 1. Acceder al visor | IU-12 | Como en CU-02 | P1, S2 |
-| 2. Abrir el panel de capas | IU-13 | — | P1 |
-| 3. Activar o desactivar capas | IU-13 | — | P1 |
-| 4. Actualizar el mapa sin recargar | IU-12 | `GET /mapas/{capa}/...` con `capa` en `susceptibilidad`, `inventario`, `precipitacion`, `tsm` o `pendiente`; `GET /capas/limites` | S3, D1 |
-| 4a. Error de una capa | IU-13 | Respuesta de error de la capa | P1 (aviso por capa) |
-
-![CU-04 en la arquitectura](img/diagramas/fig13_cu04_capas.png)
-
-#### CU-05: Consultar el historial (Asesor y Equipo Investigador)
-
-| Paso del CU | Pantalla | Endpoint | Componentes |
-|---|---|---|---|
-| 1. Acceder al historial | IU-17 | `GET /bitacora` | P2, S2 |
-| 2. Filtrar por fecha o tipo | IU-17 | `GET /bitacora?desde&hasta&tipo` | S1 |
-| 3. Mostrar las operaciones | IU-17 | — | D3 (`sistema.bitacora`, solo inserción) |
-| 4. Revisar los detalles | IU-17 | — | P2 |
-| 3a. Filtro sin registros | IU-17 | Lista vacía | P2 |
-
-![CU-05 en la arquitectura](img/diagramas/fig14_cu05_historial.png)
-
-El recorrido completo de pantallas por rol está en el mapa de navegación:
-
-![Mapa de navegación](img/diagramas/fig43_mapa_navegacion.png)
-
-## 2. Estructura del repositorio
-
-```
-api/openapi.yaml           Contrato de la API (OpenAPI 3)
-config/config.yaml         Parámetros ajustables (dominio, fuentes, reglas, partición, umbrales)
-datos/pfc_datos            Acceso a D1, D2 y D3 (almacén Parquet, repositorios, bitácora, modelos)
-datos/sql                  01_esquema.sql (esquema) y 02_operacion.sql (roles y datos de operación)
-datos/respaldo             respaldar.sh y restaurar.sh
-despliegue/                Dockerfile de las 4 imágenes, nginx, staging y entorno de pruebas
-etl/pfc_etl                Conectores, verificación, transformación y orquestador
-predictiva/pfc_predictiva  Entrenamiento, inferencia y evaluación
-presentacion/              Visor y panel (HTML, CSS y JavaScript sin compilación)
-servicios/pfc_servicios    API, seguridad, teselas y consola de administración
-pruebas/                   unitarias, integracion, sistema (Playwright) y carga (Locust)
-scripts/                   Evaluación, informes, figuras y utilidades de prueba
-resultados/                Evidencias de entrenamiento y de las pruebas
-docs/                      Manuales
-```
-
-## 3. Requisitos
-
-**Servidor de despliegue (VPS).** 2 vCPU, 4 GB de RAM sin intercambio, 40 GB de disco, Docker
-Engine con Compose v2, acceso HTTPS saliente a las fuentes de la lista blanca y un certificado TLS.
-
-**Estación de entrenamiento (opcional).** GPU NVIDIA con CUDA para XGBoost (`PFC_DISPOSITIVO_XGB=cuda`)
-y unos 20 GB para los datos crudos y la matriz Parquet (34.4 millones de filas).
-
-**Desarrollo.** Python 3.11, conda o venv, PostgreSQL 18 con PostGIS 3.7 y, para las pruebas de
-sistema, Playwright con Chromium, Firefox y Microsoft Edge.
+### 2.4.3 Verificación
 
 ```bash
-conda create -n pfc python=3.11 && conda activate pfc
-pip install -e ".[dev,geo]"
+docker compose exec -T db psql -U postgres -d pfc -v ON_ERROR_STOP=1 \
+  -c 'SELECT postgis_lib_version();' \
+  -c 'SELECT codigo FROM sistema.rol ORDER BY codigo;'
 ```
 
-**Cuentas externas.** Una clave del Climate Data Store de Copernicus en `~/.cdsapirc` para descargar
-ERA5-Land. NOAA, Copernicus DEM y GEOCATMIN no requieren clave.
+Se espera PostGIS 3.7 y los tres roles `ASESOR`, `ESPECIALISTA` e `INVESTIGADOR`. Las cuentas funcionales y los datos de referencia se preparan en 2.7.
 
-## 4. Configuración
+### 2.4.4 Si algo falla
 
-### 4.1 Variables de entorno
+Revise `docker compose logs --tail=100 db`. Los scripts de inicialización no se vuelven a ejecutar si el volumen ya existe; compruebe el esquema antes de aplicar cambios. No elimine el volumen para corregir una instalación con datos.
 
-Copie `.env.example` a `.env`. El archivo `.env` nunca se versiona.
+## 2.5 Instalación de la aplicación
 
-| Variable | Uso |
-|---|---|
-| `POSTGRES_PASSWORD` | Clave del superusuario de la base en la pila Docker |
-| `PFC_BD_URL` | URL SQLAlchemy de D1 (`postgresql+psycopg://usuario:clave@host:puerto/pfc`) |
-| `PFC_SECRETO_SESION` | Secreto de firma de las cookies de sesión (cadena aleatoria larga) |
-| `PFC_D2` | Carpeta de D2: matriz Parquet, cargas manuales, artefactos del modelo |
-| `PFC_DATOS_ORIGEN` | Carpeta de los datos crudos descargados (solo lectura para el worker) |
-| `PFC_DISPOSITIVO_XGB` | `cuda` en la estación con GPU, `cpu` en el VPS y en CI |
-| `PFC_CONFIG` | Ruta alternativa a `config/config.yaml` |
-| `PFC_VERSION`, `PFC_REGISTRO` | Etiqueta y registro de las imágenes que levanta Compose |
-| `PFC_CLAVE_NUEVA` | Clave para la consola de administración sin pedirla por teclado |
+### 2.5.1 Requisitos previos
 
-Genere los secretos con `openssl rand -hex 32`.
+Repositorio en la etiqueta indicada, base verificada y acceso de escritura al registro si se publicarán imágenes. Use el mismo registro y etiqueta que en 2.4.
 
-### 4.2 `config/config.yaml`
+### 2.5.2 Pasos y comandos
 
-| Sección | Contenido |
-|---|---|
-| `periodo`, `dominio`, `celda_m` | Ventana 2000–2026, caja de la macrorregión y celda de 1 000 m |
-| `hosts_permitidos` | Lista blanca de dominios de descarga (OWASP A10) |
-| `verificacion.fuentes` | Columnas requeridas, rangos y frecuencia por fuente (RF-06) |
-| `particion` | Entrenamiento 2000–2016, validación 2017–2019, prueba sellada 2020–2026 |
-| `modelo` | AUC-ROC mínimo de 0.80, bloques espaciales de 50 km, 5 pliegues y grilla de hiperparámetros |
-| `deriva` | Variables vigiladas y umbrales de PSI (0.10 vigilancia y 0.25 alerta) |
+1. Si las imágenes no están publicadas, ejecute el comando de construcción. Debe publicar `app`, `worker`, `db` y `proxy`; `worker-m2` reutiliza la imagen de `worker`.
 
-Si una fuente cambia de dominio de entrega, agréguelo a `hosts_permitidos`. El conector rechaza
-cualquier dominio no listado antes de abrir la conexión.
+   ```bash
+   ./despliegue/construir_y_publicar.sh "$PFC_VERSION"
+   ```
 
-## 5. Instalación y despliegue
+2. Descargue las imágenes en el host de ejecución. El sitio web no requiere compilación: Nginx monta `presentacion/` directamente.
 
-### 5.1 Pila Docker (VPS)
+   ```bash
+   docker compose pull
+   ```
 
-![Arquitectura física de despliegue](img/diagramas/fig15_despliegue.png)
+### 2.5.3 Verificación
 
+`docker compose config --images` debe enumerar las cuatro imágenes con el registro y la etiqueta elegidos. `docker compose pull` debe descargar o confirmar cada una sin errores.
 
-```bash
-git clone https://github.com/diegobfcy/pfc-susceptibilidad.git && cd pfc-susceptibilidad
-git checkout v1.0.0
-cp .env.example .env            # completar los valores
-# Certificado TLS en despliegue/nginx/tls/ (pfc.crt y pfc.key)
-./despliegue/construir_y_publicar.sh v1.0.0      # construye app, worker, db y proxy
-PFC_VERSION=v1.0.0 docker compose up -d --wait
-curl -fsk https://localhost:8443/api/salud       # {"estado":"ok"}
-```
+### 2.5.4 Si algo falla
 
-Las imágenes `app` y `worker` se endurecen con `despliegue/endurecer_imagen.sh`: retiran los paquetes
-base que la aplicación no usa y que tienen CVE sin corrección, y el worker compila libexpat 2.10.0
-con su huella SHA-256 y su firma GPG verificadas. El visor no está dentro de ninguna imagen: el proxy
-monta `./presentacion` en modo solo lectura, de modo que un cambio en el visor se despliega con el
-repositorio.
+Si el registro no responde, revise su disponibilidad y autenticación. Ante una etiqueta inexistente, confirme que fue publicada en el registro correcto y que `PFC_VERSION` está exportada en la sesión actual.
 
-### 5.2 Despliegue con reversión (staging)
+## 2.6 Configuración
 
-```bash
-./despliegue/staging/desplegar.sh <commit>
-```
+### 2.6.1 Requisitos previos
 
-El script descarga la versión, aplica el esquema, levanta los contenedores y ejecuta la prueba de humo:
-`/api/salud` a través del proxy, una consulta a la cola y el worker en ejecución. Si la prueba falla,
-vuelve a la versión registrada en `despliegue/staging/.version_actual`.
+Ruta local para los datos oficiales, un par TLS autorizado y un mecanismo para generar y custodiar secretos. No reutilice secretos del entorno de pruebas en otros entornos.
 
-### 5.3 Entorno nativo con los límites del VPS (sin Docker)
+### 2.6.2 Pasos y comandos
 
-`despliegue/pruebas/entorno.sh` levanta PostGIS, gunicorn, los dos workers y nginx dentro de un grupo
-de control de systemd con 2 CPU y 4 GB sin intercambio, en `https://127.0.0.1:8444`.
+1. Cree `.env` a partir de la plantilla en una instalación nueva. El archivo debe quedar fuera de Git.
 
-```bash
-./despliegue/pruebas/entorno.sh iniciar | detener | esquema
-eval "$(./despliegue/pruebas/entorno.sh entorno)"   # exporta PFC_BD_URL, PFC_D2 y PYTHONPATH
-```
+   ```bash
+   (umask 077; cp -n .env.example .env)
+   chmod 600 .env
+   ```
 
-## 6. Administración de cuentas
+2. Edite `.env` y sustituya los valores de ejemplo. Genere valores aleatorios independientes para la base y la sesión; `openssl rand -hex 32` genera uno por ejecución. Guárdelos sin copiarlos a documentación o tickets.
 
-Las cuentas solo se crean por consola, nunca desde la web. Con el mismo comando se cambia la clave y se
-desbloquea una cuenta existente.
+   | Variable | Propósito | Ejemplo no secreto |
+   | --- | --- | --- |
+   | `POSTGRES_PASSWORD` | Contraseña inicial de PostgreSQL | Generar una cadena hexadecimal propia |
+   | `PFC_SECRETO_SESION` | Firma de la sesión | Generar otra cadena distinta |
+   | `PFC_DATOS_ORIGEN` | Directorio absoluto montado en el worker | `/srv/pfc/origen` |
+   | `PFC_REGISTRO`, `PFC_VERSION` | Selección de imágenes | `localhost:5000`, `v1.0.2` |
+   | `PFC_BD_URL` | URL SQLAlchemy para herramientas nativas; Compose construye la suya | `postgresql+psycopg://usuario@127.0.0.1:5434/pfc` |
+   | `PFC_D2`, `PFC_CONFIG` | Directorio de artefactos y ruta YAML alternativa en ejecución nativa | `/srv/pfc/d2`, `config/config.yaml` |
 
-```bash
-python -m pfc_servicios.admin correo@dominio ESPECIALISTA --nombre "Nombre Apellido"
-# Roles: INVESTIGADOR, ESPECIALISTA, ASESOR. La clave se pide sin mostrarla
-# (o se toma de PFC_CLAVE_NUEVA). Use al menos 12 caracteres.
-docker compose exec app python -m pfc_servicios.admin correo@dominio ASESOR   # en la pila Docker
-```
+3. Instale el certificado y su clave como `pfc.crt` y `pfc.key` en `despliegue/nginx/tls/`. Proteja la clave privada. Revise en `config/config.yaml` el periodo, reglas de verificación, fuentes y umbrales antes de preparar datos; no cambie el protocolo del modelo sin validarlo.
 
-La clave se guarda solo como hash Argon2id. Tras cinco intentos fallidos la cuenta se bloquea 15
-minutos.
+### 2.6.3 Verificación
 
-## 7. Carga de datos de referencia
+`docker compose config --quiet` debe terminar con código 0. Compruebe que la ruta de datos sea legible y que `openssl x509 -in despliegue/nginx/tls/pfc.crt -noout -dates` muestre fechas vigentes. No imprima la configuración expandida con secretos.
 
-```bash
-python scripts/cargar_referencias.py
-```
+### 2.6.4 Si algo falla
 
-Carga en D1 la grilla de 108 461 celdas, la división política del INEI, el terreno por celda, la TSM
-mensual, el inventario de deslizamientos, la versión del modelo con sus métricas y los umbrales de los
-cuatro niveles (0.25, 0.50 y 0.75). Comprobaciones posteriores:
+Una variable obligatoria ausente impide resolver Compose: compruebe el nombre y que ejecuta desde la raíz. Si solo falla el proxy, revise la ruta, permisos y correspondencia de la clave y el certificado.
 
-```sql
-SELECT count(*) FROM ref.celda_analisis;                         -- 108461
-SELECT count(*) FROM ref.departamento;                           -- 7
-SELECT limites FROM sistema.umbral_version WHERE vigente;        -- {0.25,0.5,0.75}
-```
-
-## 8. Pipeline de datos (ETL)
+## 2.7 Puesta en marcha y verificación
 
-| Paso | Componente | Detalle |
-|---|---|---|
-| Obtener | E2 conectores | NOAA ERSST v5 (Niño 1+2), Copernicus ERA5-Land (precipitación diaria, CDS API), Copernicus DEM GLO-30 (teselas COG en S3) e inventario GEOCATMIN (descarga por bloques de 1 000 OBJECTID, TLS con el intermedio Sectigo fijado) |
-| Verificar | E3 | Campos requeridos, nulos, rangos por fuente, pendiente en [0°, 90°], continuidad diaria y TSM mensual |
-| Transformar | E4 | Grilla UTM 17S de 1 km, pendiente media, p90 y máxima por celda, anomalía de TSM con rezagos de 1 a 3 meses y media móvil, precipitación mensual, máximo de 3 días y antecedente de 90 días |
-| Guardar | D2 | Matriz Parquet particionada por año (`anio=AAAA/parte.parquet`) con huella SHA-256 en `catalogo.json` |
+### 2.7.1 Requisitos previos
 
-Cada archivo descargado queda registrado con su huella SHA-256 y un evento en la bitácora. Si una
-fuente falla, el procesamiento pasa a `EN_ESPERA` con el motivo `FUENTE_NO_DISPONIBLE`; si un dato
-incumple una regla, con `DATOS_RECHAZADOS`. Se reanuda con una carga manual
-(`POST /ingestas/{id}/archivos`) o se cancela.
-
-Ejecución directa, sin la cola: `python -m pfc_etl.orquestador --desde 2000 --hasta 2026 --tipo INGESTA`.
-
-## 9. Modelo predictivo
+Base, imágenes y TLS verificados; puertos locales libres. Para acceder desde otro equipo, use la dirección y el certificado aprobados por el operador.
 
-### 9.1 Variables
-
-`tsm_c`, `anom_tsm`, `anom_tsm_l1` a `anom_tsm_l3`, `anom_tsm_mm3`, `precip_mes_mm`,
-`precip_max3d_mm`, `precip_ant90_mm`, `pend_media_g`, `pend_p90_g`, `pend_max_g` y `mes`. El objetivo
-vale 1 si la celda tiene un evento del inventario con fecha de día o de mes en ese mes.
-
-### 9.2 Entrenamiento (M1)
-
-```bash
-PFC_DISPOSITIVO_XGB=cuda python -m pfc_predictiva
-```
+### 2.7.2 Pasos y comandos
 
-Búsqueda de 12 combinaciones con validación cruzada espacial (bloques de 50 km, 5 pliegues, parada
-temprana) y modelo final con `scale_pos_weight` igual al cociente entre negativos y positivos. La
-partición de prueba 2020–2026 no se lee. El artefacto se guarda en `D2/modelos/xgboost_<versión>.ubj`
-con su tarjeta JSON (huella SHA-256, hiperparámetros, métricas, importancias y referencias de PSI).
-Una versión con AUC-ROC de validación menor de 0.80 se registra como `RECHAZADA`.
-
-Versión 1 en uso: SHA-256 `0c5321b414748f0f7ad07f18078d654c98c4aab61356930ed18c73bfad786a56`.
-
-### 9.3 Inferencia (M2)
-
-`POST /inferencias` encola el trabajo. El worker verifica la huella del artefacto antes de cargarlo
-(si no coincide, responde 422 y no escribe nada), predice por lotes anuales, clasifica en cuatro
-niveles y reemplaza con `COPY` solo los meses y la zona de la ventana pedida. La inferencia completa de
-317 meses tarda unos 2 minutos en la estación con los límites del VPS.
-
-### 9.4 Evaluación (M3)
-
-| Script | Resultado |
-|---|---|
-| `scripts/cp14_evaluacion_sellada.py` | AUC-ROC único sobre la partición sellada; se niega a ejecutarse dos veces |
-| `scripts/precision_balanceada.py` | Precisión, sensibilidad, F1 y exactitud en 1 000 muestras caso-control 1:1 por año (umbral 0.5) y precisión operativa; ejecución única |
-
-Resultados de la versión 1 en 2020–2026: AUC-ROC de 0.902 (IC 95 %: 0.891 a 0.913) y precisión 1:1 de
-0.834 (IC 95 %: 0.816 a 0.852). La precisión sobre todas las celdas-mes es de 0.001 por la baja
-prevalencia: el puntaje ordena las celdas, pero no está calibrado como probabilidad.
-
-**Deriva.** M3 calcula el PSI de las variables vigiladas frente a los deciles de entrenamiento. Por
-encima de 0.25 el panel lo marca en alerta; antes de una nueva inferencia debe revisarse el AUC-ROC
-en la ventana etiquetada más reciente.
+1. Inicie los servicios y compruebe su estado. Deben quedar activos `db`, `app`, `worker`, `worker-m2` y `proxy`.
 
-**Recomendaciones para una versión 2:** incluir los positivos de 2017–2019, calibrar las probabilidades,
-agregar variables espaciales (litología, cobertura, distancia a ríos y fallas, curvatura y elevación),
-optimizar también la precisión promedio y definir una unidad de alerta, como provincia-mes.
+   ```bash
+   docker compose up -d --wait
+   docker compose ps
+   ```
 
-## 10. API REST
+2. Cree la primera cuenta funcional. El comando solicita la clave sin mostrarla y también permite restablecer una cuenta existente; la interfaz no administra cuentas.
 
-Base `/api`. El contrato completo está en `api/openapi.yaml`. Todas las rutas, salvo `/salud`,
-`/auth/login` y `/sesion/csrf`, requieren sesión. Las solicitudes que cambian estado requieren la
-cabecera `X-CSRFToken`.
+   ```bash
+   docker compose exec app python -m pfc_servicios.admin operador@example.org INVESTIGADOR --nombre "Operador de pruebas"
+   ```
 
-| Método y ruta | Roles | Función |
-|---|---|---|
-| `POST /auth/login`, `GET` y `DELETE /sesion`, `GET /sesion/csrf` | Todos | Sesión y token CSRF |
-| `POST /ingestas`, `POST /entrenamientos`, `POST /inferencias` | INV | Encolar un procesamiento (409 si ya hay uno activo) |
-| `GET /ingestas/{id}`, `GET /inferencias/{id}` | INV, ASE | Estado, fase, tiempos y memoria |
-| `GET /procesamientos/activo` | INV, ASE | Procesamiento activo y su motivo de espera (204 si no hay) |
-| `POST /ingestas/{id}/archivos` | INV | Carga manual (hasta 2 GB; extensión y contenido verificados) |
-| `POST /procesamientos/{id}/cancelar` | INV | Cancelación |
-| `GET /mapas/{capa}/{periodo}/{z}/{x}/{y}.pbf` | INV, ESP | Teselas MVT: `susceptibilidad`, `precipitacion`, `tsm`, `pendiente`, `inventario`; filtros `departamento` y `provincia` |
-| `GET /consulta-punto?periodo&lat&lon` | INV, ESP | Nivel, puntaje y variables de la celda |
-| `GET /periodos`, `GET /ambitos`, `GET /capas/limites` | INV, ESP | Catálogos del visor |
-| `GET /indicadores` | INV, ASE | Métricas, deriva, tiempos, memoria y distribución |
-| `GET /bitacora?desde&hasta&tipo` | INV, ASE | Historial filtrado |
-| `GET /salud` | Público | Prueba de humo |
+3. Para ofrecer mapas, prepare y cargue el conjunto de referencia con `scripts/cargar_referencias.py` en el entorno nativo del proyecto, con `PFC_BD_URL` y las rutas de datos configuradas. El repositorio no incluye el conjunto completo. Compruebe `SELECT count(*) FROM ref.celda_analisis;` (108 461 celdas para la referencia completa) y publique resultados mediante una inferencia válida.
 
-INV: Equipo Investigador; ESP: Especialista; ASE: Asesor. Un rol no autorizado recibe 403 antes de
-cualquier validación, y una solicitud sin sesión, 401.
+4. Para detener sin borrar volúmenes use `docker compose stop`; para volver a iniciar, `docker compose up -d --wait`. Para reiniciar solo la aplicación, use `docker compose restart app`.
 
-## 11. Base de datos
+### 2.7.3 Verificación
 
-Esquemas de D1 (`datos/sql/01_esquema.sql`):
+Con un certificado confiable válido para `localhost`, `curl --fail --silent --show-error https://localhost:8443/api/salud` debe mostrar `{"estado":"ok"}`. Si la confianza es privada, agregue `--cacert` con la ruta de su CA y use un nombre cubierto por el certificado. Abra `/panel/` en la misma dirección, inicie sesión y confirme que aparecen **Procesamientos**, **Indicadores** e **Historial**. Si ya cargó resultados, verifique también un mapa en `/visor/`.
 
-| Esquema | Tablas principales |
-|---|---|
-| `sistema` | `rol`, `usuario`, `fuente_dato`, `dataset`, `umbral_version`, `procesamiento` (cola), `registro_rechazado`, `bitacora` (solo inserción) |
-| `ref` | `departamento`, `provincia`, `celda_analisis` (geometrías UTM 17S y 3857) |
-| `datos` | `tsm_mensual`, `precipitacion_diaria`, `terreno_celda`, `deslizamiento` |
-| `modelo` | `modelo_version` (con las referencias de PSI), `variable`, `modelo_variable`, `metrica` |
-| `resultado` | `susceptibilidad`, particionada por año (108 461 filas por mes) |
+### 2.7.4 Si algo falla
 
-La tabla `sistema.bitacora` tiene el disparador `tr_bitacora_inmutable`, que rechaza `UPDATE` y
-`DELETE`. Las teselas se generan con `ST_AsMVT` sobre índices GiST de `geom_3857`.
+Use `docker compose logs --tail=100 proxy app worker worker-m2 db`. Si salud funciona pero falla el ingreso, confirme el rol y el secreto de sesión. Si un trabajo no avanza, revise ambos workers, el estado de la cola y la disponibilidad de los datos de origen y D2.
 
-## 12. Seguridad
+## 2.8 Respaldo, restauración y problemas comunes
 
-- Contraseñas con Argon2id, bloqueo a los 5 intentos y límite de solicitudes en `/auth/login` (429).
-- Cookies `HttpOnly`, `Secure` y `SameSite=Strict`; CSRF en toda solicitud que cambia estado.
-- RBAC en cada endpoint, según la tabla de la sección 10.
-- Lista blanca de dominios y solo HTTPS en las descargas; sin redirecciones a dominios no listados.
-- Cargas manuales con extensión permitida, firma de contenido verificada y tope de 2 GB.
-- Cabeceras CSP, HSTS, X-Frame-Options, X-Content-Type-Options y Referrer-Policy en nginx.
-- Huella SHA-256 del artefacto del modelo verificada antes de cada inferencia.
-- Escaneos: Bandit, pip-audit, OWASP ZAP y Trivy. Con las imágenes endurecidas, 0 críticas y 0 altas.
+Programe un respaldo diario y conserve copias externas protegidas siguiendo la regla 3-2-1. El objetivo operativo propuesto es perder como máximo 24 horas de datos y recuperar en 4 horas, sujeto a una prueba de recuperación. Respalde D2 de forma consistente con D1. Las claves se custodian por separado.
 
-## 13. Respaldo y restauración
-
-```bash
-export PFC_BD_URL_PG=postgresql://postgres:<clave>@localhost:5432/pfc
-export PFC_CLAVE_RESPALDO=/ruta/segura/clave_respaldo   # archivo con la frase de cifrado
-./datos/respaldo/respaldar.sh       # pg_dump custom + GPG AES-256 + .sha256; conserva 7 copias
-./datos/respaldo/restaurar.sh       # verifica la huella y restaura el último respaldo
-```
-
-Política: RPO de 24 h (respaldo diario con cron) y RTO de 4 h; regla 3-2-1. Respalde también el
-volumen D2 (artefactos del modelo y matriz Parquet).
-
-## 14. Pruebas y calidad
-
-| Nivel | Comando | Requisitos |
-|---|---|---|
-| Unitarias | `pytest pruebas/unitarias` | Ninguno |
-| Integración | `pytest pruebas/integracion` | `PFC_BD_URL` hacia una base **exclusiva** de pruebas (por ejemplo `pfc_it`), `PFC_DATOS_ORIGEN` y, para las descargas reales, `PFC_FUENTES_EN_LINEA=1` |
-| Sistema | `PFC_SISTEMA=1 PYTHONPATH=pruebas/sistema:$PYTHONPATH pytest pruebas/sistema` | Entorno en `https://127.0.0.1:8444`, `PFC_BD_URL_SISTEMA` y Playwright (entorno `pfc-pruebas`) |
-| Carga | `scripts/correr_escalonada.sh solo` | Locust |
-| Pipeline local | `python scripts/pipeline_local.py` | black, ruff, import-linter, OpenAPI, docstrings, pip-audit y pytest con cobertura |
-| Informe por caso | `python scripts/informe_casos.py resultados/pruebas/<regresión>` | Resultados JUnit de la regresión |
-
-Las pruebas de integración vacían tablas de resultados. Por eso se detienen solas si `PFC_BD_URL`
-apunta a la base `pfc`.
-
-Criterios vigentes: cobertura ≥ 80 % de líneas y ramas (84.0 % y 81.3 % en la quinta regresión),
-puerta de calidad PFC de SonarQube y 38 de 38 casos de prueba aprobados.
-
-## 15. Integración y despliegue continuos
-
-`.github/workflows/ci-cd.yml` ejecuta en cada push la calidad estática, las pruebas con PostGIS como
-servicio, el análisis de SonarQube y, en `main`, la construcción de las imágenes y el despliegue a
-staging. Configure estos secretos del repositorio:
-
-| Secreto | Uso |
-|---|---|
-| `PG_PRUEBAS` | Clave del PostGIS de las pruebas de CI |
-| `SONAR_TOKEN`, `SONAR_HOST_URL` | Servidor de SonarQube |
-
-El despliegue requiere un entorno `staging` con acceso al registro de imágenes y al servidor.
-
-## 16. Operación y solución de problemas
+1. Configure `PFC_RESPALDOS` y `PFC_CLAVE_RESPALDO` hacia rutas protegidas, y `PFC_BD_URL_PG` hacia la base de origen. Para staging desde el host el puerto es `5434`. Proporcione la autenticación fuera del historial de comandos.
+2. Ejecute `./datos/respaldo/respaldar.sh`. Debe producir un `.dump.gpg` y su `.sha256`; conserva siete volcados cifrados.
+3. Para el ensayo, prepare una base **aislada**, compatible con el origen. Cambie `PFC_BD_URL_PG` para apuntar a esa base. Ejecute `./datos/respaldo/restaurar.sh`, que verifica el último respaldo y reemplaza objetos del destino. No lo ejecute sobre producción como prueba.
+4. Valide roles, conteos y consultas de una muestra y recupere D2 desde la copia correspondiente. Documente el tiempo y los resultados antes de autorizar una recuperación real.
 
 | Síntoma | Causa probable | Acción |
-|---|---|---|
-| `/api/salud` no responde | app o proxy detenidos | `docker compose ps` y `docker compose logs app proxy` |
-| Procesamiento en `EN_ESPERA` | Fuente caída o dato rechazado | Ver `resumen.motivo` en `GET /procesamientos/activo`; carga manual o cancelación |
-| `HostNoPermitidoError` | La fuente entrega desde otro dominio | Agregar el dominio a `hosts_permitidos` tras verificar que es oficial |
-| `SSLError` en GEOCATMIN | Cadena TLS incompleta del servidor | Revisar el intermedio fijado en el conector del inventario |
-| 422 en `POST /inferencias` | La huella del artefacto no coincide | Restaurar el artefacto de D2 desde un respaldo |
-| Worker reiniciándose | La base no está disponible | Levantar `db` y comprobar `PFC_BD_URL` |
-| Mapa vacío | Mes sin inferencia | `GET /periodos`; ejecutar la inferencia de ese mes |
-| Alerta de PSI | Deriva de datos | Evaluar el AUC-ROC reciente y decidir si reentrenar |
-
-Registros: `docker compose logs <servicio>` y la bitácora (`GET /bitacora` o `sistema.bitacora`).
-
-## 17. Extender el sistema
-
-- **Nueva fuente:** implemente un conector en `etl/pfc_etl/conectores` con el contrato común de
-  descarga (huella y evento de bitácora), agregue su dominio a `hosts_permitidos` y sus reglas en
-  `verificacion.fuentes`.
-- **Nueva variable:** calcúlela en E4, agréguela a `VARIABLES` de `pfc_predictiva/__main__.py`,
-  reentrene y registre una nueva versión del modelo.
-- **Nueva capa del visor:** agregue la consulta MVT en `servicios/pfc_servicios/teselas`, su rampa de
-  colores y su casilla en `presentacion/visor`.
-- Mantenga el contrato de capas (`lint-imports`), los docstrings públicos (`scripts/medir_docstrings.py`)
-  y la cobertura ≥ 80 %.
+| --- | --- | --- |
+| Puerto en uso | Otro proceso ocupa `8443` o `5434` | Identifique el proceso o coordine otro puerto y actualice las URLs del entorno. |
+| PostGIS sano, pero faltan tablas | Volumen previo sin los scripts iniciales | Inspeccione el esquema; respalde y aplique un cambio revisado. |
+| Visor sin mapas | No se restauró D2 o no hay inferencia para el periodo | Verifique referencias, artefactos y la ejecución de inferencia. |
+| Huella del respaldo no coincide | Archivo incompleto o alterado | No restaure esa copia; use otra copia validada. |

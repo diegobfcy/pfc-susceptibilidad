@@ -1,387 +1,274 @@
 # Manual de usuario
 
-**Sistema de estimación de la susceptibilidad a deslizamientos por El Niño en el norte del Perú**
-Versión 1.0.0 · noviembre de 2026
+Sistema de estimación de susceptibilidad a deslizamientos por El Niño · versión 1.0.2
 
-El manual sigue los cinco casos de uso del sistema (CU-01 a CU-05). Cada capítulo reproduce la
-especificación del caso de uso: actor, precondición, flujo normal paso a paso, flujos alternativos,
-postcondición y criterio de aceptación. Cada paso lleva una captura del sistema real. En las capturas,
-el recuadro rojo señala el control que usa el actor en ese paso.
+## 1.1 Introducción
 
-El sistema es una prueba de concepto académica: **no es un sistema de alerta** y no sustituye las
-funciones de CENEPRED ni de INDECI.
+Para el Equipo Investigador, el Especialista en Gestión de Riesgos y el Asesor del Proyecto. Este manual describe las tareas de la versión 1.0.2. Los botones y campos aparecen en **negrita**; los avisos se escriben entre comillas.
 
-![Diagrama de casos de uso](img/diagramas/fig03_casos_de_uso.png)
+## 1.2 Descripción general del sistema
 
-## Contenido
+El sistema muestra la susceptibilidad a deslizamientos en el norte del Perú por mes y en celdas de 1 km. Apoya el análisis de las condiciones asociadas a El Niño. No emite alertas ni predice la fecha o la probabilidad de un deslizamiento.
 
-0. [Antes de empezar: acceso y roles](#0-antes-de-empezar-acceso-y-roles)
-1. [CU-01: Ejecutar el procesamiento de susceptibilidad](#cu-01-ejecutar-el-procesamiento-de-susceptibilidad)
-2. [CU-02: Consultar y filtrar mapas de susceptibilidad](#cu-02-consultar-y-filtrar-mapas-de-susceptibilidad)
-3. [CU-03: Visualizar indicadores de rendimiento](#cu-03-visualizar-indicadores-de-rendimiento)
-4. [CU-04: Gestionar capas de información en el visor de mapas](#cu-04-gestionar-capas-de-información-en-el-visor-de-mapas)
-5. [CU-05: Consultar el historial de operaciones](#cu-05-consultar-el-historial-de-operaciones)
-6. [Cómo interpretar los resultados](#6-cómo-interpretar-los-resultados)
-7. [Mensajes del sistema](#7-mensajes-del-sistema)
+| Rol | Panel de control | Visor de mapas |
+| --- | --- | --- |
+| Equipo Investigador | Ejecuta procesamientos, revisa indicadores e historial | Consulta mapas y cambia capas |
+| Especialista en Gestión de Riesgos | No aplica | Consulta mapas y cambia capas |
+| Asesor del Proyecto | Revisa indicadores e historial | No aplica |
 
----
+## 1.3 Acceso al sistema
 
-## 0. Antes de empezar: acceso y roles
+1. Abra en el navegador la dirección HTTPS que le entregó el responsable del sistema. El panel se abre en `/panel/` y el visor en `/visor/` dentro de esa dirección.
+2. Ingrese su **Correo** y **Clave** y pulse **Entrar**.
+3. Para salir, pulse **Cerrar sesión**, especialmente en equipos compartidos.
+4. Para cambiar o recuperar la clave, solicite un restablecimiento al responsable indicado en la entrega. No hay autoservicio de contraseñas. No comparta su clave actual.
 
-**Requisitos.** Un navegador actualizado (Google Chrome, Mozilla Firefox o Microsoft Edge), sin
-instalar programas ni complementos, y una cuenta entregada por el administrador. Las cuentas no se
-crean desde la web.
+![Figura 1. Inicio de sesión.](img/iu01_inicio_sesion.png)
 
-**Iniciar sesión (IU-01).** Abra la dirección del sistema (`https://<servidor>/panel/` o
-`https://<servidor>/visor/`), escriba su correo y su clave y pulse **Entrar**. El sistema lo lleva a la
-pantalla de su rol (IU-02).
+## 1.4 Guía por rol de usuario
 
-![Inicio de sesión (IU-01)](img/iu01_inicio_sesion.png)
+### 1.4.1 Equipo Investigador
 
-Si el correo o la clave no coinciden, aparece un aviso (IU-03). Al quinto intento fallido la cuenta se
-bloquea 15 minutos. Para salir pulse **Cerrar sesión**; la sesión también termina al cerrar el
-navegador.
+Este rol prepara los datos, ejecuta el procesamiento y comprueba sus resultados en el panel y en el visor.
 
-![Error de acceso (IU-03)](img/iu03_error_acceso.png)
+#### 1.4.1.1 Ejecutar el procesamiento (CU-01)
 
-**Roles.**
+**Objetivo.** Preparar los datos, entrenar el modelo o generar mapas de susceptibilidad para el periodo de trabajo.
 
-| Caso de uso | Equipo Investigador | Especialista en Gestión de Riesgos | Asesor del Proyecto |
-|---|:---:|:---:|:---:|
-| CU-01 Ejecutar el procesamiento | Actor | — | — |
-| CU-02 Consultar y filtrar mapas | Permitido | Actor | — |
-| CU-03 Visualizar indicadores | Actor | — | Actor |
-| CU-04 Gestionar capas | Permitido | Actor | — |
-| CU-05 Consultar el historial | Actor | — | Actor |
+**Requisitos previos.** Inicie sesión como investigador, defina un periodo y compruebe que no haya un procesamiento activo. Para generar mapas deben estar preparados los datos y el modelo.
 
----
+**Pasos.**
 
-## CU-01: Ejecutar el procesamiento de susceptibilidad
+1. Abra **Procesamientos (CU-01)** en el panel.
+2. En **Tipo**, elija **INGESTA** para obtener y verificar datos, **ENTRENAMIENTO** para ajustar el modelo o **INFERENCIA** para generar estimaciones.
+3. Complete **Desde** y **Hasta**. Para inferencia, elija un departamento o toda la macrorregión en **Zona geográfica**. Los otros tipos cubren toda la macrorregión.
+4. Pulse **Iniciar procesamiento** y revise el resumen. Use **Volver** si hay que corregirlo.
+5. Pulse **Confirmar e iniciar** y anote el número de procesamiento. Puede volver más tarde al panel para consultar el estado activo.
+6. Al finalizar una inferencia, siga **Ver en el visor** para consultar los mapas.
 
-| | |
-|---|---|
-| **Actor** | Equipo Investigador |
-| **Descripción** | Configura el rango de fechas y la zona geográfica e inicia el procesamiento. El sistema obtiene la TSM de NOAA, la precipitación diaria de Copernicus, la pendiente del modelo digital de elevación y el inventario de INGEMMET y CENEPRED; verifica los datos, calcula la susceptibilidad, genera los mapas y guarda los resultados. |
-| **Precondición** | El sistema y la base de datos están operativos. |
-| **Pantallas** | IU-04 a IU-11 del panel de control |
+**Captura.**
 
-### Flujo normal
+![Figura 2. Formulario de fechas y zona.](img/cu01_paso2_fechas_y_zona.png)
 
-**Paso 1. El Equipo Investigador accede al panel de control del sistema.**
-Abra `https://<servidor>/panel/` con su cuenta. La sección **Procesamientos (CU-01)** está arriba
-(IU-04).
+![Figura 3. Confirmación del procesamiento.](img/cu01_paso3_confirmar.png)
 
-![CU-01, paso 1: panel de control](img/cu01_paso1_panel.png)
+![Figura 4. Estado del procesamiento en curso.](img/cu01_pasos4a9_estado.png)
 
-**Paso 2. Ingresa el rango de fechas y la zona geográfica que desea procesar.**
-Elija el **Tipo** (INGESTA para obtener y verificar los datos, ENTRENAMIENTO para reentrenar el modelo,
-INFERENCIA para calcular la susceptibilidad). Ingrese **Desde** y **Hasta**, y en **Zona geográfica**
-elija un departamento o toda la macrorregión. La zona aplica a la inferencia; la ingesta y el
-entrenamiento cubren siempre toda la macrorregión. Pulse **Iniciar procesamiento**.
+![Figura 5. Procesamiento finalizado.](img/cu01_paso10_fin.png)
 
-![CU-01, paso 2: rango de fechas y zona](img/cu01_paso2_fechas_y_zona.png)
+**Resultado esperado.** Aparece «El procesamiento finalizó correctamente», con la duración y el total de registros.
 
-**Paso 3. Confirma el inicio del procesamiento.**
-El sistema muestra el resumen (IU-05): tipo, ventana, zona, variables y número de estimaciones. Revíselo
-y pulse **Confirmar e iniciar**. Con **Volver** regresa al formulario sin crear nada.
+**Errores posibles.** Si falla una fuente, descargue el archivo del portal oficial indicado, selecciónelo en el aviso y pulse **Cargar archivo y reanudar**. Se aceptan `.nc`, `.tif`, `.gpkg`, `.parquet`, `.csv` o `.ascii` de hasta 2 GB según la fuente. Si se rechazan los datos, revise la regla indicada y aporte un reemplazo. Para terminar sin guardar resultados parciales, pulse **Cancelar procesamiento** y **Sí, cancelar**. Consulte el apartado 1.7.
 
-![CU-01, paso 3: confirmación](img/cu01_paso3_confirmar.png)
+![Figura 6. Carga manual de un archivo.](img/cu01_4a_carga_manual.png)
 
-**Pasos 4 a 9. El sistema obtiene los datos, calcula la anomalía de TSM, verifica los datos, calcula
-la susceptibilidad, genera los mapas y guarda los resultados.**
-Estos pasos los realiza el sistema. El panel muestra el número del procesamiento, su estado y la fase
-en curso (IU-06). Puede cerrar la página: al volver, el panel recupera el procesamiento activo. Solo
-puede haber un procesamiento activo a la vez.
+![Figura 7. Datos rechazados en la verificación.](img/cu01_6a_datos_rechazados.png)
 
-![CU-01, pasos 4 a 9: estado del procesamiento](img/cu01_pasos4a9_estado.png)
+#### 1.4.1.2 Revisar indicadores (CU-03)
 
-**Paso 10. El sistema notifica que el procesamiento finalizó correctamente.**
-Aparece **«El procesamiento finalizó correctamente»** con el tiempo total y el número de registros
-(IU-07). El enlace **Ver en el visor** abre los mapas.
+**Objetivo.** Comprobar la calidad del modelo y la operación del procesamiento.
 
-![CU-01, paso 10: fin del procesamiento](img/cu01_paso10_fin.png)
+**Requisitos previos.** Debe existir un procesamiento completo y debe haber iniciado sesión como investigador.
 
-### Flujo alternativo 4a: una fuente no responde
+**Pasos.**
 
-Si el sistema no puede obtener los datos de una fuente, detiene la descarga automática, muestra una
-alerta visual y habilita la carga manual.
+1. Abra **Indicadores (CU-03)** en el panel.
+2. Revise la métrica predictiva, el tiempo y los registros procesados y rechazados.
+3. Pulse **Exportar indicadores (CSV)** para conservar los valores mostrados.
 
-1. El panel muestra **«Fuente externa no disponible»** con el nombre de la fuente (IU-08). El
-   procesamiento queda en espera y el error se registra en el historial.
+**Captura.**
 
-   ![CU-01, flujo 4a: alerta de fuente no disponible](img/cu01_4a_alerta_fuente.png)
+![Figura 8. Indicadores del procesamiento.](img/cu03_pasos2y3_indicadores.png)
 
-2. Descargue el archivo desde el portal oficial de esa fuente. En el formulario de la alerta la fuente
-   ya está seleccionada: elija el archivo y pulse **Cargar archivo y reanudar** (IU-09). Se aceptan
-   archivos `.nc`, `.tif`, `.gpkg`, `.parquet`, `.csv` o `.ascii` de hasta 2 GB, con un contenido que
-   corresponda a la extensión.
+**Resultado esperado.** Se muestran los valores disponibles y el CSV queda descargado si se solicitó.
 
-   ![CU-01, flujo 4a: carga manual](img/cu01_4a_carga_manual.png)
+**Errores posibles.** Si hay un indicador por debajo del umbral, compruebe el periodo y la versión evaluada y registre la incidencia; vea 1.7.
 
-3. El sistema registra el archivo con su huella SHA-256 y reanuda la verificación.
+#### 1.4.1.3 Consultar el historial (CU-05)
 
-   ![CU-01, flujo 4a: reanudación](img/cu01_4a_reanudacion.png)
+**Objetivo.** Revisar lo ocurrido durante los procesamientos y localizar advertencias o errores.
 
-### Flujo alternativo 6a: los datos no cumplen los parámetros de verificación
+**Requisitos previos.** Debe haber iniciado sesión como investigador y existir operaciones registradas.
 
-El sistema rechaza los datos, registra el problema en el historial e indica qué parámetro no se cumplió.
-El procesamiento no continúa hasta que los datos se reemplacen o el Equipo Investigador lo cancele.
+**Pasos.**
 
-1. El panel muestra **«Datos rechazados en la verificación»** con la fuente, la regla incumplida y el
-   detalle (IU-10). Para reemplazar los datos, use la carga manual como en el flujo 4a.
+1. Abra **Historial de operaciones (CU-05)**.
+2. Indique las fechas y elija un **Tipo** de evento.
+3. Pulse **Filtrar** y revise la fecha y hora, tipo, descripción y usuario de cada fila.
 
-   ![CU-01, flujo 6a: datos rechazados](img/cu01_6a_datos_rechazados.png)
+**Captura.**
 
-2. Para cancelar, pulse **Cancelar procesamiento** y confirme con **Sí, cancelar** (IU-11). Los
-   resultados parciales no se guardan.
+![Figura 9. Historial filtrado por errores.](img/cu05_pasos1a4_errores.png)
 
-   ![CU-01, flujo 6a: confirmar la cancelación](img/cu01_6a_confirmar_cancelacion.png)
+**Resultado esperado.** La tabla muestra los eventos que coinciden con los filtros.
 
-3. El estado pasa a **CANCELADO** y la cancelación queda en el historial.
+**Errores posibles.** Si no aparecen registros, amplíe el rango de fechas o seleccione otro tipo; vea 1.7.
 
-   ![CU-01, flujo 6a: procesamiento cancelado](img/cu01_6a_cancelado.png)
+#### 1.4.1.4 Verificar mapas (CU-02)
 
-### Postcondición y criterio de aceptación
+**Objetivo.** Confirmar que se pueden consultar las estimaciones generadas.
 
-Los mapas de susceptibilidad quedan almacenados y listos para consultarse en el visor.
+**Requisitos previos.** Debe haber iniciado sesión como investigador y existir un mapa para el mes.
 
-- **Escenario 1, procesamiento exitoso:** con parámetros correctos, el sistema completa los pasos 4 a 9
-  sin errores y lo notifica (paso 10).
-- **Escenario 2, falla en una fuente:** el error se registra en el historial y se permite la carga
-  manual (flujo 4a).
-- **Escenario 3, datos fuera de parámetros:** los datos se rechazan, se registran y se indica el
-  parámetro incumplido (flujo 6a).
+**Pasos.**
 
----
+1. Abra el **Visor** y seleccione el mes procesado.
+2. Filtre por departamento y, si corresponde, por provincia.
+3. Pulse una celda para consultar su nivel y sus variables.
 
-## CU-02: Consultar y filtrar mapas de susceptibilidad
+**Captura.**
 
-| | |
-|---|---|
-| **Actor** | Especialista en Gestión de Riesgos |
-| **Descripción** | Usa el visor de mapas, filtra por mes y por departamento o provincia y, con un clic sobre una zona, consulta su nivel de susceptibilidad y sus datos de TSM, precipitación y pendiente. |
-| **Precondición** | Existen mapas de susceptibilidad procesados para el periodo que se desea consultar. |
-| **Pantallas** | IU-12, IU-14 e IU-15 del visor |
+![Figura 10. Consulta de una celda.](img/cu02_pasos4y5_consulta.png)
 
-### Flujo normal
+**Resultado esperado.** Se ve el mapa filtrado y el detalle de la celda.
 
-**Paso 1. El Especialista accede al visor de mapas.**
-Abra `https://<servidor>/visor/` con su cuenta (IU-12).
+**Errores posibles.** Si el periodo no tiene resultados, revise la ejecución en el panel o elija otro mes; vea 1.7.
 
-![CU-02, paso 1: visor de mapas](img/cu02_paso1_visor.png)
+#### 1.4.1.5 Comparar capas (CU-04)
 
-**Paso 2. Selecciona un mes y un departamento o provincia en el panel de filtros.**
-En **Periodo** elija el mes. En **Departamento** y, si quiere, en **Provincia**, elija la zona.
+**Objetivo.** Contrastar la susceptibilidad con las capas de contexto.
 
-**Paso 3. El sistema muestra en el mapa únicamente las zonas que cumplen los filtros.**
-El mapa se encuadra en la zona y colorea cada celda de 1 km según su nivel; la leyenda indica el nombre
-y el rango de cada nivel.
+**Requisitos previos.** Visor abierto con el mes y ámbito de interés seleccionados.
 
-![CU-02, pasos 2 y 3: filtro por mes y departamento](img/cu02_pasos2y3_filtro.png)
+**Pasos.**
 
-**Paso 4. El Especialista hace clic sobre una zona coloreada del mapa.**
+1. Abra **Capas** en el visor.
+2. Active las capas que desea comparar y desactive las que oculten el detalle.
+3. Revise la leyenda y contraste la misma zona en las capas seleccionadas.
 
-**Paso 5. El sistema muestra una ventana con el valor exacto de susceptibilidad y los datos de TSM,
-precipitación y pendiente de esa zona** (IU-14): nivel, puntaje del modelo con cuatro decimales,
-precipitación del mes, máximo de tres días, antecedente de 90 días, anomalía de TSM de la región
-Niño 1+2 y pendiente media y percentil 90.
+**Captura.**
 
-![CU-02, pasos 4 y 5: consulta por clic](img/cu02_pasos4y5_consulta.png)
+![Figura 11. Capas de temperatura del mar e inventario.](img/cu04_capas_tsm_e_inventario.png)
 
-### Flujo alternativo 3a: no hay mapas para el mes solicitado
+**Resultado esperado.** El visor cambia las capas sin perder el ámbito seleccionado.
 
-El sistema muestra **«No existen datos procesados para el periodo seleccionado»** (IU-15). Elija otro
-mes o pida al Equipo Investigador que lo procese (CU-01).
+**Errores posibles.** Si una capa no carga, continúe con las otras y vuelva a intentarlo; vea 1.7.
 
-![CU-02, flujo 3a: mes sin mapas](img/cu02_3a_sin_datos.png)
+### 1.4.2 Especialista en Gestión de Riesgos
 
-### Postcondición y criterio de aceptación
+Este rol consulta los mapas y usa las capas para analizar una zona y un mes.
 
-El Especialista obtiene la información para su análisis sin modificar los datos originales.
+#### 1.4.2.1 Consultar y filtrar mapas (CU-02)
 
-- **Escenario 1, consulta exitosa:** al filtrar por un mes con mapas y hacer clic en una zona, se
-  muestran su valor de susceptibilidad y sus datos de TSM, precipitación y pendiente.
-- **Escenario 2, consulta sin datos:** al filtrar por un mes sin mapas, se muestra «No existen datos
-  procesados para el periodo seleccionado».
+**Objetivo.** Identificar la susceptibilidad y las variables disponibles en una celda.
 
----
+**Requisitos previos.** Inicie sesión como especialista y elija un periodo con mapas procesados.
 
-## CU-03: Visualizar indicadores de rendimiento
+**Pasos.**
 
-| | |
-|---|---|
-| **Actores** | Asesor del Proyecto y Equipo Investigador |
-| **Descripción** | Consultan los indicadores de rendimiento: la métrica predictiva del protocolo de validación, el tiempo de procesamiento, los registros procesados y los rechazados. |
-| **Precondición** | Se ejecutó al menos un procesamiento completo. |
-| **Pantalla** | IU-16 del panel de control |
+1. Abra el visor y seleccione **Periodo (mes)**.
+2. Seleccione el departamento y, si necesita mayor detalle, una provincia.
+3. Pulse una celda y revise el nivel, la precipitación, la anomalía de TSM y la pendiente disponibles.
 
-### Flujo normal
+**Captura.**
 
-**Paso 1. El usuario accede al panel de indicadores.**
-Abra `https://<servidor>/panel/`. Con la cuenta del Asesor el panel muestra los indicadores y el
-historial; no muestra la sección de procesamientos.
+![Figura 12. Filtro por mes y departamento.](img/cu02_pasos2y3_filtro.png)
 
-![CU-03, paso 1: panel del Asesor](img/cu03_paso1_panel_asesor.png)
+**Resultado esperado.** El mapa se limita al ámbito elegido y el detalle corresponde a la celda pulsada.
 
-**Paso 2. El sistema consulta los indicadores almacenados.**
+**Errores posibles.** Si se indica que no hay datos, cambie de mes; si el dato debería existir, repórtelo; vea 1.7.
 
-**Paso 3. El sistema muestra los indicadores en forma de gráficos:** AUC-ROC de prueba y de
-validación, deriva de datos (PSI) de la anomalía de TSM y de la precipitación, distribución de las
-celdas por nivel, tasa de rechazo de registros y, en la tabla inferior, el tiempo por fase y la memoria
-máxima del último procesamiento de cada tipo.
+#### 1.4.2.2 Gestionar capas del visor (CU-04)
 
-![CU-03, pasos 2 y 3: indicadores](img/cu03_pasos2y3_indicadores.png)
+**Objetivo.** Superponer información para interpretar la susceptibilidad con su contexto geográfico.
 
-**Paso 4. El usuario revisa los indicadores o los exporta para el informe del proyecto.**
-Pulse **Exportar indicadores (CSV)** para descargar los valores mostrados.
+**Requisitos previos.** Abra un mapa con datos para el mes seleccionado.
 
-![CU-03, paso 4: exportar indicadores](img/cu03_paso4_exportar.png)
+**Pasos.**
 
-### Flujo alternativo 3a: un indicador no alcanza su umbral aprobado
+1. Abra **Capas**.
+2. Marque o desmarque **Susceptibilidad**, **Inventario de deslizamientos**, **Precipitación mensual**, **Anomalía de TSM**, **Pendiente del terreno** o **Límites provinciales**, según su consulta.
+3. Contraste el mapa con la leyenda. Use la paleta accesible si necesita distinguir mejor los niveles.
 
-El sistema resalta el indicador con el aviso **«Rendimiento por debajo del nivel esperado»**. En la
-captura, el PSI de la anomalía de TSM (0.34) supera el umbral de alerta de 0.25: los datos recientes
-se alejan de los de entrenamiento y conviene revisar el modelo.
+**Captura.**
 
-![CU-03, flujo 3a: indicador en alerta](img/cu03_3a_alerta.png)
+![Figura 13. Panel de capas del visor.](img/cu04_paso2_panel_de_capas.png)
 
-### Postcondición y criterio de aceptación
+![Figura 14. Visor con la paleta accesible.](img/visor_paleta_accesible.png)
 
-El Asesor y el Equipo Investigador disponen de los indicadores para evaluar la calidad del sistema.
+**Resultado esperado.** El visor muestra las capas seleccionadas. En el inventario, los eventos del propio mes se distinguen en rojo.
 
-- **Escenario 1, consulta exitosa:** el panel muestra los gráficos de rendimiento del protocolo.
-- **Escenario 2, alerta de rendimiento bajo:** el indicador fuera de umbral se resalta con «Rendimiento
-  por debajo del nivel esperado».
+**Errores posibles.** Si una capa no está disponible, las otras siguen visibles; desactívela y pruebe de nuevo más tarde; vea 1.7.
 
----
+### 1.4.3 Asesor del Proyecto
 
-## CU-04: Gestionar capas de información en el visor de mapas
+Este rol revisa los resultados de evaluación y el historial, sin iniciar procesamientos.
 
-| | |
-|---|---|
-| **Actor** | Especialista en Gestión de Riesgos |
-| **Descripción** | Activa y desactiva las capas del visor (mapa de susceptibilidad, inventario histórico de deslizamientos, precipitación, temperatura superficial del mar y pendiente del terreno) para compararlas sobre el mismo mapa. |
-| **Precondición** | El visor está funcionando y hay capas disponibles. |
-| **Pantalla** | IU-13 del visor |
+#### 1.4.3.1 Visualizar y exportar indicadores (CU-03)
 
-### Flujo normal
+**Objetivo.** Revisar el rendimiento y guardar sus indicadores para el seguimiento.
 
-**Paso 1. El Especialista accede al visor de mapas** (como en el paso 1 de CU-02).
+**Requisitos previos.** Inicie sesión como asesor. Para una revisión completa debe existir un procesamiento finalizado.
 
-**Paso 2. Abre el panel de capas de información**, en la columna izquierda del visor, bajo
-**Capas**.
+**Pasos.**
 
-![CU-04, paso 2: panel de capas](img/cu04_paso2_panel_de_capas.png)
+1. Abra **Indicadores (CU-03)** en el panel.
+2. Revise la métrica predictiva, el tiempo y los conteos de registros.
+3. Pulse **Exportar indicadores (CSV)** y compruebe la descarga en el navegador.
 
-**Paso 3. Activa o desactiva las capas que desea ver.**
+**Captura.**
 
-**Paso 4. El sistema actualiza el mapa inmediatamente, mostrando solo las capas seleccionadas,** sin
-recargar la página. La leyenda muestra solo las capas activas. En la captura se activó **Susceptibilidad**
-y se desactivó **Precipitación mensual**, como en el escenario de aceptación.
+![Figura 15. Exportación de indicadores.](img/cu03_paso4_exportar.png)
 
-![CU-04, pasos 3 y 4: mapa actualizado](img/cu04_pasos3y4_capas_actualizadas.png)
+**Resultado esperado.** Obtiene un CSV con los indicadores mostrados.
 
-Las capas disponibles son:
+**Errores posibles.** Si ve «Rendimiento por debajo del nivel esperado», comuníquelo al Equipo Investigador indicando el indicador; vea 1.7.
 
-| Capa | Qué muestra |
-|---|---|
-| Susceptibilidad | Nivel de cada celda en el mes elegido |
-| Inventario de deslizamientos | Eventos hasta el fin del mes; los del propio mes, en rojo |
-| Precipitación mensual | Lluvia acumulada del mes por celda |
-| Anomalía de TSM (Niño 1+2) | Anomalía del mes respecto de 1991–2020 |
-| Pendiente del terreno | Pendiente media por celda |
-| Límites provinciales | Contorno de las provincias |
+#### 1.4.3.2 Auditar operaciones (CU-05)
 
-Ejemplo con la anomalía de TSM y el inventario en marzo de 2017 (El Niño costero):
+**Objetivo.** Reconstruir qué ocurrió y quién intervino en un periodo.
 
-![CU-04: capas de TSM e inventario](img/cu04_capas_tsm_e_inventario.png)
+**Requisitos previos.** Inicie sesión como asesor y disponga de un rango de fechas.
 
-### Flujo alternativo 4a: error al mostrar una capa
+**Pasos.**
 
-El sistema muestra un aviso junto al nombre de la capa y mantiene visibles las demás.
+1. Abra **Historial de operaciones (CU-05)**.
+2. Defina el rango de fechas y seleccione el tipo de evento.
+3. Pulse **Filtrar** y localice el evento por su fecha y descripción.
 
-![CU-04, flujo 4a: error de una capa](img/cu04_4a_error_de_capa.png)
+**Captura.**
 
-### Postcondición y criterio de aceptación
+![Figura 16. Historial consultado por tipo de evento.](img/cu05_pasos1a4_errores.png)
 
-El visor muestra exactamente las capas que el Especialista necesita.
+**Resultado esperado.** Se muestran las operaciones coincidentes, con su fecha y usuario cuando está identificado.
 
-- **Escenario:** al activar «Mapa de Susceptibilidad» y desactivar «Precipitación», el mapa se
-  actualiza inmediatamente y muestra solo la susceptibilidad, sin recargar la página.
+**Errores posibles.** Un filtro sin coincidencias no significa que se hayan perdido datos; amplíe las fechas o cambie el tipo; vea 1.7.
 
-**Paleta accesible.** En **Paleta** elija **Accesible** si tiene dificultad para distinguir el verde
-del rojo. El nivel Muy alta lleva además una trama, y el navegador recuerda la elección.
+## 1.5 Consultas y reportes
 
-![Paleta accesible](img/visor_paleta_accesible.png)
+En el visor, combine mes, departamento y provincia para acotar los mapas. Los niveles ordenan las celdas de menor a mayor susceptibilidad; no son porcentajes de probabilidad. Registre el mes, ámbito y capas al compartir una interpretación. En el panel, filtre el historial por fecha y tipo y use **Exportar indicadores (CSV)**. El historial y el mapa se consultan en pantalla; esta exportación se refiere solo a los indicadores.
 
----
+## 1.6 Administración funcional
 
-## CU-05: Consultar el historial de operaciones
+La interfaz no permite crear, editar o desactivar cuentas, asignar roles ni cambiar parámetros globales. Solicite esos cambios al responsable del sistema por el canal de soporte. Indique correo, rol requerido, motivo y aprobación; para una baja, indique cuándo debe dejar de usarse la cuenta. Nunca incluya claves. Los filtros del visor y los parámetros de un procesamiento son opciones de trabajo, no cambios de permisos.
 
-| | |
-|---|---|
-| **Actores** | Asesor del Proyecto y Equipo Investigador |
-| **Descripción** | Revisan el historial de operaciones del sistema. Cada registro incluye fecha y hora, tipo de evento (informativo, advertencia o error), descripción y usuario. |
-| **Precondición** | El sistema registró operaciones en su historial. |
-| **Pantalla** | IU-17 del panel de control |
+## 1.7 Mensajes y solución de problemas
 
-### Flujo normal
+| Mensaje o síntoma | Causa | Qué hacer |
+| --- | --- | --- |
+| «Correo o clave incorrectos» o cuenta bloqueada | Credenciales inválidas o cinco intentos fallidos | Revise sus datos; si está bloqueada, espere 15 minutos o solicite desbloqueo. |
+| Sesión cerrada o acceso denegado | Sesión caducada o rol sin permisos | Inicie sesión de nuevo; si persiste, confirme el rol con soporte. |
+| «Ya existe un procesamiento en curso» | Hay otro trabajo activo | Espere a que termine; no lo cancele sin coordinar con quien lo inició. |
+| «Fuente externa no disponible» | No se obtuvo el dato de la fuente | Use el archivo oficial y reanude como indica 1.4.1.1. |
+| «Datos rechazados en la verificación» | El archivo no cumple una regla indicada en pantalla | Use un archivo corregido o cancele el trabajo. |
+| «No existen datos procesados para el periodo seleccionado» | No hay un mapa para ese mes | Elija otro mes o solicite al investigador revisar el periodo. |
+| «Esta capa no está disponible; las demás siguen visibles» | Falló la carga de una capa | Pruebe de nuevo más tarde; indique la capa y el mes si reporta el error. |
+| «Rendimiento por debajo del nivel esperado» | Una métrica no alcanza su umbral | Registre el resultado y comuníquelo al Equipo Investigador. |
+| «No existen registros para el criterio seleccionado» | No hay eventos con el filtro elegido | Amplíe las fechas o cambie de tipo de evento. |
+| Error inesperado | La operación no pudo completarse | Recargue y, si persiste, registre qué hizo y el mensaje observado. |
 
-**Paso 1. El usuario accede al historial de operaciones**, en la sección **Historial de operaciones
-(CU-05)** del panel.
+## 1.8 Soporte, preguntas frecuentes y glosario
 
-**Paso 2. Aplica filtros por fecha o por tipo de evento** (informativo, advertencia o error) y pulsa
-**Filtrar**.
+**Soporte.** Contacte al responsable designado en la puesta en marcha. Indique rol, fecha y hora, tarea, pasos, mensaje y número de procesamiento si lo tiene. Adjunte una captura sin datos sensibles. El [plan de soporte](plan_soporte.md) describe el trámite y el canal alternativo para incidencias públicas.
 
-**Paso 3. El sistema muestra la lista de operaciones registradas.**
+**¿Puedo cerrar el navegador mientras se procesa?** Sí. Al volver al panel verá el trabajo activo si no ha terminado.
 
-**Paso 4. El usuario revisa los detalles de cada operación:** fecha y hora, tipo, componente,
-descripción y usuario.
+**¿Un nivel alto equivale a una alerta?** No. Es un resultado relativo útil para análisis, no una predicción ni un aviso de emergencia.
 
-![CU-05, pasos 1 a 4: historial filtrado por ERROR](img/cu05_pasos1a4_errores.png)
-
-### Flujo alternativo 3a: ningún registro cumple el filtro
-
-El sistema muestra **«No existen registros para el criterio seleccionado»**.
-
-![CU-05, flujo 3a: sin registros](img/cu05_3a_sin_registros.png)
-
-### Postcondición y criterio de aceptación
-
-El usuario verifica el estado de las operaciones del sistema. El historial no puede modificarse ni
-borrarse.
-
-- **Escenario, consulta de errores:** al filtrar por el tipo «Error», el sistema muestra todos los
-  errores registrados con su fecha, hora y descripción.
-
----
-
-## 6. Cómo interpretar los resultados
-
-- El **puntaje** ordena las celdas de mayor a menor susceptibilidad. **No es una probabilidad
-  calibrada**: un puntaje de 0.80 no significa un 80 % de probabilidad de deslizamiento.
-- Niveles: **Baja** (0 a 25 %), **Media** (25 a 50 %), **Alta** (50 a 75 %) y **Muy alta** (75 a 100 %).
-- En la validación con 2020–2026, datos que el modelo nunca vio, el AUC-ROC fue de 0.902. En muestras
-  con igual número de celdas con y sin deslizamiento, el 83 % de las celdas marcadas como susceptibles
-  tuvieron un evento (precisión 1:1 de 0.834).
-- Los deslizamientos son raros (alrededor de 1 de cada 6 300 celdas-mes en 2020–2026): la mayoría de las
-  celdas en nivel Alto o Muy alto **no** tendrán un deslizamiento ese mes. Use los niveles para priorizar
-  zonas de análisis, no como pronóstico de eventos.
-- El modelo es válido para condiciones asociadas a El Niño y a una resolución de 1 km.
-
-## 7. Mensajes del sistema
-
-| Mensaje | Caso de uso | Qué hacer |
-|---|---|---|
-| Correo o clave incorrectos / cuenta bloqueada | Acceso | Revise la clave; tras 5 intentos espere 15 minutos o pida el desbloqueo |
-| Ya existe un procesamiento en curso | CU-01, paso 3 | Espere a que termine o cancélelo |
-| Fuente externa no disponible | CU-01, flujo 4a | Cargue el archivo manualmente |
-| Datos rechazados en la verificación | CU-01, flujo 6a | Reemplace el archivo o cancele |
-| El procesamiento finalizó correctamente | CU-01, paso 10 | Consulte los mapas en el visor |
-| No existen datos procesados para el periodo seleccionado | CU-02, flujo 3a | Elija otro mes |
-| Esta capa no está disponible; las demás siguen visibles | CU-04, flujo 4a | Vuelva a activarla más tarde |
-| Rendimiento por debajo del nivel esperado | CU-03, flujo 3a | Informe al equipo para revisar el modelo |
-| No existen registros para el criterio seleccionado | CU-05, flujo 3a | Amplíe las fechas o el tipo |
-| Error del servidor (IU-18) | Cualquiera | Recargue; si persiste, avise al equipo |
-
-Las capturas se generan con `scripts/capturas_manual.py` sobre el sistema en ejecución.
+| Término | Significado |
+| --- | --- |
+| Celda | Cuadro de 1 km del área de análisis. |
+| Susceptibilidad | Puntaje relativo que ordena zonas bajo las condiciones analizadas. |
+| Anomalía de TSM | Diferencia entre la temperatura superficial del mar y su referencia climatológica. |
+| Inventario | Registro histórico de deslizamientos observados. |
+| Inferencia | Cálculo de estimaciones de susceptibilidad para los datos seleccionados. |
