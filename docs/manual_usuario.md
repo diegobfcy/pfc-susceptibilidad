@@ -252,28 +252,28 @@ Busque el lugar donde apareció el aviso. Los textos entre comillas son mensajes
 
 #### Acceso y sesión
 
-| Lo que ve | Dónde aparece y qué significa | Qué hacer |
+| Lo que ve | Dónde aparece | Qué significa y qué hacer |
 | --- | --- | --- |
-| «Correo o clave incorrectos.» | Debajo de **Entrar**, en el panel o el visor. El sistema no pudo comprobar los datos de acceso. | Revise el correo, las mayúsculas y si está usando la clave más reciente. No siga probando claves al azar. Si no recuerda la suya, pida un restablecimiento. |
-| «Cuenta bloqueada temporalmente por intentos fallidos.» | En el mismo formulario. La cuenta se bloquea después de cinco intentos fallidos. | Espere 15 minutos desde el bloqueo. Si no recuerda la clave, pida un restablecimiento en lugar de repetir los intentos. |
-| «Demasiados intentos. Espere un momento.» | Debajo de **Entrar**. Se están limitando las solicitudes de acceso. | Deje de intentar por un momento y vuelva a probar una vez. Si sigue ocurriendo, anote la hora y contacte al equipo. |
-| El navegador marca un campo sin enviar el formulario. | Junto a **Correo** o **Clave**. Falta un dato o el correo no tiene un formato válido. El texto depende del navegador. | Complete los dos campos y revise que el correo incluya su dirección completa. |
-| Vuelve a salir el formulario de acceso, o aparece un aviso de sesión, permiso o seguridad de la solicitud. | Al abrir una página o al intentar una acción. Puede faltar una sesión válida o el rol no tiene permiso para esa tarea. | Vuelva a abrir la página e inicie sesión. Si no se permite la acción, compruebe su rol en el apartado 1.2. No use la cuenta de otra persona. |
-| Abre el panel y vuelve al visor, o no ve una sección. | Al entrar con un rol que no usa esa pantalla. El Especialista pasa al visor; el Asesor no tiene acceso al visor y no inicia procesamientos. | Abra la tarea correspondiente a su rol. Si le asignaron un rol distinto del acordado, solicite su revisión. |
+| «Correo o clave incorrectos.» | Debajo de **Entrar**, en el panel o el visor. | El sistema no pudo comprobar los datos de acceso. Revise el correo, las mayúsculas y si está usando la clave más reciente. No siga probando claves al azar. Si no recuerda la suya, pida un restablecimiento. |
+| «Cuenta bloqueada temporalmente por intentos fallidos.» | Debajo de **Entrar**, en el panel o el visor. | La cuenta se bloquea después de cinco intentos fallidos. Espere 15 minutos desde el bloqueo. Si no recuerda la clave, pida un restablecimiento en lugar de repetir los intentos. |
+| «Demasiados intentos. Espere un momento.» | Debajo de **Entrar**, en el panel o el visor. | Se están limitando las solicitudes de acceso. Deje de intentar por un momento y vuelva a probar una vez. Si sigue ocurriendo, anote la hora y contacte al equipo. |
+| El navegador marca un campo sin enviar el formulario. | Junto a **Correo** o **Clave**. | Falta un dato o el correo no tiene un formato válido. El texto depende del navegador. Complete los dos campos y revise que el correo incluya su dirección completa. |
+| Vuelve a salir el formulario de acceso, o aparece un aviso de sesión, permiso o seguridad de la solicitud. | En la página que abre o donde intenta una acción. | Puede faltar una sesión válida o el rol no tiene permiso para esa tarea. Vuelva a abrir la página e inicie sesión. Si no se permite la acción, compruebe su rol en el apartado 1.2. No use la cuenta de otra persona. |
+| Abre el panel y vuelve al visor, o no ve una sección. | En la pantalla que se abre después de entrar. | El Especialista pasa al visor; el Asesor no tiene acceso al visor y no inicia procesamientos. Abra la tarea correspondiente a su rol. Si le asignaron un rol distinto del acordado, solicite su revisión. |
 
 #### Panel: iniciar un procesamiento
 
-Estos avisos aparecen en **Confirmar inicio del procesamiento**, después de pulsar **Confirmar e iniciar**, excepto los avisos del navegador, que aparecen junto a los campos del formulario.
+La ventana **Confirmar inicio del procesamiento** muestra estos avisos después de pulsar **Confirmar e iniciar**. Los avisos del navegador aparecen antes, junto a los campos del formulario.
 
-| Lo que ve | Qué significa y qué hacer |
-| --- | --- |
-| El navegador marca **Desde** o **Hasta**. | Complete ambas fechas y use días entre el 1 de enero de 2000 y el 31 de diciembre de 2026, que son los límites del formulario. Que una fecha se pueda elegir no significa que existan datos para ella. |
-| «fecha_hasta anterior a fecha_desde», o una fecha inválida o fuera del periodo. | Pulse **Volver** y corrija las fechas. **Hasta** debe ser igual o posterior a **Desde**. Revise el resumen antes de confirmar de nuevo. |
-| «Ya existe un procesamiento en curso; espere a que termine o cancélelo.» | El sistema acepta un solo trabajo activo. Consulte su número y estado. Espere a que termine o coordine con quien lo inició antes de cancelarlo. |
-| «no hay datos verificados para la ventana» | No hay datos revisados para entrenar en esas fechas. Compruebe la ingesta del periodo y sus rechazos. Si faltan datos, haga primero la ingesta o elija un periodo que ya esté preparado. |
-| «el departamento no pertenece a la macrorregión» | La zona no es válida para el modelo. Pulse **Volver**, elija un departamento de **Zona geográfica** o use **Macrorregión norte completa**. |
-| «la versión del modelo no se puede aplicar» o «el SHA-256 del artefacto no coincide» | El sistema no puede usar el modelo o no puede comprobar que su archivo esté intacto. No intente saltar esa comprobación. Informe al Equipo Investigador con tipo, fechas y zona para que revise la versión y el archivo del modelo. |
-| Otro aviso sobre un campo inválido, faltante o no permitido. | Revise **Tipo**, fechas y zona en el formulario. Si el aviso vuelve a aparecer con datos válidos, copie el texto exacto: el Equipo Investigador necesita saber qué campo o solicitud se rechazó. |
+| Lo que ve | Dónde aparece | Qué significa y qué hacer |
+| --- | --- | --- |
+| El navegador marca **Desde** o **Hasta**. | Junto a la fecha marcada. | Complete ambas fechas y use días entre el 1 de enero de 2000 y el 31 de diciembre de 2026, que son los límites del formulario. Que una fecha se pueda elegir no significa que existan datos para ella. |
+| «fecha_hasta anterior a fecha_desde», o una fecha inválida o fuera del periodo. | En la ventana de confirmación. | Pulse **Volver** y corrija las fechas. **Hasta** debe ser igual o posterior a **Desde**. Revise el resumen antes de confirmar de nuevo. |
+| «Ya existe un procesamiento en curso; espere a que termine o cancélelo.» | En la ventana de confirmación. | El sistema acepta un solo trabajo activo. Consulte su número y estado. Espere a que termine o coordine con quien lo inició antes de cancelarlo. |
+| «no hay datos verificados para la ventana» | En la ventana de confirmación, al iniciar un entrenamiento. | No hay datos revisados para entrenar en esas fechas. Compruebe la ingesta del periodo y sus rechazos. Si faltan datos, haga primero la ingesta o elija un periodo que ya esté preparado. |
+| «el departamento no pertenece a la macrorregión» | En la ventana de confirmación, al iniciar una inferencia. | La zona no es válida para el modelo. Pulse **Volver**, elija un departamento de **Zona geográfica** o use **Macrorregión norte completa**. |
+| «la versión del modelo no se puede aplicar» o «el SHA-256 del artefacto no coincide» | En la ventana de confirmación, al iniciar una inferencia. | El sistema no puede usar el modelo o no puede comprobar que su archivo esté intacto. No intente saltar esa comprobación. Informe al Equipo Investigador con tipo, fechas y zona para que revise la versión y el archivo del modelo. |
+| Otro aviso sobre un campo inválido, faltante o no permitido. | En la ventana de confirmación. | Revise **Tipo**, fechas y zona en el formulario. Si el aviso vuelve a aparecer con datos válidos, copie el texto exacto: el Equipo Investigador necesita saber qué campo o solicitud se rechazó. |
 
 #### Panel: trabajo en espera, carga de archivos y estado final
 
@@ -285,32 +285,33 @@ Estos avisos aparecen en **Confirmar inicio del procesamiento**, después de pul
 2. Pulse **Cargar archivo y reanudar**. Si aparece «Archivo … registrado … La verificación se reanuda», el archivo fue recibido y se vuelve a revisar. Todavía no significa que el procesamiento terminó.
 3. Lea el nuevo estado. Si vuelve a **EN_ESPERA**, revise el motivo nuevo. Si aparece **COMPLETADO**, el trabajo terminó. Use **Ver en el visor** para revisar los mapas si el trabajo fue una inferencia.
 
-| Lo que ve | Dónde aparece y qué hacer |
-| --- | --- |
-| «Archivo rechazado: el tipo o el contenido no está permitido.» | Debajo del formulario de carga. Vuelva a descargar el archivo en el formato admitido y compruebe que abre correctamente; un nombre con la extensión correcta no basta. |
-| «Archivo rechazado: supera el límite de 2 GB.» | Debajo del formulario de carga. Busque una descarga oficial que no supere el límite y que conserve la cobertura requerida. Si no existe, consulte al equipo antes de dividir el archivo o cancelar. |
-| El navegador pide seleccionar un archivo, o aparece «se requieren archivo y fuente válidos». | Junto al campo o debajo del formulario. Seleccione el archivo y compruebe que **Fuente** corresponde al aviso antes de enviar. |
-| «el procesamiento no está esperando archivos», «el procesamiento ya terminó» o aviso de que no se encontró el trabajo. | Debajo de la carga o en el aviso general al consultar o cancelar. El estado pudo cambiar desde que abrió el panel. Compruebe el número y vuelva a consultar el trabajo; no envíe el archivo a otro procesamiento. |
-| **FALLIDO** | En la línea de estado. El trabajo terminó sin éxito. Anote su número y fase y busque el error en **Historial de operaciones**. Si no identifica la causa, informe al equipo antes de repetirlo con los mismos datos. |
-| **CANCELADO** o «¿Cancelar el procesamiento?» | En la línea de estado o en la ventana de confirmación, respectivamente. Use **No, continuar** para conservar el trabajo, o **Sí, cancelar** para detenerlo. Los resultados parciales no se guardan y la cancelación se anota en el historial. |
+| Lo que ve | Dónde aparece | Qué significa y qué hacer |
+| --- | --- | --- |
+| «Archivo rechazado: el tipo o el contenido no está permitido.» | Debajo del formulario de carga. | Vuelva a descargar el archivo en el formato admitido y compruebe que abre correctamente; un nombre con la extensión correcta no basta. |
+| «Archivo rechazado: supera el límite de 2 GB.» | Debajo del formulario de carga. | Busque una descarga oficial que no supere el límite y que conserve la cobertura requerida. Si no existe, consulte al equipo antes de dividir el archivo o cancelar. |
+| El navegador pide seleccionar un archivo, o aparece «se requieren archivo y fuente válidos». | Junto a **Archivo** o debajo del formulario de carga. | Seleccione el archivo y compruebe que **Fuente** corresponde al aviso antes de enviar. |
+| «el procesamiento no está esperando archivos», «el procesamiento ya terminó» o aviso de que no se encontró el trabajo. | Debajo de la carga o en el aviso general al consultar o cancelar. | El estado pudo cambiar desde que abrió el panel. Compruebe el número y vuelva a consultar el trabajo; no envíe el archivo a otro procesamiento. |
+| **FALLIDO** | En la línea de estado. | El trabajo terminó sin éxito. Anote su número y fase y busque el error en **Historial de operaciones**. Si no identifica la causa, informe al equipo antes de repetirlo con los mismos datos. |
+| «¿Cancelar el procesamiento?» | En la ventana de confirmación de cancelación. | Use **No, continuar** para conservar el trabajo, o **Sí, cancelar** para detenerlo. Los resultados parciales no se guardan. |
+| **CANCELADO** | En la línea de estado. | El trabajo se detuvo. Puede consultar la cancelación en **Historial de operaciones**. |
 
 #### Panel: indicadores e historial
 
-| Lo que ve | Dónde aparece y qué hacer |
-| --- | --- |
-| «Rendimiento por debajo del nivel esperado» | Junto al indicador que necesita revisión. Puede significar que el modelo distingue peor las zonas (AUC-ROC menor que 0,80), que los datos cambiaron respecto a la referencia (PSI desde 0,25) o que se rechazó más del 5 % de registros. Anote el indicador, su valor y la versión o el periodo si los conoce. Comparta el CSV con el equipo para que revise la causa. El aviso no significa por sí solo que el trabajo falló. |
-| «No existen registros para el criterio seleccionado.» | Debajo de los filtros del historial. No se encontraron eventos que coincidan. Revise **Desde** y **Hasta**, amplíe las fechas o elija **Todos** en **Tipo** y pulse **Filtrar**. No supone que se borraron registros. |
-| Fecha o tipo inválido al filtrar. | En el aviso general del panel. Corrija las fechas o limpie el filtro, seleccione un tipo de la lista y pulse **Filtrar** de nuevo. Si ocurre con valores válidos, envíe al equipo los filtros utilizados. |
-| No aparecen indicadores o no encuentra el CSV. | En el panel no siempre hay un aviso específico. Compruebe que se muestran resultados antes de exportar. Busque `indicadores_` en **Descargas** del navegador; si el archivo no aparece, revise si el navegador bloqueó la descarga. |
+| Lo que ve | Dónde aparece | Qué significa y qué hacer |
+| --- | --- | --- |
+| «Rendimiento por debajo del nivel esperado» | Junto al indicador que necesita revisión. | Puede significar que el modelo distingue peor las zonas (AUC-ROC menor que 0,80), que los datos cambiaron respecto a la referencia (PSI desde 0,25) o que se rechazó más del 5 % de registros. Anote el indicador, su valor y la versión o el periodo si los conoce. Comparta el CSV con el equipo para que revise la causa. El aviso no significa por sí solo que el trabajo falló. |
+| «No existen registros para el criterio seleccionado.» | Debajo de los filtros del historial. | No se encontraron eventos que coincidan. Revise **Desde** y **Hasta**, amplíe las fechas o elija **Todos** en **Tipo** y pulse **Filtrar**. No supone que se borraron registros. |
+| Fecha o tipo inválido al filtrar. | En el aviso general del panel. | Corrija las fechas o limpie el filtro, seleccione un tipo de la lista y pulse **Filtrar** de nuevo. Si ocurre con valores válidos, envíe al equipo los filtros utilizados. |
+| No aparecen indicadores o no encuentra el CSV. | En la sección de indicadores o en **Descargas** del navegador. Puede no haber un aviso. | Compruebe que se muestran resultados antes de exportar. Busque `indicadores_` en **Descargas**; si el archivo no aparece, revise si el navegador bloqueó la descarga. |
 
 #### Visor: mes, capas y detalle del mapa
 
-| Lo que ve | Dónde aparece y qué hacer |
-| --- | --- |
-| «No existen datos procesados para el periodo seleccionado» | Debajo de **Periodo (mes)**. No hay resultados publicados para ese mes. Elija otro mes o pida al Equipo Investigador que compruebe si terminó la inferencia. La ausencia de datos no equivale a un nivel bajo de susceptibilidad. |
-| «Esta capa no está disponible; las demás siguen visibles.» | Debajo de la capa que falló en **Capas**. Puede seguir con las otras, pero no interprete la capa que no cargó. Desactive y vuelva a activar esa capa una vez. Si no carga, indique su nombre, mes y zona al reportar. |
-| Pulsa el mapa y no aparece el detalle. | Puede no salir un mensaje si el punto no tiene datos para ese mes. Pulse dentro de una zona coloreada y confirme que la capa de susceptibilidad está activa. Si otras celdas responden pero esa no, anote el lugar y el mes. |
-| Aviso de periodo o dato inválido. | En el aviso general del visor. Vuelva a elegir el mes en **Periodo (mes)** y revise el departamento y la provincia. Si sigue apareciendo con una selección válida, copie el mensaje y los filtros. |
+| Lo que ve | Dónde aparece | Qué significa y qué hacer |
+| --- | --- | --- |
+| «No existen datos procesados para el periodo seleccionado» | Debajo de **Periodo (mes)**. | No hay resultados publicados para ese mes. Elija otro mes o pida al Equipo Investigador que compruebe si terminó la inferencia. La ausencia de datos no equivale a un nivel bajo de susceptibilidad. |
+| «Esta capa no está disponible; las demás siguen visibles.» | Debajo de la capa que falló en **Capas**. | Puede seguir con las otras, pero no interprete la capa que no cargó. Desactive y vuelva a activar esa capa una vez. Si no carga, indique su nombre, mes y zona al reportar. |
+| Pulsa el mapa y no aparece el detalle. | En el mapa, al pulsar un punto. Puede no haber un aviso. | El punto puede no tener datos para ese mes. Pulse dentro de una zona coloreada y confirme que la capa de susceptibilidad está activa. Si otras celdas responden pero esa no, anote el lugar y el mes. |
+| Aviso de periodo o dato inválido. | En el aviso general del visor. | Vuelva a elegir el mes en **Periodo (mes)** y revise el departamento y la provincia. Si sigue apareciendo con una selección válida, copie el mensaje y los filtros. |
 
 #### Problemas de conexión y otros avisos
 
