@@ -4,66 +4,68 @@ Sistema de estimación de susceptibilidad a deslizamientos por El Niño · versi
 
 ## 4.1 Objetivo y periodo de soporte
 
-El sistema es una prueba de concepto académica: estima susceptibilidad mensual en celdas de 1 km en el norte del Perú, se ejecuta por lotes y se usa en sesiones programadas. El soporte del Equipo Investigador abarca desde la puesta en marcha del piloto hasta el cierre técnico del hito 3 (semana 15 según el cronograma). El informe, el respaldo final y el acta se entregan en la semana 16; esa entrega no amplía el periodo de soporte.
+El sistema se creó para probar un método de estimación de deslizamientos en el norte del Perú. Muestra qué zonas de 1 km son más propensas a deslizamientos en un mes dado, pero no dice cuándo ocurrirá uno. Los datos se procesan en momentos definidos, no de forma continua, y los resultados se revisan en sesiones programadas.
 
-Se atienden consultas, incidencias y correcciones que permitan validar los casos CU-01 a CU-05: procesamiento, mapas, indicadores, capas e historial. El alcance comprende el VPS de validación y la estación de entrenamiento. Durante la congelación del código solo se consideran correcciones necesarias para la validación, con autorización y prueba de reversión; las mejoras se registran como trabajo futuro.
+El Equipo Investigador atiende dudas, corrige fallas y ayuda a recuperar el entorno desde el inicio del piloto hasta el cierre técnico del hito 3 (semana 15 del cronograma). En la semana 16 se entregan el informe, el respaldo final y el acta. Esa semana es para documentar el cierre, no para extender la atención.
 
-Quedan fuera el soporte posterior al cierre, la producción institucional, la operación 24/7, el monitoreo en campo, la emisión de alertas, la respuesta a emergencias, la integración con CENEPRED o INDECI, y la actualización autónoma del modelo. Tampoco se garantiza la disponibilidad de las fuentes externas.
+La atención cubre el procesamiento, los mapas, los indicadores, las capas del visor y el historial (CU-01 a CU-05), tanto en el servidor virtual de validación (VPS) como en el equipo usado para entrenar el modelo. Una vez fijada la versión final, solo se corrigen fallas que impidan validarla. Se pide autorización y se comprueba que sea posible volver a la versión anterior, para no perder un estado que ya funcionaba. Las mejoras se anotan para un proyecto futuro.
 
-Base del plan: informe del proyecto, §1.4.2 (alcance y exclusiones), política de respaldo y restauración (tabla 75 y tabla de RPO/RTO), §3.2 (implantación formal) y §3.3 (cierre).
+No hay soporte después del cierre, guardia permanente, monitoreo en campo, alertas ni atención de emergencias. Tampoco se contempla integrar el sistema con CENEPRED o INDECI ni actualizar el modelo de forma automática. El piloto sirve para validar el método, no para operar un servicio institucional. La disponibilidad de los datos externos depende de sus proveedores.
+
+Fuente: informe del proyecto, secciones 1.4.2 (alcance), 3.2 (puesta en marcha) y 3.3 (cierre), y política de respaldo y recuperación (tabla 75 y tabla de RPO/RTO).
 
 ## 4.2 Responsables
 
 | Función | Responsable en el piloto | Deber |
 | --- | --- | --- |
-| Atención y operación técnica | Equipo Investigador | Recibir y registrar casos, diagnosticar, respaldar, restaurar y aplicar cambios autorizados en validación. |
-| Validación funcional | Especialista en Gestión de Riesgos | Comunicar el impacto en las sesiones, validar la función afectada y aprobar los umbrales cuando corresponda. |
-| Autorización y cierre académico | Asesor del Proyecto | Acordar con el equipo los cambios que afecten la entrega o sus hitos y revisar pendientes y evidencias de cierre. |
+| Atención y operación técnica | Equipo Investigador | Recibe los reportes y prueba las soluciones porque conoce y opera el entorno de validación. También hace los respaldos. |
+| Validación funcional | Especialista en Gestión de Riesgos | Confirma si puede completar la tarea y si el resultado es adecuado para la validación. Si corresponde, aprueba los límites que separan los niveles de susceptibilidad. |
+| Autorización y cierre académico | Asesor del Proyecto | Acuerda con el equipo los cambios que afecten la entrega o sus plazos y revisa los pendientes del cierre. Así no se altera lo acordado sin dejar constancia. |
 
-Antes de las sesiones, el Equipo Investigador confirma el contacto principal, su respaldo dentro del equipo y el canal privado con el Especialista y el Asesor. No se presupone una mesa de ayuda ni un operador institucional permanente.
+Antes de la primera sesión, el Equipo Investigador debe comunicar quién recibe los reportes, quién lo reemplaza si no está disponible y qué correo privado se usará. Así el Especialista y el Asesor saben a quién acudir sin depender de una mesa de ayuda institucional.
 
 ## 4.3 Canal de reporte
 
-Durante una sesión, comunique el incidente al Equipo Investigador para que lo registre. Fuera de la sesión, use el correo privado acordado para el piloto. La bitácora de incidencias es el registro de atención; publicar un defecto no abre un compromiso de soporte. No comparta credenciales, cookies, registros sin depurar ni datos restringidos.
+Si ocurre un problema durante la sesión, avise al Equipo Investigador en ese momento. Fuera de la sesión, escriba al correo privado comunicado para el piloto. El equipo registra el problema y devuelve un número de caso para que pueda hacer seguimiento. No publique contraseñas, datos privados ni capturas que los muestren.
 
-Incluya fecha, hora y zona horaria, rol, versión o entorno, pantalla, pasos, resultado esperado, mensaje observado e impacto. Para un procesamiento, agregue el identificador, periodo y ámbito; para el visor, incluya capa y mes. Adjunte evidencia anonimizada. El contacto devuelve un número de caso.
+Indique fecha y hora, rol, pantalla, qué hizo, qué esperaba y qué ocurrió. Diga si el problema le impidió seguir. Si era un procesamiento, agregue el número de ejecución, las fechas y la zona; si era un mapa, indique la capa y el mes. Incluya la versión si la conoce y una captura sin datos privados si ayuda a entender el problema. Con esos datos el equipo puede repetir los pasos y buscar la causa.
 
 ## 4.4 Severidad y SLA
 
-El informe no establece un SLA contractual ni una guardia. Los siguientes objetivos de primera respuesta sirven para coordinar el piloto y se confirman al programar cada sesión; no son plazos garantizados de resolución.
+La severidad indica qué tan grave es el problema. Un SLA es un acuerdo sobre el nivel de servicio, que puede fijar plazos de atención. El proyecto no tiene ese acuerdo ni una guardia permanente. Como el piloto funciona por sesiones, la tabla propone cuándo dar una primera respuesta. Esa respuesta indica qué se hará y cuándo habrá noticias; no significa que el problema ya esté resuelto.
 
 | Severidad | Definición y ejemplo | Primera respuesta propuesta |
 | --- | --- | --- |
-| Crítica | No se puede continuar una sesión o cumplir un hito; se sospecha pérdida de datos, resultados inválidos o exposición de credenciales. | Durante la sesión si se detecta allí; fuera de sesión, en la siguiente revisión acordada con el equipo. |
-| Media | Una tarea falla pero puede ejecutarse otra, o hay una alternativa válida; por ejemplo, carga manual cuando falla una fuente y se dispone del archivo admitido. | Antes de repetir la tarea afectada en la siguiente sesión acordada. |
-| Baja | Consulta o defecto que no bloquea la validación. | En la siguiente revisión de pendientes, a más tardar durante el cierre técnico. |
+| Crítica | La validación no puede seguir o no se puede confiar en los datos, los resultados o la seguridad de las cuentas. | En la misma sesión si se detecta allí. Fuera de la sesión, en la próxima revisión acordada. |
+| Media | Una tarea falla, pero se puede seguir con otra o usar una alternativa válida. Por ejemplo, se puede cargar un archivo aceptado si falla una fuente de datos. | Antes de volver a intentar la tarea en la siguiente sesión. |
+| Baja | Una duda o un detalle que no impide trabajar; por ejemplo, un texto poco claro. | En la siguiente revisión de pendientes y, como máximo, en el cierre técnico. |
 
-Para una incidencia crítica, el Equipo Investigador informa al Especialista y al Asesor y acuerda si se continúa, se restaura o se reprograma. El RTO de 4 h es un objetivo de recuperación ante la pérdida del VPS, no un SLA de atención.
+Al programar la sesión se acuerda también cuándo se revisarán los avisos entre sesiones. Si el problema es crítico, el Equipo Investigador informa al Especialista y al Asesor para decidir si se puede seguir, si hay que usar un respaldo o si se cambia la fecha. Las 4 horas de recuperación del servidor son un objetivo técnico, no un plazo para responder un mensaje.
 
 ## 4.5 Procedimiento de atención
 
-1. Registre número, fecha, impacto, severidad, alcance y responsable del caso.
-2. Distinga un fallo de acceso, procesamiento, fuente externa o consulta de resultados. Registre el identificador del trabajo, el periodo y la versión del modelo cuando apliquen. No presente como válido un resultado incompleto o dudoso.
-3. Reproduzca el fallo en un entorno aislado y comunique el diagnóstico inicial y la próxima actualización. Si falla una fuente, use solo una carga manual admitida y verificada o reprograme la corrida.
-4. Si requiere cambio, prepare la corrección y su reversión, pruébelas y acuerde la intervención antes de aplicarla en el VPS de validación. Compruebe salud, acceso y la tarea afectada con el rol correspondiente.
-5. Registre evidencia, causa, versión y conformidad. Cierre el caso o deje documentados su impacto, alternativa y estado al cierre del piloto.
+1. **Registrar el caso.** Anotar el número, la fecha, la gravedad y quién lo atenderá. Así se puede seguir el problema hasta el cierre.
+2. **Buscar la causa.** Repetir los pasos en un entorno de prueba para no afectar la sesión. Comunicar el diagnóstico inicial y cuándo habrá noticias. Si falla una fuente, usar solo un archivo permitido y verificado o reprogramar el procesamiento; un resultado incompleto no debe presentarse como válido.
+3. **Probar la solución.** Antes de cambiar el servidor de validación, probar tanto la corrección como la forma de deshacerla. Acordar cuándo aplicarla para no interrumpir una sesión.
+4. **Confirmar y cerrar.** Comprobar que el sistema funciona y pedir a quien reportó el problema que repita la tarea. Registrar lo ocurrido, la versión y la evidencia. Si no se resuelve antes del cierre, dejar por escrito qué falta y qué alternativa existe.
 
 ## 4.6 Mantenimiento preventivo
 
-| Tarea | Momento previsto | Responsable | Evidencia |
+| Tarea | Cuándo | Responsable | Por qué |
 | --- | --- | --- | --- |
-| Respaldar la base y preservar los artefactos D2 necesarios para reproducir la corrida | En días con cambios; antes de cada hito o cambio de esquema, e inmediatamente al aprobar umbrales | Equipo Investigador | Huellas SHA-256, versión y ubicación de copias. |
-| Comprobar HTTPS, salud, cola, espacio y acceso por rol | Antes de cada sesión o lote y después de desplegar | Equipo Investigador | Prueba de humo y resultado registrado. |
-| Ensayar una restauración aislada | Hitos de las semanas 8 y 15, según el informe | Equipo Investigador | Tiempo, conteos, integridad y consulta de muestra. |
-| Verificar las fuentes, datos de referencia y artefacto del modelo | Antes de la corrida que los utiliza | Equipo Investigador | Fuente, periodo, versión, huella y resultado de validación. |
+| Hacer una copia de la base y guardar los archivos del procesamiento (D2). | En días con cambios, antes de cada hito o cambio en la estructura de la base y apenas se aprueben los límites de susceptibilidad. | Equipo Investigador | Evita perder trabajo y conserva lo que el Especialista aprobó. |
+| Revisar conexión segura, acceso, espacio libre y trabajos pendientes. | Antes de cada sesión o procesamiento, y después de instalar un cambio. | Equipo Investigador | Permite detectar fallas antes de que interrumpan una tarea. |
+| Probar una copia en un entorno separado. | En los hitos de las semanas 8 y 15, según el informe. | Equipo Investigador | Confirma que la copia sirve sin poner en riesgo los datos en uso. Se anota cuánto tardó la recuperación. |
+| Revisar las fuentes, los datos de referencia y la versión del modelo. | Antes del procesamiento que los usará. | Equipo Investigador | Evita generar mapas con datos incompletos o con el modelo equivocado. |
 
-La política del informe prevé un RPO de hasta 24 h para trabajo reproducible y un respaldo inmediato de umbrales aprobados. Las copias externas y la custodia de D2 se gestionan según esa política; no se presume que los scripts de base de datos automaticen por sí solos esa replicación ni la recuperación de D2.
+Si se pierde el servidor, la meta es recuperar el entorno en 4 horas (RTO) y no perder más de 24 horas de trabajo que pueda repetirse (RPO). Los límites aprobados se respaldan de inmediato porque no basta con volver a ejecutar el sistema para recuperar esa aprobación. Las copias externas y los archivos D2 se gestionan aparte: restaurar la base de datos no recupera esos archivos.
 
 Véase el [manual técnico de instalación](manual_tecnico.md) para respaldo y recuperación y el [manual de mantenimiento](manual_mantenimiento.md) para pruebas y cambios de código.
 
-## 4.7 Entrega y cierre del piloto
+## 4.7 Transferencia al término del soporte
 
-1. El Equipo Investigador prepara el repositorio y la versión final, el inventario y las huellas de imágenes, modelo y datos, los manuales, las evidencias de validación, el respaldo final verificable y los casos abiertos.
-2. Como verificación documental, una persona distinta de los autores ensaya la instalación en un entorno limpio y ejecuta una tarea del manual de usuario. Registre la evidencia o deje explícito que la verificación no se realizó; no equivale a aceptar una operación institucional.
-3. Registre en el acta la conformidad funcional, los pendientes, la custodia del respaldo y la decisión sobre accesos y el VPS. Entregue por un canal privado solo los accesos autorizados y revoque los temporales que ya no se necesiten. No incluya claves en el acta.
-4. Formalice la entrega con el Acta de Conformidad y Cierre del Proyecto, para firma del Equipo Investigador, el Especialista y el Asesor. Cualquier continuidad posterior requiere un acuerdo separado que defina propietario, recursos, canales y compromisos; no se transfiere una obligación de operación o atención con esta entrega.
+La entrega sirve para conservar y consultar lo que se validó. No se asigna un operador permanente porque el proyecto no contempla prestar el servicio después del cierre. El acta debe indicar quién recibe y guarda los documentos y el respaldo. Si se decide seguir operando el sistema, se necesita otro acuerdo que defina quién lo administra, con qué recursos y cómo atiende los problemas.
+
+1. **Preparar la entrega.** El Equipo Investigador reúne el código y su versión final, el inventario con las huellas para comprobar que las imágenes de instalación, el modelo y los datos siguen intactos, los manuales, los resultados de las pruebas, el respaldo y los casos pendientes. Así queda constancia de qué versión se validó y qué faltó resolver.
+2. **Comprobar los manuales.** Una persona ajena a su elaboración instala el sistema en un entorno limpio y realiza una tarea siguiendo solo las instrucciones. Esta prueba permite detectar pasos que se dieron por sabidos. Si no se realiza, se anota como pendiente.
+3. **Dejar constancia y cerrar los accesos.** El Equipo Investigador, el Especialista y el Asesor firman el acta de cierre. Allí se registra quién guarda el respaldo, qué pasa con el servidor y qué accesos se conservan. Los accesos autorizados se entregan en privado y los temporales que ya no hagan falta se retiran. Las contraseñas no se escriben en el acta.
