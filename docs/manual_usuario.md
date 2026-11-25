@@ -261,9 +261,17 @@ Busque el lugar donde apareció el aviso. Los textos entre comillas son mensajes
 | Vuelve a salir el formulario de acceso, o aparece un aviso de sesión, permiso o seguridad de la solicitud. | En la página que abre o donde intenta una acción. | Puede faltar una sesión válida o el rol no tiene permiso para esa tarea. Vuelva a abrir la página e inicie sesión. Si no se permite la acción, compruebe su rol en el apartado 1.2. No use la cuenta de otra persona. |
 | Abre el panel y vuelve al visor, o no ve una sección. | En la pantalla que se abre después de entrar. | El Especialista pasa al visor; el Asesor no tiene acceso al visor y no inicia procesamientos. Abra la tarea correspondiente a su rol. Si le asignaron un rol distinto del acordado, solicite su revisión. |
 
+<figure>
+
+**Figura 17.** El aviso de correo o clave incorrectos aparece debajo de **Entrar**.
+
+![Formulario de acceso con el mensaje de error debajo del botón.](img/iu03_error_acceso.png)
+
+</figure>
+
 #### Panel: iniciar un procesamiento
 
-La ventana **Confirmar inicio del procesamiento** muestra estos avisos después de pulsar **Confirmar e iniciar**. Los avisos del navegador aparecen antes, junto a los campos del formulario.
+La ventana **Confirmar inicio del procesamiento** muestra estos avisos después de pulsar **Confirmar e iniciar**. Los avisos del navegador aparecen antes, junto a los campos del formulario. Consulte las figuras 2 y 3 del apartado 1.4.1.1 para ubicar las fechas y la ventana de confirmación.
 
 | Lo que ve | Dónde aparece | Qué significa y qué hacer |
 | --- | --- | --- |
@@ -295,6 +303,24 @@ La ventana **Confirmar inicio del procesamiento** muestra estos avisos después 
 | «¿Cancelar el procesamiento?» | En la ventana de confirmación de cancelación. | Use **No, continuar** para conservar el trabajo, o **Sí, cancelar** para detenerlo. Los resultados parciales no se guardan. |
 | **CANCELADO** | En la línea de estado. | El trabajo se detuvo. Puede consultar la cancelación en **Historial de operaciones**. |
 
+<figure>
+
+**Figura 18.** Cuando una fuente no está disponible, el aviso aparece junto al estado del procesamiento.
+
+![Panel de procesamiento en espera por una fuente no disponible.](img/cu01_4a_alerta_fuente.png)
+
+</figure>
+
+Para ubicar los campos de carga y ver un ejemplo de datos rechazados, consulte las figuras 6 y 7 del apartado 1.4.1.1.
+
+<figure>
+
+**Figura 19.** El panel pide confirmar antes de cancelar el procesamiento.
+
+![Ventana de confirmación con las opciones de continuar o cancelar.](img/cu01_6a_confirmar_cancelacion.png)
+
+</figure>
+
 #### Panel: indicadores e historial
 
 | Lo que ve | Dónde aparece | Qué significa y qué hacer |
@@ -304,6 +330,22 @@ La ventana **Confirmar inicio del procesamiento** muestra estos avisos después 
 | Fecha o tipo inválido al filtrar. | En el aviso general del panel. | Corrija las fechas o limpie el filtro, seleccione un tipo de la lista y pulse **Filtrar** de nuevo. Si ocurre con valores válidos, envíe al equipo los filtros utilizados. |
 | No aparecen indicadores o no encuentra el CSV. | En la sección de indicadores o en **Descargas** del navegador. Puede no haber un aviso. | Compruebe que se muestran resultados antes de exportar. Busque `indicadores_` en **Descargas**; si el archivo no aparece, revise si el navegador bloqueó la descarga. |
 
+<figure>
+
+**Figura 20.** El aviso de rendimiento aparece junto al indicador que necesita revisión.
+
+![Indicador marcado con un aviso de rendimiento.](img/cu03_3a_alerta.png)
+
+</figure>
+
+<figure>
+
+**Figura 21.** El historial avisa debajo de los filtros cuando no encuentra registros.
+
+![Historial sin resultados para los filtros seleccionados.](img/cu05_3a_sin_registros.png)
+
+</figure>
+
 #### Visor: mes, capas y detalle del mapa
 
 | Lo que ve | Dónde aparece | Qué significa y qué hacer |
@@ -312,6 +354,24 @@ La ventana **Confirmar inicio del procesamiento** muestra estos avisos después 
 | «Esta capa no está disponible; las demás siguen visibles.» | Debajo de la capa que falló en **Capas**. | Puede seguir con las otras, pero no interprete la capa que no cargó. Desactive y vuelva a activar esa capa una vez. Si no carga, indique su nombre, mes y zona al reportar. |
 | Pulsa el mapa y no aparece el detalle. | En el mapa, al pulsar un punto. Puede no haber un aviso. | El punto puede no tener datos para ese mes. Pulse dentro de una zona coloreada y confirme que la capa de susceptibilidad está activa. Si otras celdas responden pero esa no, anote el lugar y el mes. |
 | Aviso de periodo o dato inválido. | En el aviso general del visor. | Vuelva a elegir el mes en **Periodo (mes)** y revise el departamento y la provincia. Si sigue apareciendo con una selección válida, copie el mensaje y los filtros. |
+
+<figure>
+
+**Figura 22.** Si no hay datos para el mes elegido, el aviso aparece debajo de **Periodo (mes)**.
+
+![Visor con el aviso de periodo sin datos.](img/cu02_3a_sin_datos.png)
+
+</figure>
+
+<figure>
+
+**Figura 23.** Si una capa no carga, el aviso aparece debajo de esa capa.
+
+![Visor con un aviso debajo de la capa pendiente.](img/cu04_4a_error_de_capa.png)
+
+</figure>
+
+La figura 10 del apartado 1.4.1.4 muestra cómo se ve el detalle cuando el punto seleccionado sí tiene datos.
 
 #### Problemas de conexión y otros avisos
 
