@@ -259,7 +259,7 @@ La interfaz no permite crear, editar o desactivar cuentas, asignar roles ni camb
 
 ## 1.8 Soporte, preguntas frecuentes y glosario
 
-**Soporte.** Contacte al responsable designado en la puesta en marcha. Indique rol, fecha y hora, tarea, pasos, mensaje y número de procesamiento si lo tiene. Adjunte una captura sin datos sensibles. El [plan de soporte](plan_soporte.md) describe el trámite y el canal alternativo para incidencias públicas.
+**Soporte durante el piloto.** Comunique el problema al Equipo Investigador durante la sesión de validación o use el correo privado acordado para el piloto. Indique rol, fecha y hora, tarea, pasos, mensaje y número de procesamiento si lo tiene. Adjunte una captura sin datos sensibles. El [plan de soporte](plan_soporte.md) describe la atención hasta el cierre técnico; no se ofrece soporte posterior como parte del proyecto.
 
 **¿Puedo cerrar el navegador mientras se procesa?** Sí. Al volver al panel verá el trabajo activo si no ha terminado.
 

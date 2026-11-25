@@ -167,11 +167,11 @@ Use `docker compose logs --tail=100 proxy app worker worker-m2 db`. Si salud fun
 
 ## 2.8 Respaldo, restauración y problemas comunes
 
-Programe un respaldo diario y conserve copias externas protegidas siguiendo la regla 3-2-1. El objetivo operativo propuesto es perder como máximo 24 horas de datos y recuperar en 4 horas, sujeto a una prueba de recuperación. Respalde D2 de forma consistente con D1. Las claves se custodian por separado.
+Para el piloto, la política del [plan de soporte](plan_soporte.md) prevé respaldar en días con cambios, antes de cada hito o cambio de esquema e inmediatamente al aprobar umbrales. Conserve copias externas protegidas siguiendo la regla 3-2-1 y custodie las claves por separado. El RPO es de hasta 24 horas para trabajo reproducible y el RTO ante la pérdida del VPS es de 4 horas; son objetivos que deben contrastarse en el ensayo de restauración. Los scripts siguientes operan sobre D1 (PostGIS); programe la ejecución y gestione por separado las copias externas y los artefactos D2 correspondientes.
 
 1. Configure `PFC_RESPALDOS` y `PFC_CLAVE_RESPALDO` hacia rutas protegidas, y `PFC_BD_URL_PG` hacia la base de origen. Para staging desde el host el puerto es `5434`. Proporcione la autenticación fuera del historial de comandos.
 2. Ejecute `./datos/respaldo/respaldar.sh`. Debe producir un `.dump.gpg` y su `.sha256`; conserva siete volcados cifrados.
-3. Para el ensayo, prepare una base **aislada**, compatible con el origen. Cambie `PFC_BD_URL_PG` para apuntar a esa base. Ejecute `./datos/respaldo/restaurar.sh`, que verifica el último respaldo y reemplaza objetos del destino. No lo ejecute sobre producción como prueba.
+3. Para el ensayo, prepare una base **aislada**, compatible con el origen. Cambie `PFC_BD_URL_PG` para apuntar a esa base. Ejecute `./datos/respaldo/restaurar.sh`, que verifica el último respaldo y reemplaza objetos del destino. No use la base activa de validación para este ensayo.
 4. Valide roles, conteos y consultas de una muestra y recupere D2 desde la copia correspondiente. Documente el tiempo y los resultados antes de autorizar una recuperación real.
 
 | Síntoma | Causa probable | Acción |
